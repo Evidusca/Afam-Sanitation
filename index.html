@@ -66,10 +66,21 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
 .small{font-size:13px}
 .loading{opacity:.7}
+
+.form-card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:28px;box-shadow:0 12px 35px rgba(7,59,29,.06)}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:22px}
+.form-grid label{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:var(--dark)}
+.form-grid .full{grid-column:1/-1}
+.form-grid input,.form-grid select,.form-grid textarea{width:100%;border:1px solid #cfe0d4;border-radius:11px;padding:12px 13px;font:inherit;color:var(--text);background:#fff;outline:none}
+.form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}
+.form-message{margin:14px 0 0;font-weight:700}
+
 @media(max-width:800px){
   .hero-grid{grid-template-columns:1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
   .cards,.activity-list{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .form-grid .full{grid-column:auto}
   .links{display:none}
   .menu{display:block}
   .links.open{display:flex;position:absolute;top:72px;left:0;right:0;background:#fff;padding:18px 4%;border-bottom:1px solid var(--border);flex-direction:column;align-items:flex-start}
@@ -94,6 +105,7 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
       <a href="#about">About</a>
       <a href="#impact">Our Impact</a>
       <a href="#activities">Activities</a>
+      <a href="#record">Record</a>
       <a href="#hygiene">Hygiene</a>
       <a href="#report">Report an Issue</a>
     </div>
@@ -125,7 +137,7 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
       <p class="muted">These figures will eventually update automatically from the Afam Sanitation Google Sheets database.</p>
     </div>
     <div class="stats">
-      <div class="stat"><strong id="activities">0</strong><span>Activities</span></div>
+      <div class="stat"><strong id="totalActivities">0</strong><span>Activities</span></div>
       <div class="stat"><strong id="schools">0</strong><span>Schools Reached</span></div>
       <div class="stat"><strong id="people">0</strong><span>People Reached</span></div>
       <div class="stat"><strong id="communities">0</strong><span>Communities Reached</span></div>
@@ -172,6 +184,67 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
       <article class="card"><div class="card-icon">🦷</div><h3>Oral Hygiene</h3><p class="muted">Learn practical daily habits for caring for your teeth and mouth.</p></article>
       <article class="card"><div class="card-icon">🚿</div><h3>Personal Care</h3><p class="muted">Everyday personal hygiene habits for boys and girls.</p></article>
     </div>
+  </div>
+</section>
+
+<section id="record" style="background:#f8fcf9">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Field record</div>
+      <h2>Record an outreach activity.</h2>
+      <p class="muted">After a real CDS activity, enter the details below. The record will be saved to the Afam Sanitation Google Sheets database and reflected in the impact dashboard.</p>
+    </div>
+
+    <form id="activityForm" class="form-card">
+      <div class="form-grid">
+        <label>Date
+          <input type="date" id="activityDate" required>
+        </label>
+        <label>Location
+          <input type="text" id="activityLocation" placeholder="e.g. Community Secondary School, Afam" required>
+        </label>
+        <label>Activity Type
+          <select id="activityType" required>
+            <option value="">Select activity</option>
+            <option>School Hygiene Education</option>
+            <option>Community Cleanup</option>
+            <option>Market Sanitation</option>
+            <option>Playground Cleanup</option>
+            <option>Community Outreach</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>Corpers / Volunteers
+          <input type="number" id="volunteers" min="0" value="0" required>
+        </label>
+        <label>People Reached
+          <input type="number" id="peopleReached" min="0" value="0" required>
+        </label>
+        <label>Waste Collected (kg)
+          <input type="number" id="wasteCollected" min="0" step="0.1" value="0" required>
+        </label>
+        <label>Hygiene Education?
+          <select id="hygieneEducation">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
+        <label>Submitted By
+          <input type="text" id="submittedBy" placeholder="Name of corper" required>
+        </label>
+        <label class="full">Description
+          <textarea id="description" rows="4" placeholder="What did the group do? Who was reached? What was taught or cleaned?" required></textarea>
+        </label>
+        <label class="full">Photo Link (optional)
+          <input type="url" id="photos" placeholder="Google Drive / photo link">
+        </label>
+        <label class="full">Remarks (optional)
+          <textarea id="remarks" rows="3" placeholder="Any important observations or follow-up needed?"></textarea>
+        </label>
+      </div>
+      <button class="btn primary" type="submit">Save Activity</button>
+      <p id="formMessage" class="form-message" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -224,7 +297,7 @@ async function loadImpact() {
     const json = await res.json();
     if (!json.success) return;
     const d = json.data || {};
-    document.getElementById("activities").textContent = d["Total Activities"] ?? 0;
+    document.getElementById("totalActivities").textContent = d["Total Activities"] ?? 0;
     document.getElementById("schools").textContent = d["Schools Visited"] ?? 0;
     document.getElementById("people").textContent = d["People Reached"] ?? 0;
     document.getElementById("communities").textContent = d["Communities Reached"] ?? 0;
@@ -267,6 +340,49 @@ function escapeHtml(value) {
 document.getElementById("reportBtn").addEventListener("click", e => {
   e.preventDefault();
   alert("The sanitation reporting form will be connected in the next step.");
+});
+
+const activityForm = document.getElementById("activityForm");
+const activityDate = document.getElementById("activityDate");
+const formMessage = document.getElementById("formMessage");
+activityDate.value = new Date().toISOString().split("T")[0];
+
+activityForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const payload = {
+    action: "activity",
+    date: activityDate.value,
+    location: document.getElementById("activityLocation").value.trim(),
+    activityType: document.getElementById("activityType").value,
+    description: document.getElementById("description").value.trim(),
+    volunteers: Number(document.getElementById("volunteers").value) || 0,
+    peopleReached: Number(document.getElementById("peopleReached").value) || 0,
+    wasteCollected: Number(document.getElementById("wasteCollected").value) || 0,
+    hygieneEducation: document.getElementById("hygieneEducation").value,
+    photos: document.getElementById("photos").value.trim(),
+    remarks: document.getElementById("remarks").value.trim(),
+    submittedBy: document.getElementById("submittedBy").value.trim()
+  };
+
+  formMessage.textContent = "Saving activity…";
+
+  try {
+    await fetch(API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+
+    formMessage.textContent = "Activity submitted. Check the Activities sheet to confirm it was saved.";
+    activityForm.reset();
+    activityDate.value = new Date().toISOString().split("T")[0];
+    setTimeout(() => { loadImpact(); loadActivities(); }, 1500);
+  } catch (err) {
+    formMessage.textContent = "The submission could not be sent. Please check your internet connection and try again.";
+    console.error(err);
+  }
 });
 
 loadImpact();
