@@ -75,6 +75,24 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 .form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}
 .form-message{margin:14px 0 0;font-weight:700}
 
+
+.topic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.topic-card{border:1px solid var(--border);border-radius:18px;padding:20px;background:#fff;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}
+.topic-card:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(7,59,29,.08);border-color:#b8d4bf}
+.topic-card .topic-icon{font-size:28px;margin-bottom:8px}.topic-card h3{margin:0 0 5px;color:var(--dark)}
+.chat-shell{max-width:900px;margin:28px auto 0;background:#fff;border:1px solid var(--border);border-radius:24px;box-shadow:0 16px 45px rgba(7,59,29,.09);overflow:hidden}
+.chat-top{background:linear-gradient(135deg,#075b38,#0b7446);color:#fff;padding:24px}
+.chat-title{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:900}.chat-avatar{width:42px;height:42px;border-radius:14px;background:#fff;display:grid;place-items:center;font-size:23px}
+.chat-sub{margin:6px 0 0 54px;color:#d8efe0;font-size:14px}
+.chat-tools{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border);background:#fbfdfb}
+.quick-prompts{display:flex;gap:8px;overflow-x:auto;padding:2px 0 4px}.quick-prompts button{white-space:nowrap;border:1px solid #cfe0d4;background:#fff;border-radius:999px;padding:8px 12px;cursor:pointer;color:var(--dark);font-weight:700}.quick-prompts button:hover{border-color:var(--green);color:var(--green)}
+.clear-chat{border:0;background:none;color:var(--muted);font-weight:800;cursor:pointer;white-space:nowrap}.clear-chat:hover{color:var(--green)}
+.chat-messages{height:430px;overflow-y:auto;padding:22px;background:#f8fbf8}.chat-row{display:flex;margin-bottom:15px}.chat-row.user{justify-content:flex-end}.chat-bubble{max-width:min(78%,680px);padding:13px 16px;border-radius:17px;line-height:1.6;white-space:normal;word-wrap:break-word}.chat-bubble.user{background:var(--green);color:#fff;border-radius:17px 17px 4px 17px}.chat-bubble.bot{background:#eaf4ea;color:#172019;border-radius:17px 17px 17px 4px}.chat-bubble p{margin:0 0 9px}.chat-bubble p:last-child{margin-bottom:0}.chat-bubble ul,.chat-bubble ol{margin:7px 0 7px 22px;padding:0}.typing{display:inline-flex;gap:4px;align-items:center}.typing span{width:6px;height:6px;border-radius:50%;background:#60746a;animation:typing 1.2s infinite}.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}@keyframes typing{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.chat-form{padding:16px;border-top:1px solid var(--border);display:flex;gap:10px;background:#fff}.chat-form input{flex:1;min-width:0;border:1px solid #cfe0d4;border-radius:13px;padding:14px 15px;font:inherit;outline:none}.chat-form input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}.chat-form button{min-width:90px}.chat-status{padding:0 18px 14px;font-size:12px;color:var(--muted);background:#fff}
+.note{font-size:12px;color:var(--muted);margin-top:12px}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#e8f5ec;color:var(--green);font-size:11px;font-weight:900;margin:3px 4px 0 0}
+@media(max-width:800px){.topic-grid{grid-template-columns:1fr 1fr}.chat-bubble{max-width:88%}.chat-messages{height:400px}.chat-tools{align-items:flex-start}.quick-prompts{max-width:100%}}
+@media(max-width:450px){.topic-grid{grid-template-columns:1fr}.chat-top{padding:20px}.chat-sub{margin-left:0;margin-top:8px}.chat-form{padding:12px}.chat-form button{min-width:72px}.chat-messages{height:390px;padding:16px}}
+
 @media(max-width:800px){
   .hero-grid{grid-template-columns:1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -103,12 +121,11 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
     <button class="menu" id="menuBtn" type="button" aria-label="Open menu">☰</button>
     <div class="links" id="navLinks">
       <a href="#about">About</a>
-      <a href="#impact">Our Impact</a>
+      <a href="#learn">Learn</a>
+      <a href="#hygiene-buddy">Hygiene Buddy</a>
+      <a href="#impact">Impact</a>
       <a href="#activities">Activities</a>
-        <a href="#hygiene-buddy">Hygiene Buddy</a>
       <a href="#record">Record</a>
-      <a href="#hygiene">Hygiene</a>
-      <a href="#report">Report an Issue</a>
     </div>
   </div>
 </nav>
@@ -173,17 +190,20 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
   </div>
 </section>
 
-<section id="hygiene" style="background:#fffbea">
+<section id="learn" style="background:#fffbea">
   <div class="container">
     <div class="section-head">
-      <div class="kicker">Hygiene hub</div>
-      <h2>Learn. Practice. Share.</h2>
-      <p class="muted">This section will become our interactive hygiene centre, with short lessons, quizzes and eventually an AI-powered Hygiene Buddy for students.</p>
+      <div class="kicker">Learn</div>
+      <h2>Growing up. Staying clean. Staying informed.</h2>
+      <p class="muted">Simple educational resources for boys, girls, young people, parents and communities. If you have a question, ask Afam Hygiene Buddy below.</p>
     </div>
-    <div class="cards">
-      <article class="card"><div class="card-icon">👐</div><h3>Hand Hygiene</h3><p class="muted">Simple habits that help keep hands clean and reduce the spread of germs.</p></article>
-      <article class="card"><div class="card-icon">🦷</div><h3>Oral Hygiene</h3><p class="muted">Learn practical daily habits for caring for your teeth and mouth.</p></article>
-      <article class="card"><div class="card-icon">🚿</div><h3>Personal Care</h3><p class="muted">Everyday personal hygiene habits for boys and girls.</p></article>
+    <div class="topic-grid">
+      <article class="topic-card" onclick="askSuggested('What is puberty and what changes happen during puberty?')"><div class="topic-icon">🌱</div><h3>Puberty & Body Changes</h3><p class="muted">Learn what happens to boys and girls as they grow.</p></article>
+      <article class="topic-card" onclick="askSuggested('What should I know about periods and menstrual hygiene?')"><div class="topic-icon">🩸</div><h3>Periods & Menstrual Health</h3><p class="muted">Understand periods, menstrual hygiene and common questions.</p></article>
+      <article class="topic-card" onclick="askSuggested('What are normal changes boys experience during puberty?')"><div class="topic-icon">👦</div><h3>Boys & Growing Up</h3><p class="muted">Voice changes, body hair, wet dreams, body odor and more.</p></article>
+      <article class="topic-card" onclick="askSuggested('What are normal changes girls experience during puberty?')"><div class="topic-icon">👧</div><h3>Girls & Growing Up</h3><p class="muted">Periods, body changes, discharge, hygiene and self-care.</p></article>
+      <article class="topic-card" onclick="askSuggested('What are the most important daily personal hygiene habits?')"><div class="topic-icon">🧼</div><h3>Personal Hygiene</h3><p class="muted">Bathing, handwashing, oral care, body odor and healthy habits.</p></article>
+      <article class="topic-card" onclick="askSuggested('How can young people take care of their health and wellbeing during puberty?')"><div class="topic-icon">❤️</div><h3>Healthy Habits</h3><p class="muted">Practical habits for growing, learning and caring for yourself.</p></article>
     </div>
   </div>
 </section>
@@ -250,43 +270,40 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 </section>
 
 
-<section id="hygiene-buddy" style="padding:80px 0;background:#f5f8f3;">
+<section id="hygiene-buddy" style="background:#f5f8f3">
   <div class="container">
     <div class="section-head">
-      <div class="kicker">AI hygiene education</div>
+      <div class="kicker">Your questions are welcome</div>
       <h2>Meet Afam Hygiene Buddy.</h2>
-      <p class="muted">Ask questions about personal hygiene, sanitation, waste management, clean environments and everyday healthy habits.</p>
+      <p class="muted">Ask about hygiene, periods, puberty, body changes, growing up and healthy habits. No shame. No embarrassment. Just simple, educational answers.</p>
+      <div><span class="pill">🧼 Hygiene</span><span class="pill">🩸 Periods</span><span class="pill">🌱 Puberty</span><span class="pill">👦 Boys</span><span class="pill">👧 Girls</span><span class="pill">❤️ Healthy habits</span></div>
     </div>
 
-    <div style="max-width:820px;margin:28px auto 0;background:#fff;border-radius:22px;box-shadow:0 12px 35px rgba(0,0,0,.08);overflow:hidden;border:1px solid #e5ebe2;">
-      <div style="background:#0b5d3b;color:#fff;padding:22px 24px;">
-        <div style="font-size:1.15rem;font-weight:800;">🧼 Afam Hygiene Buddy</div>
-        <div style="opacity:.85;font-size:.9rem;margin-top:5px;">A sanitation education assistant powered by AI.</div>
+    <div class="chat-shell">
+      <div class="chat-top">
+        <div class="chat-title"><div class="chat-avatar">🧼</div><div>Afam Hygiene Buddy</div></div>
+        <p class="chat-sub">A friendly AI guide to hygiene, puberty, periods, body changes and growing up.</p>
       </div>
-
-      <div id="chatMessages" style="height:380px;overflow-y:auto;padding:22px;background:#fafcf9;">
-        <div style="display:flex;justify-content:flex-start;margin-bottom:14px;">
-          <div style="max-width:78%;background:#eaf4ea;border-radius:16px 16px 16px 4px;padding:13px 15px;line-height:1.55;">
-            Hello! 👋 I'm Afam Hygiene Buddy. Ask me a question about hygiene or sanitation and I'll help you with a simple, practical answer.
-          </div>
+      <div class="chat-tools">
+        <div class="quick-prompts" aria-label="Suggested questions">
+          <button type="button" onclick="askSuggested('What is puberty?')">What is puberty?</button>
+          <button type="button" onclick="askSuggested('What should I know about periods?')">Periods</button>
+          <button type="button" onclick="askSuggested('What changes happen to boys during puberty?')">Boys</button>
+          <button type="button" onclick="askSuggested('What changes happen to girls during puberty?')">Girls</button>
+          <button type="button" onclick="askSuggested('What are good daily hygiene habits?')">Hygiene</button>
         </div>
+        <button class="clear-chat" type="button" onclick="clearChat()">Clear</button>
       </div>
-
-      <form id="hygieneChatForm" style="padding:18px;border-top:1px solid #e5ebe2;display:flex;gap:10px;">
-        <input
-          id="hygieneQuestion"
-          type="text"
-          maxlength="1000"
-          placeholder="e.g. Why is handwashing important?"
-          autocomplete="off"
-          required
-          style="flex:1;padding:14px 16px;border:1px solid #ccd7cb;border-radius:12px;font:inherit;outline:none;"
-        >
+      <div id="chatMessages" class="chat-messages" aria-live="polite">
+        <div class="chat-row"><div class="chat-bubble bot"><p><strong>Hello! 👋 I'm Afam Hygiene Buddy.</strong></p><p>You can ask me about your body, puberty, periods, personal hygiene, growing up and healthy habits.</p><p>There are no silly questions. What would you like to know?</p></div></div>
+      </div>
+      <form id="hygieneChatForm" class="chat-form">
+        <input id="hygieneQuestion" type="text" maxlength="1000" placeholder="Ask a question about growing up, hygiene or your body…" autocomplete="off" required>
         <button id="hygieneSend" class="btn primary" type="submit">Ask</button>
       </form>
-
-      <div id="hygieneStatus" style="padding:0 18px 18px;font-size:.85rem;color:#66736a;"></div>
+      <div id="hygieneStatus" class="chat-status"></div>
     </div>
+    <p class="note">Educational information only. Afam Hygiene Buddy is not a doctor and does not diagnose illness. For serious or worrying symptoms, speak with a trusted adult or qualified healthcare professional.</p>
   </div>
 </section>
 
@@ -429,46 +446,93 @@ activityForm.addEventListener("submit", async (e) => {
 
 
 async function askHygieneBuddy(question) {
-  const url = API_URL
-    + "?action=hygiene_chat&message="
-    + encodeURIComponent(question);
-
+  const url = API_URL + "?action=hygiene_chat&message=" + encodeURIComponent(question);
   const response = await fetch(url);
   return await response.json();
+}
+
+function formatBotText(text) {
+  const safe = escapeHtml(text);
+  const lines = safe.split(/\r?\n/);
+  let html = "";
+  let listType = null;
+
+  function closeList() {
+    if (listType) { html += listType === "ul" ? "</ul>" : "</ol>"; listType = null; }
+  }
+
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    if (!trimmed) { closeList(); return; }
+    const bullet = trimmed.match(/^[*•-]\s+(.*)$/);
+    const numbered = trimmed.match(/^\d+[.)]\s+(.*)$/);
+    if (bullet) {
+      if (listType !== "ul") { closeList(); html += "<ul>"; listType = "ul"; }
+      html += "<li>" + inlineFormat(bullet[1]) + "</li>";
+    } else if (numbered) {
+      if (listType !== "ol") { closeList(); html += "<ol>"; listType = "ol"; }
+      html += "<li>" + inlineFormat(numbered[1]) + "</li>";
+    } else {
+      closeList();
+      html += "<p>" + inlineFormat(trimmed) + "</p>";
+    }
+  });
+  closeList();
+  return html;
+}
+
+function inlineFormat(text) {
+  return text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 }
 
 function addChatMessage(text, sender) {
   const box = document.getElementById("chatMessages");
   const row = document.createElement("div");
-  row.style.display = "flex";
-  row.style.justifyContent = sender === "user" ? "flex-end" : "flex-start";
-  row.style.marginBottom = "14px";
-
+  row.className = "chat-row " + (sender === "user" ? "user" : "");
   const bubble = document.createElement("div");
-  bubble.style.maxWidth = "78%";
-  bubble.style.padding = "13px 15px";
-  bubble.style.lineHeight = "1.55";
-  bubble.style.whiteSpace = "pre-wrap";
-  bubble.style.borderRadius = sender === "user"
-    ? "16px 16px 4px 16px"
-    : "16px 16px 16px 4px";
-  bubble.style.background = sender === "user" ? "#0b5d3b" : "#eaf4ea";
-  bubble.style.color = sender === "user" ? "#fff" : "#172019";
-  bubble.textContent = text;
-
+  bubble.className = "chat-bubble " + (sender === "user" ? "user" : "bot");
+  if (sender === "user") bubble.textContent = text;
+  else bubble.innerHTML = formatBotText(text);
   row.appendChild(bubble);
+  box.appendChild(row);
+  box.scrollTop = box.scrollHeight;
+  return row;
+}
+
+function addTypingIndicator() {
+  const box = document.getElementById("chatMessages");
+  const row = document.createElement("div");
+  row.className = "chat-row";
+  row.id = "typingIndicator";
+  row.innerHTML = '<div class="chat-bubble bot"><span class="typing"><span></span><span></span><span></span></span></div>';
   box.appendChild(row);
   box.scrollTop = box.scrollHeight;
 }
 
+function removeTypingIndicator() {
+  const indicator = document.getElementById("typingIndicator");
+  if (indicator) indicator.remove();
+}
+
+function askSuggested(question) {
+  const input = document.getElementById("hygieneQuestion");
+  input.value = question;
+  document.getElementById("hygiene-buddy").scrollIntoView({ behavior: "smooth", block: "start" });
+  setTimeout(() => document.getElementById("hygieneChatForm").requestSubmit(), 250);
+}
+
+function clearChat() {
+  const box = document.getElementById("chatMessages");
+  box.innerHTML = '<div class="chat-row"><div class="chat-bubble bot"><p><strong>Chat cleared. 👋</strong></p><p>Ask me anything about hygiene, periods, puberty, body changes or growing up.</p></div></div>';
+  document.getElementById("hygieneStatus").textContent = "";
+}
+
 document.getElementById("hygieneChatForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const input = document.getElementById("hygieneQuestion");
   const button = document.getElementById("hygieneSend");
   const status = document.getElementById("hygieneStatus");
   const question = input.value.trim();
-
   if (!question) return;
 
   addChatMessage(question, "user");
@@ -476,21 +540,23 @@ document.getElementById("hygieneChatForm").addEventListener("submit", async (e) 
   input.disabled = true;
   button.disabled = true;
   status.textContent = "Afam Hygiene Buddy is thinking…";
+  addTypingIndicator();
 
   try {
     const result = await askHygieneBuddy(question);
-
+    removeTypingIndicator();
     if (result.success && result.answer) {
       addChatMessage(result.answer, "bot");
       status.textContent = "";
     } else {
-      addChatMessage("Sorry, I couldn't answer that right now. Please try again.", "bot");
-      status.textContent = result.message || "The AI service returned an error.";
+      addChatMessage(result.message || "Sorry, I couldn't answer that right now. Please try again.", "bot");
+      status.textContent = "";
     }
   } catch (error) {
+    removeTypingIndicator();
     console.error(error);
-    addChatMessage("Sorry, I'm having trouble connecting right now. Please try again.", "bot");
-    status.textContent = "Connection error.";
+    addChatMessage("I'm having trouble connecting right now. Please try again in a moment.", "bot");
+    status.textContent = "Connection problem.";
   } finally {
     input.disabled = false;
     button.disabled = false;
