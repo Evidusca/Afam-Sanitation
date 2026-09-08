@@ -20,39 +20,196 @@ input,select,textarea{width:100%;border:1px solid #cfe0d4;border-radius:11px;pad
 input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}
 .btn{min-height:48px;padding:0 18px;border:0;border-radius:12px;font-weight:800;cursor:pointer} .primary{background:var(--green);color:#fff}
 .message{font-weight:800} @media(max-width:700px){.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.header{flex-direction:column;align-items:flex-start}}
+
+.login-card{max-width:520px;margin:40px auto}.hidden{display:none!important}
+.logout{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;padding:9px 14px;border-radius:10px;font-weight:800;cursor:pointer}
 </style></head>
 <body>
 <header><div class="container header">
 <div class="brand"><img src="logo.png" alt="Afam Sanitation CDS logo"><div>AFAM SANITATION CDS<br><small>Administrator</small></div></div>
-<a class="back" href="index.html">← Public Website</a></div></header>
+<div style="display:flex;gap:10px;align-items:center"><a class="back" href="index.html">← Public Website</a><button class="logout" id="logoutBtn" type="button">Logout</button></div></div></header>
+
 <main class="container">
-<div class="card"><div class="kicker">Admin area</div><h1>Record an outreach activity.</h1>
-<p class="muted">After a real CDS activity, enter the details below. The record will be saved to the Afam Sanitation Google Sheets database and reflected in the public impact dashboard and activities page.</p>
-<div class="notice"><strong>Internal use:</strong> This page is for Afam Sanitation CDS administrators.</div></div>
-<div class="card"><h2>Activity details</h2>
-<form id="activityForm"><div class="form-grid">
-<label>Date<input type="date" id="activityDate" required></label>
-<label>Location<input type="text" id="activityLocation" placeholder="e.g. Community Secondary School, Afam" required></label>
-<label>Activity Type<select id="activityType" required><option value="">Select activity</option><option>School Hygiene Education</option><option>Community Cleanup</option><option>Market Sanitation</option><option>Playground Cleanup</option><option>Community Outreach</option><option>Other</option></select></label>
-<label>Corpers / Volunteers<input type="number" id="volunteers" min="0" value="0" required></label>
-<label>People Reached<input type="number" id="peopleReached" min="0" value="0" required></label>
-<label>Waste Collected (kg)<input type="number" id="wasteCollected" min="0" step="0.1" value="0" required></label>
-<label>Hygiene Education?<select id="hygieneEducation"><option>Yes</option><option>No</option></select></label>
-<label>Submitted By<input type="text" id="submittedBy" placeholder="Name of corper" required></label>
-<label class="full">Description<textarea id="description" rows="4" placeholder="What did the group do? Who was reached? What was taught or cleaned?" required></textarea></label>
-<label class="full">Photo Link (optional)<input type="url" id="photos" placeholder="Google Drive / photo link"></label>
-<label class="full">Remarks (optional)<textarea id="remarks" rows="3" placeholder="Any important observations or follow-up needed?"></textarea></label>
-</div><button class="btn primary" id="saveBtn" type="submit">Save Activity</button><p id="formMessage" class="message"></p></form>
-</div></main>
+  <div id="loginView" class="card login-card">
+    <div class="kicker">Restricted access</div>
+    <h1>Administrator login</h1>
+    <p class="muted">This area is for authorized Afam Sanitation CDS administrators only.</p>
+    <form id="loginForm">
+      <label>Administrator Password
+        <input id="adminPassword" type="password" autocomplete="current-password" required placeholder="Enter administrator password">
+      </label>
+      <br>
+      <button class="btn primary" type="submit" id="loginBtn">Login</button>
+      <p id="loginMessage" class="message" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div id="adminView" class="hidden">
+    <div class="card">
+      <div class="kicker">Admin area</div>
+      <h1>Record an outreach activity.</h1>
+      <p class="muted">After a real CDS activity, enter the details below. The record will be saved to the Afam Sanitation Google Sheets database and reflected in the public impact dashboard and activities page.</p>
+      <div class="notice"><strong>Internal use:</strong> This page is for Afam Sanitation CDS administrators.</div>
+    </div>
+
+    <div class="card">
+      <h2>Activity details</h2>
+      <form id="activityForm">
+        <div class="form-grid">
+          <label>Date<input type="date" id="activityDate" required></label>
+          <label>Location<input type="text" id="activityLocation" placeholder="e.g. Community Secondary School, Afam" required></label>
+          <label>Activity Type<select id="activityType" required><option value="">Select activity</option><option>School Hygiene Education</option><option>Community Cleanup</option><option>Market Sanitation</option><option>Playground Cleanup</option><option>Community Outreach</option><option>Other</option></select></label>
+          <label>Corpers / Volunteers<input type="number" id="volunteers" min="0" value="0" required></label>
+          <label>People Reached<input type="number" id="peopleReached" min="0" value="0" required></label>
+          <label>Waste Collected (kg)<input type="number" id="wasteCollected" min="0" step="0.1" value="0" required></label>
+          <label>Hygiene Education?<select id="hygieneEducation"><option>Yes</option><option>No</option></select></label>
+          <label>Submitted By<input type="text" id="submittedBy" placeholder="Name of corper" required></label>
+          <label class="full">Description<textarea id="description" rows="4" placeholder="What did the group do? Who was reached? What was taught or cleaned?" required></textarea></label>
+          <label class="full">Photo Link (optional)<input type="url" id="photos" placeholder="Google Drive / photo link"></label>
+          <label class="full">Remarks (optional)<textarea id="remarks" rows="3" placeholder="Any important observations or follow-up needed?"></textarea></label>
+        </div>
+        <button class="btn primary" id="saveBtn" type="submit">Save Activity</button>
+        <p id="formMessage" class="message"></p>
+      </form>
+    </div>
+  </div>
+</main>
+
 <script>
-const API_URL="https://script.google.com/macros/s/AKfycbxMHXPlkr5DORU92N0t-XMbChXJr9t0cbxugq8x9ELUwAfmCwZ8NaxItGUDDk1lnZG4/exec";
-const form=document.getElementById("activityForm"), date=document.getElementById("activityDate"), msg=document.getElementById("formMessage"), btn=document.getElementById("saveBtn");
-date.value=new Date().toISOString().split("T")[0];
-form.addEventListener("submit",async e=>{
-e.preventDefault(); btn.disabled=true; msg.textContent="Saving activity…";
-const payload={action:"activity",date:date.value,location:document.getElementById("activityLocation").value.trim(),activityType:document.getElementById("activityType").value,description:document.getElementById("description").value.trim(),volunteers:Number(document.getElementById("volunteers").value)||0,peopleReached:Number(document.getElementById("peopleReached").value)||0,wasteCollected:Number(document.getElementById("wasteCollected").value)||0,hygieneEducation:document.getElementById("hygieneEducation").value,photos:document.getElementById("photos").value.trim(),remarks:document.getElementById("remarks").value.trim(),submittedBy:document.getElementById("submittedBy").value.trim()};
-try{await fetch(API_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}); msg.textContent="Activity submitted. Check the Activities sheet to confirm it was saved."; form.reset(); date.value=new Date().toISOString().split("T")[0];}
-catch(err){msg.textContent="The submission could not be sent. Please check your internet connection and try again."; console.error(err);}
-finally{btn.disabled=false;}
+const API_URL = "https://script.google.com/macros/s/AKfycbxMHXPlkr5DORU92N0t-XMbChXJr9t0cbxugq8x9ELUwAfmCwZ8NaxItGUDDk1lnZG4/exec";
+const TOKEN_KEY = "afam_admin_token";
+const EXPIRES_KEY = "afam_admin_expires";
+
+const loginView = document.getElementById("loginView");
+const adminView = document.getElementById("adminView");
+const loginForm = document.getElementById("loginForm");
+const loginMessage = document.getElementById("loginMessage");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+
+function getToken() {
+  const token = localStorage.getItem(TOKEN_KEY);
+  const expires = Number(localStorage.getItem(EXPIRES_KEY) || 0);
+  if (!token || !expires || Date.now() >= expires) {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(EXPIRES_KEY);
+    return null;
+  }
+  return token;
+}
+
+function showAdmin() {
+  loginView.classList.add("hidden");
+  adminView.classList.remove("hidden");
+}
+
+function showLogin() {
+  adminView.classList.add("hidden");
+  loginView.classList.remove("hidden");
+}
+
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const password = document.getElementById("adminPassword").value.trim();
+  if (!password) return;
+
+  loginBtn.disabled = true;
+  loginMessage.textContent = "Checking password…";
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify({action:"admin_login", password:password})
+    });
+    const result = await response.json();
+
+    if (result.success && result.token) {
+      localStorage.setItem(TOKEN_KEY, result.token);
+      localStorage.setItem(EXPIRES_KEY, String(result.expiresAt || (Date.now() + 8*60*60*1000)));
+      document.getElementById("adminPassword").value = "";
+      loginMessage.textContent = "";
+      showAdmin();
+    } else {
+      loginMessage.textContent = result.message || "Login failed.";
+    }
+  } catch (err) {
+    console.error(err);
+    loginMessage.textContent = "Could not connect to the administrator service.";
+  } finally {
+    loginBtn.disabled = false;
+  }
 });
+
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(EXPIRES_KEY);
+  showLogin();
+});
+
+const activityForm = document.getElementById("activityForm");
+const activityDate = document.getElementById("activityDate");
+const formMessage = document.getElementById("formMessage");
+const saveBtn = document.getElementById("saveBtn");
+activityDate.value = new Date().toISOString().split("T")[0];
+
+activityForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const adminToken = getToken();
+  if (!adminToken) {
+    showLogin();
+    loginMessage.textContent = "Your admin session has expired. Please log in again.";
+    return;
+  }
+
+  const payload = {
+    action:"activity",
+    adminToken:adminToken,
+    date:activityDate.value,
+    location:document.getElementById("activityLocation").value.trim(),
+    activityType:document.getElementById("activityType").value,
+    description:document.getElementById("description").value.trim(),
+    volunteers:Number(document.getElementById("volunteers").value)||0,
+    peopleReached:Number(document.getElementById("peopleReached").value)||0,
+    wasteCollected:Number(document.getElementById("wasteCollected").value)||0,
+    hygieneEducation:document.getElementById("hygieneEducation").value,
+    photos:document.getElementById("photos").value.trim(),
+    remarks:document.getElementById("remarks").value.trim(),
+    submittedBy:document.getElementById("submittedBy").value.trim()
+  };
+
+  saveBtn.disabled = true;
+  formMessage.textContent = "Saving activity…";
+
+  try {
+    const response = await fetch(API_URL, {
+      method:"POST",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(payload)
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      formMessage.textContent = "Activity recorded successfully.";
+      activityForm.reset();
+      activityDate.value = new Date().toISOString().split("T")[0];
+    } else {
+      if (result.message && result.message.includes("authentication")) {
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(EXPIRES_KEY);
+        showLogin();
+        loginMessage.textContent = "Your admin session has expired. Please log in again.";
+      }
+      formMessage.textContent = result.message || "The activity could not be saved.";
+    }
+  } catch (err) {
+    console.error(err);
+    formMessage.textContent = "The submission could not be sent. Please check your internet connection and try again.";
+  } finally {
+    saveBtn.disabled = false;
+  }
+});
+
+if (getToken()) showAdmin();
+else showLogin();
 </script></body></html>
