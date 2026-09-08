@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afam Sanitation CDS | Admin</title>
+<style>
+:root{--green:#08752f;--dark:#073b1d;--light:#f5faf6;--text:#163022;--muted:#617268;--border:#dce9df}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:var(--light);line-height:1.6}
+.container{width:min(1000px,92%);margin:auto} header{background:var(--dark);color:#fff;padding:22px 0}
+.header{display:flex;align-items:center;justify-content:space-between;gap:20px} .brand{display:flex;align-items:center;gap:12px;font-weight:900}
+.brand img{width:52px;height:52px;object-fit:contain;background:#fff;border-radius:12px;padding:3px}
+.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.35);padding:9px 14px;border-radius:10px;font-weight:800}
+main{padding:50px 0} .card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:28px;margin-bottom:24px;box-shadow:0 12px 35px rgba(7,59,29,.06)}
+.kicker{font-size:12px;color:var(--green);font-weight:900;text-transform:uppercase;letter-spacing:.12em}
+h1,h2{color:var(--dark);line-height:1.1} h1{font-size:42px;margin:8px 0 12px} h2{font-size:28px}
+.muted{color:var(--muted)} .notice{background:#eef7f0;border-left:4px solid var(--green);padding:14px 16px;border-radius:8px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:22px 0}
+label{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:var(--dark)} .full{grid-column:1/-1}
+input,select,textarea{width:100%;border:1px solid #cfe0d4;border-radius:11px;padding:12px 13px;font:inherit;color:var(--text);background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}
+.btn{min-height:48px;padding:0 18px;border:0;border-radius:12px;font-weight:800;cursor:pointer} .primary{background:var(--green);color:#fff}
+.message{font-weight:800} @media(max-width:700px){.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.header{flex-direction:column;align-items:flex-start}}
+</style></head>
+<body>
+<header><div class="container header">
+<div class="brand"><img src="logo.png" alt="Afam Sanitation CDS logo"><div>AFAM SANITATION CDS<br><small>Administrator</small></div></div>
+<a class="back" href="index.html">← Public Website</a></div></header>
+<main class="container">
+<div class="card"><div class="kicker">Admin area</div><h1>Record an outreach activity.</h1>
+<p class="muted">After a real CDS activity, enter the details below. The record will be saved to the Afam Sanitation Google Sheets database and reflected in the public impact dashboard and activities page.</p>
+<div class="notice"><strong>Internal use:</strong> This page is for Afam Sanitation CDS administrators.</div></div>
+<div class="card"><h2>Activity details</h2>
+<form id="activityForm"><div class="form-grid">
+<label>Date<input type="date" id="activityDate" required></label>
+<label>Location<input type="text" id="activityLocation" placeholder="e.g. Community Secondary School, Afam" required></label>
+<label>Activity Type<select id="activityType" required><option value="">Select activity</option><option>School Hygiene Education</option><option>Community Cleanup</option><option>Market Sanitation</option><option>Playground Cleanup</option><option>Community Outreach</option><option>Other</option></select></label>
+<label>Corpers / Volunteers<input type="number" id="volunteers" min="0" value="0" required></label>
+<label>People Reached<input type="number" id="peopleReached" min="0" value="0" required></label>
+<label>Waste Collected (kg)<input type="number" id="wasteCollected" min="0" step="0.1" value="0" required></label>
+<label>Hygiene Education?<select id="hygieneEducation"><option>Yes</option><option>No</option></select></label>
+<label>Submitted By<input type="text" id="submittedBy" placeholder="Name of corper" required></label>
+<label class="full">Description<textarea id="description" rows="4" placeholder="What did the group do? Who was reached? What was taught or cleaned?" required></textarea></label>
+<label class="full">Photo Link (optional)<input type="url" id="photos" placeholder="Google Drive / photo link"></label>
+<label class="full">Remarks (optional)<textarea id="remarks" rows="3" placeholder="Any important observations or follow-up needed?"></textarea></label>
+</div><button class="btn primary" id="saveBtn" type="submit">Save Activity</button><p id="formMessage" class="message"></p></form>
+</div></main>
+<script>
+const API_URL="https://script.google.com/macros/s/AKfycbxMHXPlkr5DORU92N0t-XMbChXJr9t0cbxugq8x9ELUwAfmCwZ8NaxItGUDDk1lnZG4/exec";
+const form=document.getElementById("activityForm"), date=document.getElementById("activityDate"), msg=document.getElementById("formMessage"), btn=document.getElementById("saveBtn");
+date.value=new Date().toISOString().split("T")[0];
+form.addEventListener("submit",async e=>{
+e.preventDefault(); btn.disabled=true; msg.textContent="Saving activity…";
+const payload={action:"activity",date:date.value,location:document.getElementById("activityLocation").value.trim(),activityType:document.getElementById("activityType").value,description:document.getElementById("description").value.trim(),volunteers:Number(document.getElementById("volunteers").value)||0,peopleReached:Number(document.getElementById("peopleReached").value)||0,wasteCollected:Number(document.getElementById("wasteCollected").value)||0,hygieneEducation:document.getElementById("hygieneEducation").value,photos:document.getElementById("photos").value.trim(),remarks:document.getElementById("remarks").value.trim(),submittedBy:document.getElementById("submittedBy").value.trim()};
+try{await fetch(API_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}); msg.textContent="Activity submitted. Check the Activities sheet to confirm it was saved."; form.reset(); date.value=new Date().toISOString().split("T")[0];}
+catch(err){msg.textContent="The submission could not be sent. Please check your internet connection and try again."; console.error(err);}
+finally{btn.disabled=false;}
+});
+</script></body></html>
