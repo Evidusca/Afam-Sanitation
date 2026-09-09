@@ -116,6 +116,9 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 .report-form input,.report-form select,.report-form textarea{width:100%;border:1px solid #cfe0d4;border-radius:11px;padding:12px 13px;font:inherit;color:var(--text);background:#fff;outline:none}
 .report-form input:focus,.report-form select:focus,.report-form textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}
 .report-message{font-weight:800;margin:0}.report-help{font-size:12px;color:var(--muted);margin:0}
+
+/* Education Library */
+.edu-library{background:#fffbea}.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.edu-card{background:#fff;border:1px solid #e4eee5;border-radius:16px;padding:20px;box-shadow:0 5px 18px rgba(0,0,0,.05)}.edu-card .edu-num{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;background:#e9f7ed;color:var(--green);font-weight:800}.edu-card h3{margin:12px 0 6px}.edu-card p{margin:0 0 14px;color:#64736a}.edu-card button{cursor:pointer}.lesson-modal{display:none;position:fixed;inset:0;background:rgba(8,30,17,.62);z-index:1000;padding:20px;overflow:auto}.lesson-modal.open{display:block}.lesson-box{max-width:820px;margin:30px auto;background:#fff;border-radius:20px;padding:28px;position:relative}.lesson-close{position:absolute;right:15px;top:10px;border:0;background:#eef4ef;color:#123322;font-size:26px;width:42px;height:42px;border-radius:50%;cursor:pointer}.lesson-box h2{margin-top:0;font-size:30px}.lesson-box h3{color:var(--green);margin-bottom:5px}.lesson-box li{margin:7px 0}.lesson-note{background:#fff8dc;border-left:5px solid #f2c94c;padding:13px 15px;border-radius:7px;margin-top:18px}.quiz-section{background:#f5f8f3}.quiz-card{max-width:850px;margin:auto;background:#fff;border-radius:20px;padding:26px;box-shadow:0 5px 20px rgba(0,0,0,.06)}.quiz-q{padding:18px 0;border-bottom:1px solid #e8eee9}.quiz-q h3{font-size:18px;margin-top:0}.quiz-q label{display:block;margin:9px 0;padding:10px;border:1px solid #e3ebe5;border-radius:10px;cursor:pointer}.quiz-q label:hover{background:#f7fbf7}.quiz-result{display:none;margin-top:20px;padding:18px;border-radius:12px;background:#eaf7ed}.quiz-result.show{display:block}
 </style>
 </head>
 <body>
@@ -131,6 +134,8 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
       <a href="#about">About</a>
       <a href="#learn">Learn</a>
       <a href="#hygiene-buddy">Hygiene Buddy</a>
+      <a href="#education">Education</a>
+      <a href="#quiz">Quiz</a>
       <a href="#impact">Impact</a>
       <a href="#activities">Activities</a>
     </div>
@@ -192,6 +197,51 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
     <p class="note">Educational information only. Afam Hygiene Buddy is not a doctor and does not diagnose illness. For serious or worrying symptoms, speak with a trusted adult or qualified healthcare professional.</p>
   </div>
 </section>
+
+
+<section id="education" class="edu-library">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Education library</div>
+      <h2>Learn. Understand. Take care of yourself.</h2>
+      <p class="muted">Short, practical lessons for boys, girls, young people, parents and communities. Choose a topic to read more.</p>
+    </div>
+    <div class="edu-grid">
+      <article class="edu-card"><span class="edu-num">1</span><h3>Understanding Puberty</h3><p>Body changes, hormones and why everyone develops differently.</p><button class="btn primary" onclick="openLesson(1)">Read lesson</button></article>
+      <article class="edu-card"><span class="edu-num">2</span><h3>Boys & Growing Up</h3><p>Voice changes, body hair, wet dreams, hygiene and more.</p><button class="btn primary" onclick="openLesson(2)">Read lesson</button></article>
+      <article class="edu-card"><span class="edu-num">3</span><h3>Girls & Growing Up</h3><p>Breast development, body changes, hygiene and self-care.</p><button class="btn primary" onclick="openLesson(3)">Read lesson</button></article>
+      <article class="edu-card"><span class="edu-num">4</span><h3>Understanding Periods</h3><p>What menstruation is, common symptoms and when to ask for help.</p><button class="btn primary" onclick="openLesson(4)">Read lesson</button></article>
+      <article class="edu-card"><span class="edu-num">5</span><h3>Menstrual Hygiene</h3><p>Practical ways to stay clean, comfortable and confident.</p><button class="btn primary" onclick="openLesson(5)">Read lesson</button></article>
+      <article class="edu-card"><span class="edu-num">6</span><h3>Personal Hygiene</h3><p>Handwashing, bathing, oral care, clean clothes and toilet hygiene.</p><button class="btn primary" onclick="openLesson(6)">Read lesson</button></article>
+      <article class="edu-card"><span class="edu-num">7</span><h3>Body Confidence & Healthy Habits</h3><p>Confidence, sleep, food, water, exercise and self-care.</p><button class="btn primary" onclick="openLesson(7)">Read lesson</button></article>
+      <article class="edu-card"><span class="edu-num">8</span><h3>When to Ask for Help</h3><p>Know when to involve a trusted adult or healthcare professional.</p><button class="btn primary" onclick="openLesson(8)">Read lesson</button></article>
+    </div>
+  </div>
+</section>
+
+<section id="quiz" class="quiz-section">
+  <div class="container">
+    <div class="section-head"><div class="kicker">Test what you learned</div><h2>Afam Hygiene Quiz.</h2><p class="muted">Answer these quick questions after exploring the Education Library.</p></div>
+    <div class="quiz-card">
+      <form id="quizForm">
+        <div class="quiz-q"><h3>1. What is puberty?</h3><label><input type="radio" name="q1" value="a"> A sickness that affects only some children</label><label><input type="radio" name="q1" value="b"> A natural stage when the body changes toward adulthood</label><label><input type="radio" name="q1" value="c"> A type of hygiene product</label></div>
+        <div class="quiz-q"><h3>2. Which is a good daily hygiene habit?</h3><label><input type="radio" name="q2" value="a"> Washing hands regularly with soap and clean water</label><label><input type="radio" name="q2" value="b"> Wearing the same underwear for several days</label><label><input type="radio" name="q2" value="c"> Avoiding baths during hot weather</label></div>
+        <div class="quiz-q"><h3>3. Is it normal for people to start puberty at different times?</h3><label><input type="radio" name="q3" value="a"> Yes</label><label><input type="radio" name="q3" value="b"> No</label></div>
+        <div class="quiz-q"><h3>4. What should you do when changing a menstrual product?</h3><label><input type="radio" name="q4" value="a"> Never wash your hands</label><label><input type="radio" name="q4" value="b"> Wash your hands before and after changing it</label><label><input type="radio" name="q4" value="c"> Leave used products in an open public place</label></div>
+        <div class="quiz-q"><h3>5. If a symptom is severe, worrying or getting worse, what should you do?</h3><label><input type="radio" name="q5" value="a"> Ignore it</label><label><input type="radio" name="q5" value="b"> Search social media and self-diagnose</label><label><input type="radio" name="q5" value="c"> Speak with a trusted adult or qualified healthcare professional</label></div>
+        <button class="btn primary" type="submit" style="margin-top:20px">Check my score</button>
+      </form>
+      <div id="quizResult" class="quiz-result"></div>
+    </div>
+  </div>
+</section>
+
+<div class="lesson-modal" id="lessonModal" aria-hidden="true">
+  <div class="lesson-box">
+    <button class="lesson-close" type="button" onclick="closeLesson()" aria-label="Close lesson">×</button>
+    <div id="lessonContent"></div>
+  </div>
+</div>
 
 <section id="impact">
   <div class="container">
@@ -277,7 +327,7 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
     <div>
       <div class="kicker" style="color:#9be26f">Community reporting</div>
       <h2>See a sanitation problem?</h2>
-      <p class="muted">Help Afam Sanitation identify areas that need attention. Our QR reporting system will make it easy to send us a location, description and photo.</p>
+      <p class="muted">Help Afam Sanitation identify areas that need attention. Our reporting system makes it easy to send us a location and description so we can identify areas that may need attention.</p>
     </div>
     <a class="btn" style="background:#fff;color:var(--dark)" href="#" id="reportBtn">Report an Issue</a>
   </div>
@@ -587,6 +637,23 @@ document.getElementById("hygieneChatForm").addEventListener("submit", async (e) 
     input.focus();
   }
 });
+
+
+const lessons = {
+1:{title:'Understanding Puberty',html:`<h2>Understanding Puberty</h2><h3>What is puberty?</h3><p>Puberty is the stage when a child's body gradually changes toward an adult body because of natural hormone changes.</p><h3>Common changes</h3><ul><li>Height and body shape may change.</li><li>Body hair may grow.</li><li>Skin may become oilier and acne may appear.</li><li>Body odour may become stronger.</li><li>Emotions and feelings may change.</li></ul><div class="lesson-note"><strong>Remember:</strong> People do not all start or finish puberty at the same time. Differences in timing and rate of change are normal.</div>`},
+2:{title:'Boys & Growing Up',html:`<h2>Boys & Growing Up</h2><h3>Common changes</h3><ul><li>The voice may become deeper.</li><li>Facial and body hair may grow.</li><li>The penis and testicles develop.</li><li>Erections and wet dreams can happen during puberty.</li><li>Body odour and acne may increase.</li></ul><h3>Good hygiene habits</h3><ul><li>Bathe regularly and clean the body well.</li><li>Wear clean underwear and clothes.</li><li>Wash hands regularly.</li><li>Keep the genital area clean without harsh or perfumed products.</li><li>Brush teeth twice daily.</li></ul>`},
+3:{title:'Girls & Growing Up',html:`<h2>Girls & Growing Up</h2><h3>Common changes</h3><ul><li>Breasts develop.</li><li>Body and pubic hair may grow.</li><li>Body shape changes.</li><li>Body odour and acne may increase.</li><li>Emotions and feelings can change.</li></ul><h3>Good hygiene habits</h3><ul><li>Bathe regularly and wear clean clothes.</li><li>Keep the external genital area clean gently.</li><li>Change underwear regularly.</li><li>Keep menstrual products clean and dispose of them properly.</li><li>Brush teeth twice daily.</li></ul><div class="lesson-note"><strong>Remember:</strong> Every body develops at its own pace. There is no single “correct” way to look during puberty.</div>`},
+4:{title:'Understanding Periods',html:`<h2>Understanding Periods</h2><h3>What is menstruation?</h3><p>A period is the regular shedding of the lining of the uterus through the vagina. It is a normal part of the menstrual cycle for many girls and women.</p><h3>What might you notice?</h3><ul><li>Bleeding for several days.</li><li>Cramps or lower-abdominal discomfort.</li><li>Tiredness or changes in mood.</li><li>Breast tenderness or headaches for some people.</li></ul><h3>When to ask for help</h3><p>Talk to a trusted adult or qualified healthcare professional if pain is severe, bleeding seems unusually heavy, you feel very unwell, or you are worried about a change in your periods.</p>`},
+5:{title:'Menstrual Hygiene',html:`<h2>Menstrual Hygiene</h2><h3>During a period</h3><ul><li>Use a menstrual product that suits you and change it regularly according to its instructions and your flow.</li><li>Wash your hands before and after changing a menstrual product.</li><li>Keep the external genital area clean and dry.</li><li>Wrap used disposable products and place them in an appropriate bin.</li><li>Carry spare products when possible, especially when going to school or travelling.</li></ul><div class="lesson-note"><strong>There is no shame in having a period.</strong> Menstruation is a normal body process, and young people deserve accurate information and support.</div>`},
+6:{title:'Personal Hygiene',html:`<h2>Personal Hygiene</h2><h3>Daily habits</h3><ul><li>Wash your hands with soap and clean running water, especially after using the toilet and before eating or preparing food.</li><li>Bathe regularly and clean areas that sweat more.</li><li>Brush your teeth twice a day with fluoride toothpaste.</li><li>Wear clean clothes and underwear.</li><li>Keep toilets and shared spaces clean.</li></ul><h3>Food and water</h3><ul><li>Drink safe water.</li><li>Keep food covered and handle it with clean hands.</li><li>Wash fruits and vegetables appropriately before eating.</li></ul>`},
+7:{title:'Body Confidence & Healthy Habits',html:`<h2>Body Confidence & Healthy Habits</h2><ul><li>Remember that bodies naturally look different.</li><li>Get enough sleep and make time to rest.</li><li>Eat a varied, balanced diet and drink enough safe water.</li><li>Stay physically active in ways that are safe and enjoyable.</li><li>Take care of your hygiene without feeling ashamed of normal body changes.</li><li>Respect your own body and other people's bodies.</li></ul><div class="lesson-note"><strong>Healthy confidence</strong> means learning to care for yourself without comparing your body to everyone else's.</div>`},
+8:{title:'When to Ask for Help',html:`<h2>When to Ask for Help</h2><h3>Speak up when something concerns you</h3><p>You do not have to handle every question or problem alone. Talk to a parent, guardian, teacher, another trusted adult, or a qualified healthcare professional when you need help.</p><ul><li>Ask for medical help when symptoms are severe, worsening, or worrying.</li><li>Ask a trusted adult for support if you feel unsafe or someone crosses your personal boundaries.</li><li>Never feel pressured to keep a harmful secret.</li><li>For an emergency, seek immediate help from a trusted adult or local emergency service.</li></ul><div class="lesson-note"><strong>Hygiene Buddy provides general educational information and does not replace a qualified healthcare professional.</strong></div>`}
+};
+function openLesson(n){const m=document.getElementById('lessonModal');document.getElementById('lessonContent').innerHTML=lessons[n].html;m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+function closeLesson(){const m=document.getElementById('lessonModal');m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow=''}
+document.getElementById('lessonModal').addEventListener('click',e=>{if(e.target.id==='lessonModal')closeLesson()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
+document.getElementById('quizForm').addEventListener('submit',function(e){e.preventDefault();const answers={q1:'b',q2:'a',q3:'a',q4:'b',q5:'c'};let score=0;Object.entries(answers).forEach(([q,a])=>{const el=document.querySelector('input[name="'+q+'"]:checked');if(el&&el.value===a)score++});const r=document.getElementById('quizResult');let msg=score===5?'Excellent! 🎉 You got all 5 correct.':score>=3?'Good job! 👍 You got '+score+' out of 5. Review the lessons and try again.':'Keep learning! 🌱 You got '+score+' out of 5. Read the Education Library and try again.';r.innerHTML='<strong>'+msg+'</strong>';r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'nearest'})});
 
 loadImpact();
 loadActivities();
