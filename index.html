@@ -214,6 +214,13 @@ body{overflow-x:hidden}
 .library-note{max-width:100%}
 .education-grid{width:100%}
 
+
+.section-quiz-invite{margin-top:30px;padding:24px;border-radius:24px;background:linear-gradient(135deg,#effaf1,#fffbea);border:2px dashed rgba(8,117,47,.22);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px}
+.quiz-invite-icon{font-size:48px}.section-quiz-invite h3{margin:5px 0 6px;font-size:24px}.section-quiz-invite p{margin:0;color:#52605a;line-height:1.55}
+.section-quiz-container{margin-top:18px}.section-quiz-box{padding:24px;border-radius:24px;background:#f4f8f5;border:1px solid rgba(8,117,47,.14)}
+.section-quiz-box .quiz-progress{font-weight:800;color:#08752f;margin-bottom:10px}
+@media(max-width:760px){.section-quiz-invite{grid-template-columns:1fr;text-align:center}.section-quiz-invite .btn{width:100%}}
+
 </style>
 
 <style>
@@ -371,30 +378,6 @@ body{overflow-x:hidden}
   </div>
 </section>
 
-<section id="quiz" class="section quiz-section">
-  <div class="container">
-  <div class="section-head">
-    <div>
-      <span class="eyebrow">TEST WHAT YOU LEARNED</span>
-      <h2>Afam Sanitation Quiz.</h2>
-      <p>Answer 10 random questions after exploring the Education Library. You can try the same 10 again or get a fresh set of 10.</p>
-    </div>
-  </div>
-
-  <div class="quiz-controls">
-    <button class="btn" type="button" onclick="startAfamQuiz('fresh')">🎲 Give Me 10 Random Questions</button>
-    <button class="btn secondary" type="button" onclick="startAfamQuiz('same')">🔁 Do The Same 10 Again</button>
-  </div>
-
-  <div id="quizIntro" class="quiz-intro">
-    <div class="quiz-icon">🧠</div>
-    <h3>Ready to test yourself?</h3>
-    <p>Read the Education Library first, then choose your challenge above.</p>
-  </div>
-
-  <div id="afamQuiz" class="test-box" style="display:none"></div>
-  </div>
-</section>
 <section id="activities" class="activities">
   <div class="container">
     <div class="section-head">
@@ -996,15 +979,42 @@ function openLibraryTopic(key){
       </div>
       <button class="btn secondary" type="button" onclick="closeLibraryTopic()">← Back to Library</button>
     </div>
-    ${l.sections.map(s=>`<div class="library-section"><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join("")}
-    <div class="library-fact"><strong>💡 Remember:</strong> ${l.fact}</div>
+
+    ${l.sections.map((s,i)=>`
+      <div class="library-section">
+        <h3>${s[0]}</h3>
+        <p>${s[1]}</p>
+      </div>`).join("")}
+
+    <div class="library-fact">
+      <strong>💡 Remember:</strong> ${l.fact}
+    </div>
+
     <div class="library-section">
       <h3>📚 Book & Learning Recommendations</h3>
-      <p>These are good starting points for children, teenagers, parents and educators. Availability can vary by library or bookstore.</p>
+      <p>These are useful starting points for children, teenagers, parents and educators. Availability can vary by library or bookstore.</p>
       <div class="book-list">
-        ${l.books.map(b=>`<div class="book-card"><strong>${b[0]}</strong><span>${b[1]}</span></div>`).join("")}
+        ${l.books.map(b=>`
+          <div class="book-card">
+            <strong>${b[0]}</strong>
+            <span>${b[1]}</span>
+          </div>`).join("")}
       </div>
-    </div>`;
+    </div>
+
+    <div class="section-quiz-invite">
+      <div class="quiz-invite-icon">🧠</div>
+      <div>
+        <span class="eyebrow">YOU'VE FINISHED READING</span>
+        <h3>Test what you just learned.</h3>
+        <p>This 10-question quiz is based specifically on <strong>${l.title}</strong> — the topic you just read.</p>
+      </div>
+      <button class="btn" type="button" onclick="startSectionQuiz('${key}')">📝 Start 10-Question Test</button>
+    </div>
+
+    <div id="sectionQuiz_${key}" class="section-quiz-container"></div>
+  `;
+
   viewer.classList.add("open");
   viewer.setAttribute("aria-hidden","false");
   viewer.scrollIntoView({behavior:"smooth",block:"start"});
@@ -1074,6 +1084,189 @@ function finishAfamQuiz(e){
       </div>
     </div>`;
 }
+
+
+const sectionQuizBanks = {
+  hygiene: [
+    ["What does personal hygiene mean?","Taking care of your body and keeping yourself clean",["Avoiding all outdoor activities","Only washing your clothes","Never getting dirty"],0],
+    ["When is an important time to wash your hands?","Before eating or preparing food",["Only before sleeping","Only once a week","Only after school"],0],
+    ["How long should you rub all parts of your hands when washing?","About 20 seconds",["About 2 seconds","About 2 minutes every time","About 1 second"],0],
+    ["How often should you generally brush your teeth?","Twice a day",["Once a week","Once a month","Only when they hurt"],0],
+    ["What should you do with fingernails?","Keep them short and clean",["Never wash them","Cover them with perfume","Keep them dirty"],0],
+    ["What can help reduce body odour?","Regular bathing and clean clothes",["Avoiding water","Never changing clothes","Using unknown chemicals"],0],
+    ["Which personal item should not normally be shared?","A toothbrush",["A classroom book","A football","A school desk"],0],
+    ["What should you do after bathing?","Dry yourself with a clean towel and wear clean clothes",["Put on wet clothes","Share your towel with everyone","Skip changing clothes"],0],
+    ["What is a good way to care for teeth?","Brush gently around teeth and gums",["Scrub as hard as possible","Brush once a month","Only brush one tooth"],0],
+    ["If you have ongoing tooth pain, what should you do?","Tell a trusted adult and seek qualified dental or health advice",["Hide it","Ignore it forever","Stop drinking water"],0]
+  ],
+  puberty: [
+    ["What is puberty?","A normal stage of growing up when the body changes toward adulthood",["A disease","A school punishment","A type of exercise"],0],
+    ["Do all people begin puberty at exactly the same age?","No",["Yes","Only boys do","Only girls do"],0],
+    ["Which can be a normal puberty change?","Developing body hair",["Never sweating","Stopping growth forever","Losing all emotions"],0],
+    ["What may happen to a boy's voice during puberty?","It may become deeper",["It always disappears","It never changes","It becomes permanently silent"],0],
+    ["What may happen to girls during puberty?","Breast development and periods may begin",["They stop growing immediately","They can never develop body hair","Nothing changes"],0],
+    ["Can emotions change during puberty?","Yes",["No","Only at school","Only during sleep"],0],
+    ["What is important to remember about puberty?","People develop at different times and speeds",["Everyone develops at exactly the same time","Earlier is always better","Later always means something is wrong"],0],
+    ["What can help during puberty?","Good hygiene, sleep, healthy food and trusted support",["Skipping meals","Avoiding all adults","Never asking questions"],0],
+    ["Who can provide reliable health information?","A trusted adult or qualified health professional",["A random stranger online","Someone who makes fun of you","Nobody"],0],
+    ["Are questions about puberty normal?","Yes",["No","Only adults can ask them","Only boys can ask them"],0]
+  ],
+  periods: [
+    ["What is a period?","The normal shedding of blood and tissue from the uterine lining",["A disease","A skin condition","A type of exercise"],0],
+    ["What should you do before and after changing a menstrual product?","Wash your hands",["Eat sweets","Touch your face","Do nothing"],0],
+    ["Are periods something to be ashamed of?","No",["Yes","Only at school","Only during holidays"],0],
+    ["Which can some people experience during a period?","Cramps or tiredness",["Their bones disappearing","A permanent fever","Never feeling anything"],0],
+    ["How should used menstrual products be disposed of?","Safely according to local waste arrangements",["In a river","On the classroom floor","In a desk"],0],
+    ["What should you do about severe or unusual period symptoms?","Talk to a trusted adult or qualified healthcare professional",["Hide them","Ignore them forever","Stop drinking water"],0],
+    ["What can help someone manage menstruation at school?","Having clean products and a plan for changing them",["Avoiding school forever","Sharing used products","Never washing hands"],0],
+    ["Which statement about periods is true?","People can have different period experiences",["Everyone has identical periods","Periods are dirty","Nobody needs information about them"],0],
+    ["What can make menstruation more respectful?","Accurate information and avoiding shame",["Making fun of people","Spreading rumours","Hiding all information"],0],
+    ["What should be avoided inside the vagina for routine cleaning?","Harsh or perfumed products",["Clean water for the external area","Following qualified health advice","Basic hygiene"],0]
+  ],
+  boys: [
+    ["Which is a possible puberty change for boys?","Voice deepening",["Growing shorter every day","Never sweating","Losing all body hair"],0],
+    ["Can wet dreams happen during puberty?","Yes",["No","Only after age 30","Only during school"],0],
+    ["What can help with increased body odour?","Bathing and clean clothes",["Never washing","Sharing towels","Avoiding all water"],0],
+    ["Can erections happen without a person choosing them?","Yes",["No","Never","Only during exercise"],0],
+    ["Is acne during puberty something to be ashamed of?","No",["Yes","Always","Only for boys"],0],
+    ["Do all boys develop at exactly the same rate?","No",["Yes","Only twins do","Only athletes do"],0],
+    ["What is a good response to questions about puberty?","Ask a trusted adult or health professional",["Believe every rumour","Stay silent forever","Make fun of someone"],0],
+    ["What should boys do about personal hygiene during puberty?","Keep clean and wear clean clothes",["Stop bathing","Share toothbrushes","Avoid exercise"],0],
+    ["What can puberty affect besides the body?","Feelings and emotions",["The colour of the sky","The length of a school day","Nothing"],0],
+    ["What is important about other people's boundaries?","Respect them",["Ignore them","Laugh at them","Test them"],0]
+  ],
+  girls: [
+    ["Which is a possible puberty change for girls?","Breast development",["Never growing","Losing all body hair","Never sweating"],0],
+    ["Can periods begin during puberty?","Yes",["No","Only after age 50","Only during school"],0],
+    ["Can vaginal discharge sometimes be normal?","Yes",["No","Never","Only during sports"],0],
+    ["What can help with body odour?","Regular washing and clean clothes",["Avoiding water","Never changing clothes","Using random chemicals"],0],
+    ["What should you do if you have concerning symptoms?","Talk to a trusted adult or qualified healthcare professional",["Hide them","Ignore them forever","Ask a stranger"],0],
+    ["Do all girls develop at the same speed?","No",["Yes","Only sisters do","Only athletes do"],0],
+    ["What is an important privacy principle?","Your body belongs to you",["Everyone may touch you","You cannot say no","Privacy does not matter"],0],
+    ["What can help with acne?","Gentle washing and qualified advice if severe",["Squeezing every spot hard","Using unknown chemicals","Never washing"],0],
+    ["Is normal body development something to be ashamed of?","No",["Yes","Always","Only at school"],0],
+    ["What is a good self-care habit?","Keeping clean and having what you may need for school or outings",["Skipping meals","Avoiding trusted adults","Never asking questions"],0]
+  ],
+  healthy: [
+    ["Which supports a healthy lifestyle?","Balanced food, enough sleep and physical activity",["Skipping sleep","Only eating sweets","Never moving"],0],
+    ["Why is sleep important?","It supports health, growth and learning",["It makes water unnecessary","It replaces food","It stops all emotions"],0],
+    ["Which is a good drink choice?","Safe water",["An unknown liquid","Only sugary drinks","Chemical cleaner"],0],
+    ["What can help when you feel stressed?","Talk to a trusted person",["Keep everything secret forever","Hurt yourself","Stop eating"],0],
+    ["Why is physical activity useful?","It helps keep the body strong and healthy",["It prevents learning","It replaces sleep","It makes hygiene unnecessary"],0],
+    ["What is a healthy approach to food?","Eat a variety of foods",["Eat one food forever","Avoid all vegetables","Never drink water"],0],
+    ["How should medicines be used?","According to trusted instructions",["Share them randomly","Double every dose","Take unknown medicines"],0],
+    ["Can you ask for help with difficult feelings?","Yes",["No","Only adults can","Never"],0],
+    ["How are healthy habits usually built?","By repeating small healthy actions consistently",["By changing everything once a year","By avoiding routines","By never practising"],0],
+    ["Who can help with a health concern?","A trusted adult or qualified healthcare professional",["A random stranger","Nobody","Only social media"],0]
+  ],
+  environment: [
+    ["What does environmental sanitation involve?","Keeping surroundings clean and reducing health risks",["Painting every wall","Only sweeping indoors","Avoiding all communities"],0],
+    ["Where should rubbish go?","An appropriate bin or disposal point",["A drain","A river","The road"],0],
+    ["Why should drains be kept clear?","To reduce blockage, flooding and unhealthy conditions",["To collect plastic","To make litter harder to see","For decoration"],0],
+    ["What should you do with litter in a shared space?","Dispose of it properly when safe",["Throw it into water","Hide it under a desk","Leave it on the road"],0],
+    ["Can one person create a completely clean community alone?","Community teamwork makes a bigger difference",["Yes, always","No one can help","Only children can"],0],
+    ["What should never be dumped into waterways?","Rubbish and harmful chemicals",["Clean air","Sunlight","Rain"],0],
+    ["Which is a shared space?","A school or marketplace",["Only your bedroom","Only your phone","Only your bag"],0],
+    ["What is a good sanitation attitude?","Encourage others respectfully",["Shame everyone","Ignore litter","Make fun of cleaners"],0],
+    ["What can many small actions create?","A cleaner community",["More pollution","More blocked drains","Nothing"],0],
+    ["What is a safe response to dangerous waste?","Tell a trusted adult or responsible authority",["Pick it up with bare hands","Kick it into a drain","Hide it"],0]
+  ],
+  waste: [
+    ["What is waste?","Material we no longer need or want",["Only water","Only food","Only paper"],0],
+    ["What does reduce mean?","Avoiding unnecessary waste",["Throwing more away","Burning everything","Hiding rubbish"],0],
+    ["What does reuse mean?","Using an item again when safe and practical",["Buying five more","Throwing it away","Putting it in a river"],0],
+    ["What does recycling mean?","Processing suitable materials into useful products again",["Burning all waste","Hiding waste","Putting plastic in drains"],0],
+    ["Why should food waste be handled properly?","It can attract pests if left around",["It becomes clean automatically","It stops all smells","It cannot affect anything"],0],
+    ["What can plastic waste do?","Pollute land and water and block drains",["Clean rivers","Make drains wider","Disappear immediately"],0],
+    ["What should you do with sharp or dangerous waste?","Tell a trusted adult or responsible authority",["Pick it up with bare hands","Put it in your pocket","Throw it at someone"],0],
+    ["Which is often best for waste reduction?","Avoid creating unnecessary waste",["Create more waste","Use more disposable items","Litter less visibly"],0],
+    ["Which item may be reusable when safe?","A suitable reusable bottle",["A used medical needle","Unknown chemicals","Broken sharp glass"],0],
+    ["Who can play a role in better waste management?","Everyone can play a safe, responsible role",["Only children","Nobody","Only one person"],0]
+  ],
+  water: [
+    ["Why is safe water important?","Our bodies need water and unsafe water can contain harmful germs or substances",["Water is only for washing cars","It is never needed","It replaces food"],0],
+    ["How should drinking-water storage be kept?","Clean and covered",["Open and dirty","Near rubbish","Uncovered always"],0],
+    ["Should dirty hands be dipped into stored drinking water?","No",["Yes","Only at night","Always"],0],
+    ["What should you do after using the toilet?","Wash your hands with soap and clean water when available",["Touch your face","Eat immediately","Never wash"],0],
+    ["Should rubbish be thrown into rivers or streams?","No",["Yes","Only plastic","Only on weekends"],0],
+    ["Can water look clear and still be unsafe?","Yes",["No","Never","Only in winter"],0],
+    ["What should you do if you are unsure about water safety?","Ask a trusted adult or local health authority",["Guess","Drink anything","Ignore the concern"],0],
+    ["Why should toilets be kept clean?","Clean toilets support hygiene and reduce health risks",["It does not matter","Only adults use toilets","To make them smell stronger"],0],
+    ["What should be protected from pollution?","Water sources",["Only roads","Only classrooms","Nothing"],0],
+    ["What is a safe water habit?","Use water from a trusted safe source",["Share dirty cups","Leave containers open","Store water beside waste"],0]
+  ]
+};
+
+let activeSectionQuizKey = null;
+let activeSectionQuestions = [];
+let lastSectionQuestionSet = null;
+
+function startSectionQuiz(key, mode="fresh"){
+  activeSectionQuizKey = key;
+  const bank = sectionQuizBanks[key] || [];
+  if(mode==="same" && lastSectionQuestionSet && lastSectionQuestionSet.key===key){
+    activeSectionQuestions = lastSectionQuestionSet.questions;
+  }else{
+    activeSectionQuestions = shuffleAfam(bank).slice(0,10);
+    lastSectionQuestionSet = {key, questions: activeSectionQuestions};
+  }
+
+  const box=document.getElementById("sectionQuiz_"+key);
+  if(!box)return;
+
+  box.innerHTML=`
+    <div class="section-quiz-box">
+      <div class="quiz-progress">🧠 ${afamLibrary[key].title} • 10 Questions</div>
+      <p>These questions are based on the information you just read.</p>
+      <form id="sectionQuizForm_${key}">
+        ${activeSectionQuestions.map((q,i)=>`
+          <div class="quiz-question">
+            <h4>${i+1}. ${q[0]}</h4>
+            <label class="quiz-option"><input type="radio" name="sectionQ${i}" value="0"> ${q[1]}</label>
+            <label class="quiz-option"><input type="radio" name="sectionQ${i}" value="1"> ${q[2][0]}</label>
+            <label class="quiz-option"><input type="radio" name="sectionQ${i}" value="2"> ${q[2][1]}</label>
+            <label class="quiz-option"><input type="radio" name="sectionQ${i}" value="3"> ${q[2][2]}</label>
+          </div>`).join("")}
+        <button class="btn" type="submit">✅ Submit My Answers</button>
+      </form>
+      <div id="sectionQuizResult_${key}"></div>
+    </div>`;
+
+  document.getElementById("sectionQuizForm_"+key).addEventListener("submit", finishSectionQuiz);
+  box.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function finishSectionQuiz(e){
+  e.preventDefault();
+  let score=0, answered=0;
+  activeSectionQuestions.forEach((q,i)=>{
+    const chosen=document.querySelector(`input[name="sectionQ${i}"]:checked`);
+    if(chosen){
+      answered++;
+      if(Number(chosen.value)===q[3])score++;
+    }
+  });
+
+  const key=activeSectionQuizKey;
+  const result=document.getElementById("sectionQuizResult_"+key);
+  if(answered<10){
+    result.innerHTML=`<div class="library-fact"><strong>Almost there! 👀</strong> Please answer all 10 questions before submitting.</div>`;
+    return;
+  }
+
+  const title=score>=9?"🌟 Clean Champion!":score>=7?"👏 Great Job!":score>=5?"👍 Keep Learning!":"📚 Review the Library Topic";
+  result.innerHTML=`
+    <div class="quiz-result">
+      <div class="quiz-score">${score}/10</div>
+      <h3>${title}</h3>
+      <p>${score>=7?"Excellent work! These questions were based on the topic you just read.":"Go back through the information above and try again when you're ready."}</p>
+      <div class="quiz-result-actions">
+        <button class="btn" type="button" onclick="startSectionQuiz('${key}','fresh')">🎲 Give Me 10 Fresh Questions</button>
+        <button class="btn secondary" type="button" onclick="startSectionQuiz('${key}','same')">🔁 Do The Same 10 Again</button>
+      </div>
+    </div>`;
+}
+
 
 document.addEventListener("DOMContentLoaded",()=>{
   renderAfamLibrary();
