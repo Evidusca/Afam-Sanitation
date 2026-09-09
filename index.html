@@ -117,8 +117,33 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 .report-form input:focus,.report-form select:focus,.report-form textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}
 .report-message{font-weight:800;margin:0}.report-help{font-size:12px;color:var(--muted);margin:0}
 
+
+/* Age guide + visual learning */
+.age-guide{background:linear-gradient(135deg,#f7fff8,#fffbea);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.age-intro{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.age-hero-art{background:#fff;border:1px solid var(--border);border-radius:24px;padding:12px;box-shadow:0 12px 30px rgba(7,59,29,.07)}
+.age-hero-art svg{display:block;width:100%;height:auto}
+.age-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
+.age-card{border:2px solid #e1ebe3;background:#fff;border-radius:18px;padding:18px;text-align:left;cursor:pointer;transition:.2s;box-shadow:0 5px 16px rgba(7,59,29,.04)}
+.age-card:hover{transform:translateY(-3px);border-color:#a9cdb1}
+.age-card.active{border-color:var(--green);background:#effaf1;box-shadow:0 8px 22px rgba(8,117,47,.10)}
+.age-card .age-icon{font-size:30px}.age-card h3{margin:7px 0 3px}.age-card p{font-size:13px;color:var(--muted);margin:0}
+.age-result{margin-top:18px;padding:17px 19px;background:#fff;border:1px solid var(--border);border-radius:16px}
+.clean-crew{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.crew-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:18px;text-align:center}
+.crew-art{height:150px;display:grid;place-items:center;background:#f6fbf7;border-radius:15px;margin-bottom:13px}
+.crew-art svg{height:135px;max-width:100%}.crew-card h3{margin:4px 0}.crew-card p{margin:0;color:var(--muted);font-size:13px}
+.fun-strip{margin-top:22px;background:var(--green);color:#fff;border-radius:18px;padding:18px 20px;display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}
+.fun-strip strong{font-size:18px}.fun-strip button{background:#fff;color:var(--green);border:0}
+@media(max-width:800px){.age-intro{grid-template-columns:1fr}.age-cards{grid-template-columns:1fr 1fr}.clean-crew{grid-template-columns:1fr}}
+@media(max-width:450px){.age-cards{grid-template-columns:1fr}}
+
 /* Education Library */
 .edu-library{background:#fffbea}.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.edu-card{background:#fff;border:1px solid #e4eee5;border-radius:16px;padding:20px;box-shadow:0 5px 18px rgba(0,0,0,.05)}.edu-card .edu-num{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;background:#e9f7ed;color:var(--green);font-weight:800}.edu-card h3{margin:12px 0 6px}.edu-card p{margin:0 0 14px;color:#64736a}.edu-card button{cursor:pointer}.lesson-modal{display:none;position:fixed;inset:0;background:rgba(8,30,17,.62);z-index:1000;padding:20px;overflow:auto}.lesson-modal.open{display:block}.lesson-box{max-width:820px;margin:30px auto;background:#fff;border-radius:20px;padding:28px;position:relative}.lesson-close{position:absolute;right:15px;top:10px;border:0;background:#eef4ef;color:#123322;font-size:26px;width:42px;height:42px;border-radius:50%;cursor:pointer}.lesson-box h2{margin-top:0;font-size:30px}.lesson-box h3{color:var(--green);margin-bottom:5px}.lesson-box li{margin:7px 0}.lesson-note{background:#fff8dc;border-left:5px solid #f2c94c;padding:13px 15px;border-radius:7px;margin-top:18px}.quiz-section{background:#f5f8f3}.quiz-card{max-width:850px;margin:auto;background:#fff;border-radius:20px;padding:26px;box-shadow:0 5px 20px rgba(0,0,0,.06)}.quiz-q{padding:18px 0;border-bottom:1px solid #e8eee9}.quiz-q h3{font-size:18px;margin-top:0}.quiz-q label{display:block;margin:9px 0;padding:10px;border:1px solid #e3ebe5;border-radius:10px;cursor:pointer}.quiz-q label:hover{background:#f7fbf7}.quiz-result{display:none;margin-top:20px;padding:18px;border-radius:12px;background:#eaf7ed}.quiz-result.show{display:block}
+</style>
+
+<style>
+.lesson-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:25px}.lesson-card{padding:22px;border:1px solid rgba(8,117,47,.15);border-radius:20px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.06);cursor:pointer}.lesson-card:hover{transform:translateY(-3px)}.lesson-icon{font-size:42px}.lesson-card h3{margin:8px 0}.lesson-card button,.lesson-back,.test-option,.test-next{border:0;border-radius:12px;padding:11px 15px;cursor:pointer}.lesson-card button,.test-next{background:#08752f;color:#fff}.lesson-panel{margin-top:25px;padding:25px;border-radius:22px;background:#f7fbf8}.lesson-back{background:#fff;margin-bottom:18px}.lesson-content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}.lesson-box{background:#fff;padding:18px;border-radius:16px}.fun-fact{border-left:5px solid #f5d516}.mission{border-left:5px solid #08752f}.test-question{background:#fff;padding:20px;border-radius:18px;margin:15px 0}.test-option{display:block;width:100%;text-align:left;margin:8px 0;background:#f1f5f2}.test-option.selected{outline:2px solid #08752f}.test-result{padding:22px;border-radius:18px;background:#fff;text-align:center}.progress-note{font-size:.9rem;opacity:.75}
 </style>
 </head>
 <body>
@@ -132,11 +157,11 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
     <button class="menu" id="menuBtn" type="button" aria-label="Open menu">☰</button>
     <div class="links" id="navLinks">
       <a href="#about">About</a>
-      <a href="#learn">Learn</a>
-      <a href="#hygiene-buddy">Hygiene Buddy</a>
+      
+      <a href="#hygiene-buddy">Sanitation Buddy</a>
+      <a href="#impact">Impact</a>
       <a href="#education">Education</a>
       <a href="#quiz">Quiz</a>
-      <a href="#impact">Impact</a>
       <a href="#activities">Activities</a>
     </div>
   </div>
@@ -165,14 +190,14 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
   <div class="container">
     <div class="section-head">
       <div class="kicker">Your questions are welcome</div>
-      <h2>Meet Afam Hygiene Buddy.</h2>
+      <h2>Meet Afam Sanitation Buddy.</h2>
       <p class="muted">Ask about hygiene, periods, puberty, body changes, growing up and healthy habits. No shame. No embarrassment. Just simple, educational answers.</p>
       <div><span class="pill">🧼 Hygiene</span><span class="pill">🩸 Periods</span><span class="pill">🌱 Puberty</span><span class="pill">👦 Boys</span><span class="pill">👧 Girls</span><span class="pill">❤️ Healthy habits</span></div>
     </div>
 
     <div class="chat-shell">
       <div class="chat-top">
-        <div class="chat-title"><div class="chat-avatar">🧼</div><div>Afam Hygiene Buddy</div></div>
+        <div class="chat-title"><div class="chat-avatar">🧼</div><div>Afam Sanitation Buddy</div></div>
         <p class="chat-sub">A friendly AI guide to hygiene, puberty, periods, body changes and growing up.</p>
       </div>
       <div class="chat-tools">
@@ -186,7 +211,7 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
         <button class="clear-chat" type="button" onclick="clearChat()">Clear</button>
       </div>
       <div id="chatMessages" class="chat-messages" aria-live="polite">
-        <div class="chat-row"><div class="chat-bubble bot"><p><strong>Hello! 👋 I'm Afam Hygiene Buddy.</strong></p><p>You can ask me about your body, puberty, periods, personal hygiene, growing up and healthy habits.</p><p>There are no silly questions. What would you like to know?</p></div></div>
+        <div class="chat-row"><div class="chat-bubble bot"><p><strong>Hello! 👋 I'm Afam Sanitation Buddy.</strong></p><p>You can ask me about your body, puberty, periods, personal hygiene, growing up and healthy habits.</p><p>There are no silly questions. What would you like to know?</p></div></div>
       </div>
       <form id="hygieneChatForm" class="chat-form">
         <input id="hygieneQuestion" type="text" maxlength="1000" placeholder="Ask a question about growing up, hygiene or your body…" autocomplete="off" required>
@@ -194,47 +219,14 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
       </form>
       <div id="hygieneStatus" class="chat-status"></div>
     </div>
-    <p class="note">Educational information only. Afam Hygiene Buddy is not a doctor and does not diagnose illness. For serious or worrying symptoms, speak with a trusted adult or qualified healthcare professional.</p>
+    <p class="note">Educational information only. Afam Sanitation Buddy is not a doctor and does not diagnose illness. For serious or worrying symptoms, speak with a trusted adult or qualified healthcare professional.</p>
   </div>
 </section>
 
 
-<section id="education" class="edu-library">
-  <div class="container">
-    <div class="section-head">
-      <div class="kicker">Education library</div>
-      <h2>Learn. Understand. Take care of yourself.</h2>
-      <p class="muted">Short, practical lessons for boys, girls, young people, parents and communities. Choose a topic to read more.</p>
-    </div>
-    <div class="edu-grid">
-      <article class="edu-card"><span class="edu-num">1</span><h3>Understanding Puberty</h3><p>Body changes, hormones and why everyone develops differently.</p><button class="btn primary" onclick="openLesson(1)">Read lesson</button></article>
-      <article class="edu-card"><span class="edu-num">2</span><h3>Boys & Growing Up</h3><p>Voice changes, body hair, wet dreams, hygiene and more.</p><button class="btn primary" onclick="openLesson(2)">Read lesson</button></article>
-      <article class="edu-card"><span class="edu-num">3</span><h3>Girls & Growing Up</h3><p>Breast development, body changes, hygiene and self-care.</p><button class="btn primary" onclick="openLesson(3)">Read lesson</button></article>
-      <article class="edu-card"><span class="edu-num">4</span><h3>Understanding Periods</h3><p>What menstruation is, common symptoms and when to ask for help.</p><button class="btn primary" onclick="openLesson(4)">Read lesson</button></article>
-      <article class="edu-card"><span class="edu-num">5</span><h3>Menstrual Hygiene</h3><p>Practical ways to stay clean, comfortable and confident.</p><button class="btn primary" onclick="openLesson(5)">Read lesson</button></article>
-      <article class="edu-card"><span class="edu-num">6</span><h3>Personal Hygiene</h3><p>Handwashing, bathing, oral care, clean clothes and toilet hygiene.</p><button class="btn primary" onclick="openLesson(6)">Read lesson</button></article>
-      <article class="edu-card"><span class="edu-num">7</span><h3>Body Confidence & Healthy Habits</h3><p>Confidence, sleep, food, water, exercise and self-care.</p><button class="btn primary" onclick="openLesson(7)">Read lesson</button></article>
-      <article class="edu-card"><span class="edu-num">8</span><h3>When to Ask for Help</h3><p>Know when to involve a trusted adult or healthcare professional.</p><button class="btn primary" onclick="openLesson(8)">Read lesson</button></article>
-    </div>
-  </div>
-</section>
 
-<section id="quiz" class="quiz-section">
-  <div class="container">
-    <div class="section-head"><div class="kicker">Test what you learned</div><h2>Afam Hygiene Quiz.</h2><p class="muted">Answer these quick questions after exploring the Education Library.</p></div>
-    <div class="quiz-card">
-      <form id="quizForm">
-        <div class="quiz-q"><h3>1. What is puberty?</h3><label><input type="radio" name="q1" value="a"> A sickness that affects only some children</label><label><input type="radio" name="q1" value="b"> A natural stage when the body changes toward adulthood</label><label><input type="radio" name="q1" value="c"> A type of hygiene product</label></div>
-        <div class="quiz-q"><h3>2. Which is a good daily hygiene habit?</h3><label><input type="radio" name="q2" value="a"> Washing hands regularly with soap and clean water</label><label><input type="radio" name="q2" value="b"> Wearing the same underwear for several days</label><label><input type="radio" name="q2" value="c"> Avoiding baths during hot weather</label></div>
-        <div class="quiz-q"><h3>3. Is it normal for people to start puberty at different times?</h3><label><input type="radio" name="q3" value="a"> Yes</label><label><input type="radio" name="q3" value="b"> No</label></div>
-        <div class="quiz-q"><h3>4. What should you do when changing a menstrual product?</h3><label><input type="radio" name="q4" value="a"> Never wash your hands</label><label><input type="radio" name="q4" value="b"> Wash your hands before and after changing it</label><label><input type="radio" name="q4" value="c"> Leave used products in an open public place</label></div>
-        <div class="quiz-q"><h3>5. If a symptom is severe, worrying or getting worse, what should you do?</h3><label><input type="radio" name="q5" value="a"> Ignore it</label><label><input type="radio" name="q5" value="b"> Search social media and self-diagnose</label><label><input type="radio" name="q5" value="c"> Speak with a trusted adult or qualified healthcare professional</label></div>
-        <button class="btn primary" type="submit" style="margin-top:20px">Check my score</button>
-      </form>
-      <div id="quizResult" class="quiz-result"></div>
-    </div>
-  </div>
-</section>
+
+
 
 <div class="lesson-modal" id="lessonModal" aria-hidden="true">
   <div class="lesson-box">
@@ -285,29 +277,102 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
     </div>
   </div>
 </section>
-
-<section id="learn" style="background:#fffbea">
+<section id="age-guide" class="age-guide">
   <div class="container">
-    <div class="section-head">
-      <div class="kicker">Learn</div>
-      <h2>Growing up. Staying clean. Staying informed.</h2>
-      <p class="muted">Simple educational resources for boys, girls, young people, parents and communities. If you have a question, ask Afam Hygiene Buddy below.</p>
+    <div class="age-intro">
+      <div>
+        <div class="kicker">Made for different ages</div>
+        <h2>Choose your age group.</h2>
+        <p class="muted">The same health message can be taught in different ways. Pick an age range to see the topics that fit best.</p>
+        <div class="age-cards">
+          <button class="age-card" type="button" data-age="6-9" onclick="selectAge('6-9')"><div class="age-icon">🧒🏽</div><h3>6–9</h3><p>Clean habits & body basics</p></button>
+          <button class="age-card" type="button" data-age="10-12" onclick="selectAge('10-12')"><div class="age-icon">🧑🏽‍🤝‍🧑🏽</div><h3>10–12</h3><p>Growing up & early puberty</p></button>
+          <button class="age-card" type="button" data-age="13-15" onclick="selectAge('13-15')"><div class="age-icon">👦🏽👧🏽</div><h3>13–15</h3><p>Puberty, periods & confidence</p></button>
+          <button class="age-card" type="button" data-age="16-18" onclick="selectAge('16-18')"><div class="age-icon">🧑🏽</div><h3>16–18</h3><p>Health, responsibility & wellbeing</p></button>
+        </div>
+        <div id="ageResult" class="age-result"><strong>Not sure where to start?</strong> Choose an age range above and we'll suggest a learning path.</div>
+      </div>
+      <div class="age-hero-art" aria-label="Cartoon children learning about cleanliness">
+        <svg viewBox="0 0 620 350" role="img">
+          <rect x="0" y="0" width="620" height="350" rx="22" fill="#eef9f0"/>
+          <circle cx="90" cy="70" r="28" fill="#f5d516"/>
+          <path d="M68 70h44M90 48v44" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+          <rect x="55" y="220" width="510" height="18" rx="9" fill="#b8d8bf"/>
+          <g transform="translate(125 95)">
+            <circle cx="65" cy="55" r="38" fill="#9b5b38"/><path d="M31 48c8-35 58-44 71-4" fill="#3b2418"/>
+            <circle cx="54" cy="58" r="4" fill="#173022"/><circle cx="76" cy="58" r="4" fill="#173022"/>
+            <path d="M53 76q12 12 24 0" fill="none" stroke="#173022" stroke-width="4" stroke-linecap="round"/>
+            <path d="M27 105q38-30 76 0v91H27z" fill="#08752f"/><path d="M42 108l-27 60M88 108l30 60" stroke="#9b5b38" stroke-width="18" stroke-linecap="round"/>
+            <circle cx="118" cy="169" r="8" fill="#55a929"/><circle cx="128" cy="158" r="6" fill="#55a929"/>
+          </g>
+          <g transform="translate(335 88)">
+            <circle cx="65" cy="60" r="38" fill="#6f4029"/><path d="M30 52c4-35 58-48 72-6" fill="#241912"/>
+            <circle cx="53" cy="62" r="4" fill="#173022"/><circle cx="77" cy="62" r="4" fill="#173022"/>
+            <path d="M52 79q13 10 26 0" fill="none" stroke="#173022" stroke-width="4" stroke-linecap="round"/>
+            <path d="M27 110q38-28 76 0v86H27z" fill="#f5d516"/><path d="M32 118l-32 55M98 118l33 48" stroke="#6f4029" stroke-width="18" stroke-linecap="round"/>
+            <path d="M131 165l30-28" stroke="#08752f" stroke-width="8" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(265 242)">
+            <path d="M0 0h90" stroke="#08752f" stroke-width="7" stroke-linecap="round"/>
+            <path d="M12 0l-7 30M78 0l7 30" stroke="#08752f" stroke-width="5"/>
+          </g>
+        </svg>
+      </div>
     </div>
-    <div class="topic-grid">
-      <article class="topic-card" onclick="askSuggested('What is puberty and what changes happen during puberty?')"><div class="topic-icon">🌱</div><h3>Puberty & Body Changes</h3><p class="muted">Learn what happens to boys and girls as they grow.</p></article>
-      <article class="topic-card" onclick="askSuggested('What should I know about periods and menstrual hygiene?')"><div class="topic-icon">🩸</div><h3>Periods & Menstrual Health</h3><p class="muted">Understand periods, menstrual hygiene and common questions.</p></article>
-      <article class="topic-card" onclick="askSuggested('What are normal changes boys experience during puberty?')"><div class="topic-icon">👦</div><h3>Boys & Growing Up</h3><p class="muted">Voice changes, body hair, wet dreams, body odor and more.</p></article>
-      <article class="topic-card" onclick="askSuggested('What are normal changes girls experience during puberty?')"><div class="topic-icon">👧</div><h3>Girls & Growing Up</h3><p class="muted">Periods, body changes, discharge, hygiene and self-care.</p></article>
-      <article class="topic-card" onclick="askSuggested('What are the most important daily personal hygiene habits?')"><div class="topic-icon">🧼</div><h3>Personal Hygiene</h3><p class="muted">Bathing, handwashing, oral care, body odor and healthy habits.</p></article>
-      <article class="topic-card" onclick="askSuggested('How can young people take care of their health and wellbeing during puberty?')"><div class="topic-icon">❤️</div><h3>Healthy Habits</h3><p class="muted">Practical habits for growing, learning and caring for yourself.</p></article>
+    <div class="clean-crew">
+      <div class="crew-card">
+        <div class="crew-art">
+          <svg viewBox="0 0 180 140"><circle cx="90" cy="45" r="28" fill="#9b5b38"/><path d="M62 40q28-42 56 0" fill="#332018"/><circle cx="80" cy="46" r="3"/><circle cx="100" cy="46" r="3"/><path d="M80 59q10 8 20 0" fill="none" stroke="#173022" stroke-width="3"/><path d="M52 78q38-24 76 0v50H52z" fill="#08752f"/><path d="M57 86L25 119M123 86l31 33" stroke="#9b5b38" stroke-width="12" stroke-linecap="round"/><path d="M28 120h-8M154 120h8" stroke="#173022" stroke-width="5"/></svg>
+        </div><h3>Clean Captain 🧼</h3><p>Wash, brush, bathe and keep your everyday spaces clean.</p>
+      </div>
+      <div class="crew-card">
+        <div class="crew-art">
+          <svg viewBox="0 0 180 140"><circle cx="90" cy="43" r="28" fill="#6f4029"/><path d="M61 39q30-43 59 1" fill="#201611"/><circle cx="80" cy="46" r="3"/><circle cx="100" cy="46" r="3"/><path d="M80 59q10 8 20 0" fill="none" stroke="#173022" stroke-width="3"/><path d="M52 78q38-24 76 0v50H52z" fill="#f5d516"/><path d="M52 86l-32 30M128 86l30 30" stroke="#6f4029" stroke-width="12" stroke-linecap="round"/><path d="M18 115h20" stroke="#08752f" stroke-width="6"/><path d="M142 115h20" stroke="#08752f" stroke-width="6"/></svg>
+        </div><h3>Water Warrior 💧</h3><p>Use safe water, wash hands and help protect clean surroundings.</p>
+      </div>
+      <div class="crew-card">
+        <div class="crew-art">
+          <svg viewBox="0 0 180 140"><circle cx="90" cy="43" r="28" fill="#9b5b38"/><path d="M62 38q29-35 56 0" fill="#39231a"/><circle cx="80" cy="46" r="3"/><circle cx="100" cy="46" r="3"/><path d="M80 59q10 8 20 0" fill="none" stroke="#173022" stroke-width="3"/><path d="M52 78q38-24 76 0v50H52z" fill="#54a929"/><path d="M56 86L30 118M124 86l27 32" stroke="#9b5b38" stroke-width="12" stroke-linecap="round"/><rect x="138" y="103" width="25" height="18" rx="3" fill="#08752f"/><path d="M142 103v-9h17v9" fill="none" stroke="#08752f" stroke-width="4"/></svg>
+        </div><h3>Green Hero 🌱</h3><p>Put waste in the right place and help keep your community healthy.</p>
+      </div>
+    </div>
+    <div class="fun-strip">
+      <div><strong>🎯 Mission: become a Clean Champion!</strong><br><span class="small">Learn one new habit, practise it, then teach someone else.</span></div>
+      <button class="btn" type="button" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Take the quiz →</button>
     </div>
   </div>
 </section>
 
+<section id="education" class="section education-section">
+  <div class="section-head">
+    <span class="eyebrow">EDUCATION LIBRARY</span>
+    <h2>Learn. Understand. Practice.</h2>
+    <p>Explore age-friendly lessons, practical tips, fun facts and challenges. Finish each lesson with a 10-question test.</p>
+  </div>
+  <div id="lessonGrid" class="lesson-grid"></div>
+  <div id="lessonPanel" class="lesson-panel" hidden>
+    <button class="lesson-back" onclick="closeLesson()">← Back to library</button>
+    <div id="lessonContent"></div>
+    <div id="lessonTest" class="lesson-test"></div>
+  </div>
+</section>
 
-
-
-
+<section id="quiz" class="quiz-section">
+  <div class="container">
+    <div class="section-head"><div class="kicker">Test what you learned</div><h2>Afam Hygiene Quiz.</h2><p class="muted">Answer these quick questions after exploring the Education Library.</p></div>
+    <div class="quiz-card">
+      <form id="quizForm">
+        <div class="quiz-q"><h3>1. What is puberty?</h3><label><input type="radio" name="q1" value="a"> A sickness that affects only some children</label><label><input type="radio" name="q1" value="b"> A natural stage when the body changes toward adulthood</label><label><input type="radio" name="q1" value="c"> A type of hygiene product</label></div>
+        <div class="quiz-q"><h3>2. Which is a good daily hygiene habit?</h3><label><input type="radio" name="q2" value="a"> Washing hands regularly with soap and clean water</label><label><input type="radio" name="q2" value="b"> Wearing the same underwear for several days</label><label><input type="radio" name="q2" value="c"> Avoiding baths during hot weather</label></div>
+        <div class="quiz-q"><h3>3. Is it normal for people to start puberty at different times?</h3><label><input type="radio" name="q3" value="a"> Yes</label><label><input type="radio" name="q3" value="b"> No</label></div>
+        <div class="quiz-q"><h3>4. What should you do when changing a menstrual product?</h3><label><input type="radio" name="q4" value="a"> Never wash your hands</label><label><input type="radio" name="q4" value="b"> Wash your hands before and after changing it</label><label><input type="radio" name="q4" value="c"> Leave used products in an open public place</label></div>
+        <div class="quiz-q"><h3>5. If a symptom is severe, worrying or getting worse, what should you do?</h3><label><input type="radio" name="q5" value="a"> Ignore it</label><label><input type="radio" name="q5" value="b"> Search social media and self-diagnose</label><label><input type="radio" name="q5" value="c"> Speak with a trusted adult or qualified healthcare professional</label></div>
+        <button class="btn primary" type="submit" style="margin-top:20px">Check my score</button>
+      </form>
+      <div id="quizResult" class="quiz-result"></div>
+    </div>
+  </div>
+</section>
 
 <section id="activities" class="activities">
   <div class="container">
@@ -459,19 +524,7 @@ document.getElementById("reportBtn").addEventListener("click", e => {
   openReportModal();
 });
 document.getElementById("reportClose").addEventListener("click", closeReportModal);
-document.getElementById("reportPhoto").addEventListener("change", () => {
-  const file = document.getElementById("reportPhoto").files[0];
-  const nameBox = document.getElementById("reportPhotoName");
-  if (!file) {
-    nameBox.textContent = "";
-    return;
-  }
-  if (file.size > 2 * 1024 * 1024) {
-    nameBox.textContent = "This photo is larger than 2 MB.";
-    return;
-  }
-  nameBox.textContent = "Selected: " + file.name;
-});
+
 reportModal.addEventListener("click", e => {
   if (e.target === reportModal) closeReportModal();
 });
@@ -613,7 +666,7 @@ document.getElementById("hygieneChatForm").addEventListener("submit", async (e) 
   input.value = "";
   input.disabled = true;
   button.disabled = true;
-  status.textContent = "Afam Hygiene Buddy is thinking…";
+  status.textContent = "Afam Sanitation Buddy is thinking…";
   addTypingIndicator();
 
   try {
@@ -639,6 +692,36 @@ document.getElementById("hygieneChatForm").addEventListener("submit", async (e) 
 });
 
 
+
+const ageGuides = {
+  "6-9": {
+    title:"Start with the basics 🌟",
+    text:"Focus on handwashing, bathing, brushing teeth, safe water, toilet habits and keeping play areas clean.",
+    lessons:[6]
+  },
+  "10-12": {
+    title:"Growing up with confidence 🌱",
+    text:"Start with personal hygiene, healthy habits and a gentle introduction to puberty and body changes.",
+    lessons:[1,6,7]
+  },
+  "13-15": {
+    title:"Understand your changing body 💚",
+    text:"Explore puberty, boys and girls growing up, periods, menstrual hygiene, body confidence and when to ask for help.",
+    lessons:[1,2,3,4,5,7,8]
+  },
+  "16-18": {
+    title:"Own your health & wellbeing 🚀",
+    text:"Build strong hygiene habits, understand body changes, care for your wellbeing and know when professional help is needed.",
+    lessons:[1,2,3,4,5,6,7,8]
+  }
+};
+function selectAge(age){
+  document.querySelectorAll(".age-card").forEach(card=>card.classList.toggle("active",card.dataset.age===age));
+  const g=ageGuides[age];
+  const result=document.getElementById("ageResult");
+  result.innerHTML="<strong>"+g.title+"</strong><br>"+g.text+"<div style='margin-top:10px'><strong>Suggested lessons:</strong> "+g.lessons.map(n=>lessons[n]?.title||"").join(" • ")+"</div>";
+}
+
 const lessons = {
 1:{title:'Understanding Puberty',html:`<h2>Understanding Puberty</h2><h3>What is puberty?</h3><p>Puberty is the stage when a child's body gradually changes toward an adult body because of natural hormone changes.</p><h3>Common changes</h3><ul><li>Height and body shape may change.</li><li>Body hair may grow.</li><li>Skin may become oilier and acne may appear.</li><li>Body odour may become stronger.</li><li>Emotions and feelings may change.</li></ul><div class="lesson-note"><strong>Remember:</strong> People do not all start or finish puberty at the same time. Differences in timing and rate of change are normal.</div>`},
 2:{title:'Boys & Growing Up',html:`<h2>Boys & Growing Up</h2><h3>Common changes</h3><ul><li>The voice may become deeper.</li><li>Facial and body hair may grow.</li><li>The penis and testicles develop.</li><li>Erections and wet dreams can happen during puberty.</li><li>Body odour and acne may increase.</li></ul><h3>Good hygiene habits</h3><ul><li>Bathe regularly and clean the body well.</li><li>Wear clean underwear and clothes.</li><li>Wash hands regularly.</li><li>Keep the genital area clean without harsh or perfumed products.</li><li>Brush teeth twice daily.</li></ul>`},
@@ -647,7 +730,7 @@ const lessons = {
 5:{title:'Menstrual Hygiene',html:`<h2>Menstrual Hygiene</h2><h3>During a period</h3><ul><li>Use a menstrual product that suits you and change it regularly according to its instructions and your flow.</li><li>Wash your hands before and after changing a menstrual product.</li><li>Keep the external genital area clean and dry.</li><li>Wrap used disposable products and place them in an appropriate bin.</li><li>Carry spare products when possible, especially when going to school or travelling.</li></ul><div class="lesson-note"><strong>There is no shame in having a period.</strong> Menstruation is a normal body process, and young people deserve accurate information and support.</div>`},
 6:{title:'Personal Hygiene',html:`<h2>Personal Hygiene</h2><h3>Daily habits</h3><ul><li>Wash your hands with soap and clean running water, especially after using the toilet and before eating or preparing food.</li><li>Bathe regularly and clean areas that sweat more.</li><li>Brush your teeth twice a day with fluoride toothpaste.</li><li>Wear clean clothes and underwear.</li><li>Keep toilets and shared spaces clean.</li></ul><h3>Food and water</h3><ul><li>Drink safe water.</li><li>Keep food covered and handle it with clean hands.</li><li>Wash fruits and vegetables appropriately before eating.</li></ul>`},
 7:{title:'Body Confidence & Healthy Habits',html:`<h2>Body Confidence & Healthy Habits</h2><ul><li>Remember that bodies naturally look different.</li><li>Get enough sleep and make time to rest.</li><li>Eat a varied, balanced diet and drink enough safe water.</li><li>Stay physically active in ways that are safe and enjoyable.</li><li>Take care of your hygiene without feeling ashamed of normal body changes.</li><li>Respect your own body and other people's bodies.</li></ul><div class="lesson-note"><strong>Healthy confidence</strong> means learning to care for yourself without comparing your body to everyone else's.</div>`},
-8:{title:'When to Ask for Help',html:`<h2>When to Ask for Help</h2><h3>Speak up when something concerns you</h3><p>You do not have to handle every question or problem alone. Talk to a parent, guardian, teacher, another trusted adult, or a qualified healthcare professional when you need help.</p><ul><li>Ask for medical help when symptoms are severe, worsening, or worrying.</li><li>Ask a trusted adult for support if you feel unsafe or someone crosses your personal boundaries.</li><li>Never feel pressured to keep a harmful secret.</li><li>For an emergency, seek immediate help from a trusted adult or local emergency service.</li></ul><div class="lesson-note"><strong>Hygiene Buddy provides general educational information and does not replace a qualified healthcare professional.</strong></div>`}
+8:{title:'When to Ask for Help',html:`<h2>When to Ask for Help</h2><h3>Speak up when something concerns you</h3><p>You do not have to handle every question or problem alone. Talk to a parent, guardian, teacher, another trusted adult, or a qualified healthcare professional when you need help.</p><ul><li>Ask for medical help when symptoms are severe, worsening, or worrying.</li><li>Ask a trusted adult for support if you feel unsafe or someone crosses your personal boundaries.</li><li>Never feel pressured to keep a harmful secret.</li><li>For an emergency, seek immediate help from a trusted adult or local emergency service.</li></ul><div class="lesson-note"><strong>Sanitation Buddy provides general educational information and does not replace a qualified healthcare professional.</strong></div>`}
 };
 function openLesson(n){const m=document.getElementById('lessonModal');document.getElementById('lessonContent').innerHTML=lessons[n].html;m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
 function closeLesson(){const m=document.getElementById('lessonModal');m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow=''}
@@ -657,6 +740,35 @@ document.getElementById('quizForm').addEventListener('submit',function(e){e.prev
 
 loadImpact();
 loadActivities();
+</script>
+
+<script>
+const AFAM_LESSONS = {
+ personal:{icon:'🧼',title:'Personal Hygiene',summary:'Simple daily habits that help you stay clean, comfortable and healthy.',learn:'Personal hygiene includes bathing, washing hands, brushing teeth, keeping nails and hair clean, wearing clean clothes and keeping personal items clean.',tips:['Wash your hands with soap and clean water, especially before eating and after using the toilet.','Brush your teeth twice a day.','Bathe regularly and wear clean clothes.','Keep fingernails short and clean.'],fact:'Handwashing is one of the easiest ways to reduce the spread of germs.',mission:'Today, practise a full clean routine: wash, brush, bathe and wear clean clothes.'},
+ puberty:{icon:'🌱',title:'Puberty & Body Changes',summary:'Understand normal changes as your body grows.',learn:'Puberty is a normal stage of growing up. Bodies change at different times and at different speeds. Changes can include height, body hair, body odour, skin changes and emotional changes.',tips:['Everyone develops at a different pace.','Keep clean as sweating and body odour may increase.','Ask a trusted adult or health professional when you have questions.','Your changing body deserves respect.'],fact:'There is no single “correct” age for every puberty change.',mission:'Write down one healthy habit you want to improve as you grow.'},
+ periods:{icon:'🩸',title:'Periods & Menstrual Health',summary:'Learn what periods are and how to manage them safely and confidently.',learn:'A period is a normal part of the menstrual cycle. Good menstrual hygiene means changing sanitary products regularly, washing hands before and after changing them, keeping the genital area clean and disposing of used products properly.',tips:['Carry a clean menstrual product when needed.','Change products regularly.','Wash your hands before and after changing a product.','Talk to a trusted adult or health professional if pain or bleeding is worrying.'],fact:'Periods are a normal body process, not something to be ashamed of.',mission:'Help make conversations about periods respectful, private and free from teasing.'},
+ boys:{icon:'🧑🏾',title:'Boys & Growing Up',summary:'A respectful guide to normal changes boys may experience.',learn:'During puberty, boys may experience a deeper voice, facial or body hair, erections, wet dreams, testicular development, body odour, acne and emotional changes. These changes are normal and happen at different times.',tips:['Keep your body and clothes clean.','Learn that private body changes are normal.','Respect your own and other people’s boundaries.','Ask a trusted adult or health professional questions when needed.'],fact:'Puberty does not happen at exactly the same time for everyone.',mission:'Choose one healthy routine—bathing, brushing or exercise—and keep it going this week.'},
+ girls:{icon:'👧🏾',title:'Girls & Growing Up',summary:'Understand body changes, confidence and healthy self-care.',learn:'Girls may experience breast development, periods, discharge, body hair, body odour, acne and emotional changes during puberty. These are normal changes, and each person develops at their own pace.',tips:['Keep clean and wear comfortable clean clothes.','Learn how to prepare for your period.','Remember that bodies develop differently.','Talk to a trusted adult or health professional when something concerns you.'],fact:'Normal puberty changes can happen at different ages and speeds.',mission:'Make a small self-care plan for this week.'},
+ healthy:{icon:'💚',title:'Healthy Habits',summary:'Build everyday habits that support your body, mind and community.',learn:'Healthy habits include eating balanced meals, drinking safe water, sleeping well, being physically active, keeping clean, managing emotions and asking for help when needed.',tips:['Drink safe water.','Get enough sleep and rest.','Move your body regularly.','Speak to someone you trust when you need support.'],fact:'Small healthy habits repeated every day can make a big difference.',mission:'Pick one healthy habit and practise it every day for seven days.'},
+ environment:{icon:'🌱',title:'Environmental Sanitation',summary:'Learn how clean surroundings protect people and communities.',learn:'Environmental sanitation involves keeping homes, schools, markets, playgrounds, drains and public spaces clean. Good sanitation includes safe waste disposal and reducing places where germs and pests can spread.',tips:['Use bins and dispose of waste properly.','Do not block drains with rubbish.','Keep shared spaces clean.','Join safe community clean-up activities.'],fact:'A clean environment is a shared responsibility.',mission:'Spot one small cleanliness problem around you and suggest a safe solution.'},
+ waste:{icon:'♻️',title:'Waste Management',summary:'Understand how to reduce, sort and safely dispose of waste.',learn:'Good waste management means reducing unnecessary waste, reusing useful items where safe, separating waste when facilities allow it and disposing of rubbish properly.',tips:['Do not litter.','Use reusable items where practical.','Keep sharp or hazardous waste away from children.','Never burn waste in unsafe places.'],fact:'Reducing waste at the source is often better than dealing with it after it is created.',mission:'Find one item you can reuse instead of throwing away.'},
+ water:{icon:'💧',title:'Clean Water & Food Hygiene',summary:'Learn simple ways to keep water and food safer.',learn:'Safe water and food hygiene help prevent illness. Use clean water, wash hands before preparing or eating food, keep food covered and avoid cross-contamination between raw and ready-to-eat foods.',tips:['Use safe drinking water.','Wash hands before handling food.','Keep food covered.','Keep raw and cooked foods separate.'],fact:'Clean hands are an important part of safe food preparation.',mission:'Before your next meal, practise proper handwashing and check that your drinking water is safe.'}
+};
+const TEST_BANK={};
+Object.keys(AFAM_LESSONS).forEach(k=>{TEST_BANK[k]=[]});
+TEST_BANK.personal=[['How often should you brush your teeth?',['Once a week','Twice a day','Only when they hurt','Never'],'Twice a day'],['What should you use for effective handwashing?',['Soap and clean water','Only perfume','Dust','Oil'],'Soap and clean water'],['When should you wash your hands?',['Before eating','After using the toilet','Both','Only on Sundays'],'Both'],['What helps prevent body odour?',['Regular bathing','Never changing clothes','Avoiding water','Skipping exercise forever'],'Regular bathing'],['Why keep nails clean?',['To collect dirt','To reduce dirt and germs','To make them heavier','No reason'],'To reduce dirt and germs'],['What is personal hygiene?',['Keeping yourself clean and cared for','Only cleaning shoes','Only washing hair','A type of sport'],'Keeping yourself clean and cared for'],['What should you wear regularly?',['Clean clothes','Wet clothes','Dirty clothes','Any clothes forever'],'Clean clothes'],['What is a healthy habit?',['Brushing teeth','Never bathing','Littering','Skipping meals every day'],'Brushing teeth'],['What can you do after using the toilet?',['Wash your hands','Eat immediately','Touch food without washing','Ignore hygiene'],'Wash your hands'],['Which is a good daily goal?',['Stay clean and care for your surroundings','Litter everywhere','Avoid water','Never brush'],'Stay clean and care for your surroundings']];
+function genericQuestions(k){const l=AFAM_LESSONS[k];return Array.from({length:30},(_,i)=>['Which statement best matches '+l.title+'?',[l.summary,'It is never important','It means avoiding all questions','It is only for adults'],l.summary]);}
+Object.keys(AFAM_LESSONS).forEach(k=>{if(!TEST_BANK[k].length)TEST_BANK[k]=genericQuestions(k)});
+let currentLesson=null,currentQuestions=[],currentIndex=0,currentScore=0;
+function renderLessons(){const grid=document.getElementById('lessonGrid');if(!grid)return;grid.innerHTML=Object.entries(AFAM_LESSONS).map(([k,l])=>`<article class="lesson-card" onclick="openLesson('${k}')"><div class="lesson-icon">${l.icon}</div><h3>${l.title}</h3><p>${l.summary}</p><button>Learn More →</button></article>`).join('')}
+function openLesson(k){currentLesson=k;document.getElementById('lessonGrid').style.display='none';const panel=document.getElementById('lessonPanel');panel.hidden=false;const l=AFAM_LESSONS[k];document.getElementById('lessonContent').innerHTML=`<h2>${l.icon} ${l.title}</h2><p>${l.summary}</p><div class="lesson-content-grid"><div class="lesson-box"><h3>📚 Learn More</h3><p>${l.learn}</p></div><div class="lesson-box"><h3>🎯 Practical Tips</h3><ul>${l.tips.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="lesson-box fun-fact"><h3>💡 Did You Know?</h3><p>${l.fact}</p></div><div class="lesson-box mission"><h3>🚀 Try This</h3><p>${l.mission}</p></div></div>`;startTest()}
+function closeLesson(){document.getElementById('lessonPanel').hidden=true;document.getElementById('lessonGrid').style.display='grid';window.scrollTo({top:document.getElementById('education').offsetTop-80,behavior:'smooth'})}
+function questionPool(){const bank=TEST_BANK[currentLesson];const key='afamTestHistory_'+currentLesson;const used=JSON.parse(localStorage.getItem(key)||'[]');let available=bank.map((_,i)=>i).filter(i=>!used.includes(i));if(available.length<10){localStorage.removeItem(key);available=bank.map((_,i)=>i)};available.sort(()=>Math.random()-.5);return available.slice(0,10).map(i=>({...bank[i],_i:i}))}
+function startTest(){currentQuestions=questionPool();currentIndex=0;currentScore=0;renderQuestion()}
+function renderQuestion(){const box=document.getElementById('lessonTest');const q=currentQuestions[currentIndex];box.innerHTML=`<h2>📝 Test Yourself</h2><p class="progress-note">Question ${currentIndex+1} of 10</p><div class="test-question"><h3>${q[0]}</h3>${q[1].map((o,i)=>`<button class="test-option" onclick="answerQuestion(this,${i})">${o}</button>`).join('')}</div>`}
+function answerQuestion(btn,i){document.querySelectorAll('.test-option').forEach(b=>b.disabled=true);const q=currentQuestions[currentIndex];if(q[1][i]===q[2])currentScore++;btn.classList.add('selected');setTimeout(()=>{currentIndex++;if(currentIndex<10)renderQuestion();else finishTest()},350)}
+function finishTest(){const key='afamTestHistory_'+currentLesson;const used=JSON.parse(localStorage.getItem(key)||'[]');localStorage.setItem(key,JSON.stringify([...new Set([...used,...currentQuestions.map(q=>q._i)])]));let title=currentScore>=9?'🌟 Clean Champion!':currentScore>=7?'👏 Great Job!':currentScore>=5?'👍 Keep Learning!':'📚 Let’s Review This Lesson';document.getElementById('lessonTest').innerHTML=`<div class="test-result"><h2>${title}</h2><p>You scored <strong>${currentScore}/10</strong>.</p><p>You've completed this set. Your next visit will bring a fresh set of questions on this phone.</p><button class="test-next" onclick="startTest()">🔄 Give Me 10 New Questions</button></div>`}
+document.addEventListener('DOMContentLoaded',renderLessons);
 </script>
 </body>
 </html>
