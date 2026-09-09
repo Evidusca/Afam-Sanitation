@@ -67,8 +67,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0
           <label>Hygiene Education?<select id="hygieneEducation"><option>Yes</option><option>No</option></select></label>
           <label>Submitted By<input type="text" id="submittedBy" placeholder="Name of corper" required></label>
           <label class="full">Description<textarea id="description" rows="4" placeholder="What did the group do? Who was reached? What was taught or cleaned?" required></textarea></label>
-          <label class="full">Photo Link (optional)<input type="url" id="photos" placeholder="Google Drive / photo link"></label>
-          <label class="full">Remarks (optional)<textarea id="remarks" rows="3" placeholder="Any important observations or follow-up needed?"></textarea></label>
+<label class="full">Remarks (optional)<textarea id="remarks" rows="3" placeholder="Any important observations or follow-up needed?"></textarea></label>
         </div>
         <button class="btn primary" id="saveBtn" type="submit">Save Activity</button>
         <p id="formMessage" class="message"></p>
@@ -86,9 +85,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0
       <p id="reportsMessage" class="admin-message"></p>
       <div class="report-table-wrap">
         <table class="report-table">
-          <thead><tr><th>Date</th><th>Location</th><th>Problem</th><th>Description</th><th>Photo</th><th>Status</th></tr></thead>
+          <thead><tr><th>Date</th><th>Location</th><th>Problem</th><th>Description</th><th>Status</th></tr></thead>
           <tbody id="reportTableBody">
-            <tr><td colspan="6" class="muted">Login to load reports.</td></tr>
+            <tr><td colspan="5" class="muted">Login to load reports.</td></tr>
           </tbody>
         </table>
       </div>
@@ -239,20 +238,20 @@ async function loadReports() {
 
   const body = document.getElementById("reportTableBody");
   const message = document.getElementById("reportsMessage");
-  body.innerHTML = '<tr><td colspan="6" class="muted">Loading reports…</td></tr>';
+  body.innerHTML = '<tr><td colspan="5" class="muted">Loading reports…</td></tr>';
 
   try {
     const response = await fetch(API_URL + "?action=reports&adminToken=" + encodeURIComponent(token));
     const result = await response.json();
 
     if (!result.success) {
-      body.innerHTML = '<tr><td colspan="6" class="muted">Could not load reports.</td></tr>';
+      body.innerHTML = '<tr><td colspan="5" class="muted">Could not load reports.</td></tr>';
       message.textContent = result.message || "Could not load reports.";
       return;
     }
 
     if (!result.data || result.data.length === 0) {
-      body.innerHTML = '<tr><td colspan="6" class="muted">No sanitation reports yet.</td></tr>';
+      body.innerHTML = '<tr><td colspan="5" class="muted">No sanitation reports yet.</td></tr>';
       message.textContent = "";
       return;
     }
@@ -265,13 +264,7 @@ async function loadReports() {
       const location = escapeHtmlAdmin(item["Location"] || "");
       const problem = escapeHtmlAdmin(item["Problem Type"] || "");
       const description = escapeHtmlAdmin(item["Description"] || "");
-      const photoUrl = String(item["Photo"] || "").trim();
-      const driveIdMatch = photoUrl.match(/(?:id=|\/d\/)([A-Za-z0-9_-]{10,})/);
-      const driveId = driveIdMatch ? driveIdMatch[1] : "";
-      const thumbnailUrl = driveId ? "https://drive.google.com/thumbnail?id=" + encodeURIComponent(driveId) + "&sz=w300" : photoUrl;
-      const photo = photoUrl
-        ? '<a href="' + escapeAttrAdmin(photoUrl) + '" target="_blank" rel="noopener" style="display:inline-flex;flex-direction:column;gap:6px;align-items:flex-start"><img src="' + escapeAttrAdmin(thumbnailUrl) + '" alt="Sanitation report photo" style="width:110px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #dce9df" onerror="this.style.display=\'none\'"><span>View photo</span></a>'
-        : "No photo";
+      
       const current = item["Status"] || "Pending";
 
       tr.innerHTML = `
@@ -279,7 +272,7 @@ async function loadReports() {
         <td>${location}</td>
         <td>${problem}</td>
         <td>${description}</td>
-        <td>${photo}</td>
+        <td></td>
         <td>
           <select class="status-select" data-row="${Number(item._rowNumber)}">
             ${["Pending","Reviewed","In Progress","Resolved"].map(s => `<option ${s === current ? "selected" : ""}>${s}</option>`).join("")}
@@ -294,7 +287,7 @@ async function loadReports() {
     message.textContent = `${result.data.length} report(s) loaded.`;
   } catch (err) {
     console.error(err);
-    body.innerHTML = '<tr><td colspan="6" class="muted">Connection problem while loading reports.</td></tr>';
+    body.innerHTML = '<tr><td colspan="5" class="muted">Connection problem while loading reports.</td></tr>';
     message.textContent = "Could not connect to the reports service.";
   }
 }
