@@ -316,10 +316,10 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
       <label>Description
         <textarea id="reportDescription" rows="4" maxlength="1200" placeholder="Describe what you saw and why it needs attention." required></textarea>
       </label>
-      <label>Photo Link (optional)
-        <input type="url" id="reportPhoto" placeholder="Google Drive or image link">
+      <label>Photo (optional, max 2 MB)
+        <input type="file" id="reportPhoto" accept="image/*">
       </label>
-      <p class="report-help">Please don't include private or sensitive information about other people.</p>
+      <p class="report-help">Upload one photo only. Maximum size is 2 MB. Please don't include private or sensitive information about other people.</p>
       <button class="btn primary" id="reportSubmit" type="submit">Submit Report</button>
       <p id="reportMessage" class="report-message" aria-live="polite"></p>
     </form>
@@ -424,13 +424,36 @@ reportForm.addEventListener("submit", async e => {
   reportSubmit.disabled = true;
   reportMessage.textContent = "Submitting report…";
 
+  const photoInput = document.getElementById("reportPhoto");
+  const photoFile = photoInput.files && photoInput.files[0];
+
+  if (photoFile && photoFile.size > 2 * 1024 * 1024) {
+    reportMessage.textContent = "The photo is too large. Please choose an image no bigger than 2 MB.";
+    reportSubmit.disabled = false;
+    return;
+  }
+
+  let photoData = null;
+  if (photoFile) {
+    photoData = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({
+        name: photoFile.name,
+        mimeType: photoFile.type,
+        data: String(reader.result).split(",")[1]
+      });
+      reader.onerror = reject;
+      reader.readAsDataURL(photoFile);
+    });
+  }
+
   const payload = {
     action: "sanitation_report",
     date: reportDate.value,
     location: document.getElementById("reportLocation").value.trim(),
     problemType: document.getElementById("reportProblemType").value,
     description: document.getElementById("reportDescription").value.trim(),
-    photo: document.getElementById("reportPhoto").value.trim()
+    photo: photoData
   };
 
   try {
