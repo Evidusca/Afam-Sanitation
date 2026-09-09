@@ -208,6 +208,12 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 .quiz-result-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px}
 @media(max-width:650px){.library-note{display:block}.library-note span{display:block;margin-top:5px}}
 
+
+body{overflow-x:hidden}
+#education .container,#quiz .container{width:min(1120px,92%);margin:auto}
+.library-note{max-width:100%}
+.education-grid{width:100%}
+
 </style>
 
 <style>
@@ -345,75 +351,8 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
     </div>
   </div>
 </section>
-<section id="age-guide" class="age-guide">
-  <div class="container">
-    <div class="age-intro">
-      <div>
-        <div class="kicker">Made for different ages</div>
-        <h2>Choose your age group.</h2>
-        <p class="muted">The same health message can be taught in different ways. Pick an age range to see the topics that fit best.</p>
-        <div class="age-cards">
-          <button class="age-card" type="button" data-age="6-9"><div class="age-icon">🧒🏽</div><h3>6–9</h3><p>Clean habits & body basics</p></button>
-          <button class="age-card" type="button" data-age="10-12"><div class="age-icon">🧑🏽‍🤝‍🧑🏽</div><h3>10–12</h3><p>Growing up & early puberty</p></button>
-          <button class="age-card" type="button" data-age="13-15"><div class="age-icon">👦🏽👧🏽</div><h3>13–15</h3><p>Puberty, periods & confidence</p></button>
-          <button class="age-card" type="button" data-age="16-18"><div class="age-icon">🧑🏽</div><h3>16–18</h3><p>Health, responsibility & wellbeing</p></button>
-        </div>
-        <div id="ageResult" class="age-result"><strong>Not sure where to start?</strong> Choose an age range above and we'll suggest a learning path.</div>
-      </div>
-      <div class="age-hero-art" aria-label="Cartoon children learning about cleanliness">
-        <svg viewBox="0 0 620 350" role="img">
-          <rect x="0" y="0" width="620" height="350" rx="22" fill="#eef9f0"/>
-          <circle cx="90" cy="70" r="28" fill="#f5d516"/>
-          <path d="M68 70h44M90 48v44" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
-          <rect x="55" y="220" width="510" height="18" rx="9" fill="#b8d8bf"/>
-          <g transform="translate(125 95)">
-            <circle cx="65" cy="55" r="38" fill="#9b5b38"/><path d="M31 48c8-35 58-44 71-4" fill="#3b2418"/>
-            <circle cx="54" cy="58" r="4" fill="#173022"/><circle cx="76" cy="58" r="4" fill="#173022"/>
-            <path d="M53 76q12 12 24 0" fill="none" stroke="#173022" stroke-width="4" stroke-linecap="round"/>
-            <path d="M27 105q38-30 76 0v91H27z" fill="#08752f"/><path d="M42 108l-27 60M88 108l30 60" stroke="#9b5b38" stroke-width="18" stroke-linecap="round"/>
-            <circle cx="118" cy="169" r="8" fill="#55a929"/><circle cx="128" cy="158" r="6" fill="#55a929"/>
-          </g>
-          <g transform="translate(335 88)">
-            <circle cx="65" cy="60" r="38" fill="#6f4029"/><path d="M30 52c4-35 58-48 72-6" fill="#241912"/>
-            <circle cx="53" cy="62" r="4" fill="#173022"/><circle cx="77" cy="62" r="4" fill="#173022"/>
-            <path d="M52 79q13 10 26 0" fill="none" stroke="#173022" stroke-width="4" stroke-linecap="round"/>
-            <path d="M27 110q38-28 76 0v86H27z" fill="#f5d516"/><path d="M32 118l-32 55M98 118l33 48" stroke="#6f4029" stroke-width="18" stroke-linecap="round"/>
-            <path d="M131 165l30-28" stroke="#08752f" stroke-width="8" stroke-linecap="round"/>
-          </g>
-          <g transform="translate(265 242)">
-            <path d="M0 0h90" stroke="#08752f" stroke-width="7" stroke-linecap="round"/>
-            <path d="M12 0l-7 30M78 0l7 30" stroke="#08752f" stroke-width="5"/>
-          </g>
-        </svg>
-      </div>
-    </div>
-    <div class="clean-crew">
-      <div class="crew-card">
-        <div class="crew-art">
-          <svg viewBox="0 0 180 140"><circle cx="90" cy="45" r="28" fill="#9b5b38"/><path d="M62 40q28-42 56 0" fill="#332018"/><circle cx="80" cy="46" r="3"/><circle cx="100" cy="46" r="3"/><path d="M80 59q10 8 20 0" fill="none" stroke="#173022" stroke-width="3"/><path d="M52 78q38-24 76 0v50H52z" fill="#08752f"/><path d="M57 86L25 119M123 86l31 33" stroke="#9b5b38" stroke-width="12" stroke-linecap="round"/><path d="M28 120h-8M154 120h8" stroke="#173022" stroke-width="5"/></svg>
-        </div><h3>Clean Captain 🧼</h3><p>Wash, brush, bathe and keep your everyday spaces clean.</p>
-      </div>
-      <div class="crew-card">
-        <div class="crew-art">
-          <svg viewBox="0 0 180 140"><circle cx="90" cy="43" r="28" fill="#6f4029"/><path d="M61 39q30-43 59 1" fill="#201611"/><circle cx="80" cy="46" r="3"/><circle cx="100" cy="46" r="3"/><path d="M80 59q10 8 20 0" fill="none" stroke="#173022" stroke-width="3"/><path d="M52 78q38-24 76 0v50H52z" fill="#f5d516"/><path d="M52 86l-32 30M128 86l30 30" stroke="#6f4029" stroke-width="12" stroke-linecap="round"/><path d="M18 115h20" stroke="#08752f" stroke-width="6"/><path d="M142 115h20" stroke="#08752f" stroke-width="6"/></svg>
-        </div><h3>Water Warrior 💧</h3><p>Use safe water, wash hands and help protect clean surroundings.</p>
-      </div>
-      <div class="crew-card">
-        <div class="crew-art">
-          <svg viewBox="0 0 180 140"><circle cx="90" cy="43" r="28" fill="#9b5b38"/><path d="M62 38q29-35 56 0" fill="#39231a"/><circle cx="80" cy="46" r="3"/><circle cx="100" cy="46" r="3"/><path d="M80 59q10 8 20 0" fill="none" stroke="#173022" stroke-width="3"/><path d="M52 78q38-24 76 0v50H52z" fill="#54a929"/><path d="M56 86L30 118M124 86l27 32" stroke="#9b5b38" stroke-width="12" stroke-linecap="round"/><rect x="138" y="103" width="25" height="18" rx="3" fill="#08752f"/><path d="M142 103v-9h17v9" fill="none" stroke="#08752f" stroke-width="4"/></svg>
-        </div><h3>Green Hero 🌱</h3><p>Put waste in the right place and help keep your community healthy.</p>
-      </div>
-    </div>
-    <div class="fun-strip">
-      <div><strong>🎯 Mission: become a Clean Champion!</strong><br><span class="small">Learn one new habit, practise it, then teach someone else.</span></div>
-      <button class="btn" type="button" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Take the quiz →</button>
-    </div>
-  </div>
-</section>
-
-
-
 <section id="education" class="section">
+  <div class="container">
   <div class="section-head">
     <div>
       <span class="eyebrow">EDUCATION LIBRARY</span>
@@ -429,9 +368,11 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 
   <div id="libraryGrid" class="education-grid"></div>
   <div id="libraryViewer" class="lesson-viewer" aria-hidden="true"></div>
+  </div>
 </section>
 
 <section id="quiz" class="section quiz-section">
+  <div class="container">
   <div class="section-head">
     <div>
       <span class="eyebrow">TEST WHAT YOU LEARNED</span>
@@ -452,6 +393,7 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
   </div>
 
   <div id="afamQuiz" class="test-box" style="display:none"></div>
+  </div>
 </section>
 <section id="activities" class="activities">
   <div class="container">
@@ -852,134 +794,6 @@ schedulePublicData();
 
 
 <script>
-const educationLessons = {
-  hygiene: {
-    icon:"🧼", title:"Personal Hygiene", level:"Ages 6–18",
-    summary:"Learn the everyday habits that help keep your body clean, comfortable and healthy.",
-    sections:[
-      ["What is personal hygiene?","Personal hygiene means taking care of your body and keeping yourself clean. Simple habits such as bathing, brushing your teeth, washing your hands and wearing clean clothes help you stay fresh and reduce the spread of germs."],
-      ["1. Keep your body clean","Bathe regularly, especially after sports, outdoor activities or when you have been sweating. Clean areas such as your armpits, feet and other body folds carefully. Dry yourself with a clean towel and change into clean clothes."],
-      ["2. Wash your hands","Wash your hands with soap and clean running water before eating or preparing food, after using the toilet, after coughing or sneezing, after playing outside and whenever your hands are visibly dirty. Rub all parts of your hands for about 20 seconds before rinsing."],
-      ["3. Care for your teeth","Brush your teeth twice a day with fluoride toothpaste. Clean gently around your teeth and gums. Limit frequent sugary snacks and drinks, and tell a trusted adult if you have tooth pain."],
-      ["4. Hair, nails and clothes","Keep hair clean and cared for. Keep fingernails short and clean because dirt and germs can collect underneath them. Wear clean underwear and clothes and do not share personal items such as toothbrushes or towels."],
-      ["Body odour","Sweat itself is not something to be ashamed of. Body odour can happen when sweat mixes with bacteria on the skin. Regular bathing, clean clothes and keeping areas such as the armpits clean can help."],
-      ["Your daily Clean Champion checklist","Morning: brush your teeth and wash your face. During the day: wash your hands at important times. Evening: bathe or wash, brush your teeth and put dirty clothes in the right place."]
-    ],
-    fact:"Clean hands are one of the simplest ways to reduce the spread of many germs.",
-    action:"🎯 Try This: For the next 7 days, make a morning and evening hygiene checklist and tick each habit when you complete it."
-  },
-  puberty: {
-    icon:"🌱", title:"Puberty & Body Changes", level:"Ages 10–18",
-    summary:"Understand why your body changes as you grow, and learn that different people develop at different times.",
-    sections:[
-      ["What is puberty?","Puberty is a normal stage of growing up when the body begins changing from a child's body toward an adult body. Hormones help cause these changes. Puberty does not happen at exactly the same age or speed for everyone."],
-      ["Common changes","People may grow taller, develop body hair, have more body odour, experience oily skin or acne, and notice emotional changes. These changes are normal parts of growing up."],
-      ["For girls","Breasts may develop, hips may change, body hair may grow, and periods may begin. Vaginal discharge can also occur and can be normal. A trusted adult or health professional can help if something worries you."],
-      ["For boys","The penis and testicles grow, the voice may deepen, facial or body hair may appear, erections and wet dreams can happen, and body odour or acne may increase. These are normal puberty changes."],
-      ["Everyone develops differently","One person may start puberty earlier or later than a friend. Growth and body changes can also happen at different speeds. Comparing your body with others can create unnecessary worry."],
-      ["Looking after yourself","Keep clean, wear clean clothes, eat a balanced diet, sleep well, stay active and talk to a trusted adult when you have questions. You deserve accurate information and respectful answers."]
-    ],
-    fact:"There is no single 'correct' age at which every person must experience each puberty change.",
-    action:"🎯 Try This: Write down three questions about growing up that you would like a trusted adult or health professional to answer."
-  },
-  periods: {
-    icon:"🩸", title:"Periods & Menstrual Health", level:"Ages 10–18",
-    summary:"Learn what periods are, how to manage them hygienically, and how to support someone who is menstruating.",
-    sections:[
-      ["What is a period?","A period is the monthly shedding of blood and tissue from the lining of the uterus through the vagina. It is a normal biological process for many girls and women after puberty begins."],
-      ["Managing a period","Use a clean menstrual product that suits you, such as a pad or another appropriate product. Change products regularly according to the product instructions and how heavy the flow is. Wash your hands before and after changing a product."],
-      ["Stay comfortable and clean","Keep the external genital area clean with clean water. Avoid putting harsh or perfumed products inside the vagina. Carry spare menstrual products when possible and have a plan for school or other activities."],
-      ["Period feelings and pain","Some people experience cramps, tiredness, headaches or mood changes. Gentle activity, rest, warmth and appropriate over-the-counter pain relief may help some people. If pain is severe or unusual, speak to a qualified healthcare professional."],
-      ["No shame","Periods are a normal part of growing up. Menstrual products should be disposed of safely according to local waste arrangements. Boys and girls can both learn how to support respectful, clean and safe menstrual environments."],
-      ["When to seek help","Talk to a trusted adult or qualified healthcare professional about very heavy bleeding, severe pain, fainting, unusual symptoms or anything that causes concern."]
-    ],
-    fact:"A period is not dirty or something a person should be ashamed of.",
-    action:"🎯 Try This: Think of one kind thing you can do to make school or home more comfortable and respectful for someone having a period."
-  },
-  boys: {
-    icon:"🧑🏾", title:"Boys & Growing Up", level:"Ages 10–18",
-    summary:"A simple, respectful guide to common puberty changes for boys.",
-    sections:[
-      ["Growing up","Puberty brings physical, emotional and social changes. Boys can grow taller, gain muscle, develop body hair and notice changes in their voice and skin."],
-      ["Body changes","The penis and testicles develop, erections may happen without warning, and wet dreams can occur during sleep. These are normal biological changes and are not something to be ashamed of."],
-      ["Keeping clean","As sweat and body odour increase, regular bathing, clean clothes, clean socks and good care of the armpits and feet become especially important. Brush your teeth twice a day and wash your hands regularly."],
-      ["Skin and acne","Hormonal changes can increase oil on the skin and lead to pimples. Wash gently rather than scrubbing hard or squeezing spots. Persistent or severe acne can be discussed with a healthcare professional."],
-      ["Feelings and respect","Puberty can bring stronger or changing emotions. Learn to respect your own body and other people's boundaries. Having questions is normal, and a trusted adult or qualified health professional can provide reliable information."]
-    ],
-    fact:"Puberty is a process, not a competition. Growing earlier or later than a friend does not automatically mean something is wrong.",
-    action:"🎯 Try This: Choose one new healthy habit—such as daily bathing, regular exercise or better sleep—and practise it for one week."
-  },
-  girls: {
-    icon:"👧🏾", title:"Girls & Growing Up", level:"Ages 10–18",
-    summary:"Understand common puberty changes for girls and learn practical ways to care for yourself.",
-    sections:[
-      ["Growing up","Girls may grow taller, develop breasts and hips, grow body hair and notice changes in skin, sweat and emotions. Everyone develops at a different rate."],
-      ["Periods","Periods can begin during puberty and may be irregular at first. Learning how to manage menstrual products, hygiene and period symptoms can make the experience easier."],
-      ["Normal body changes","Vaginal discharge can be normal, especially when it is clear or white and does not have a strong unpleasant smell. If there is pain, unusual bleeding, a strong unpleasant smell, itching or another concerning symptom, talk to a qualified healthcare professional."],
-      ["Skin and body odour","Hormonal changes may cause acne and increased sweating. Gentle washing, clean clothes and good personal hygiene can help. You do not need to feel ashamed of normal body changes."],
-      ["Confidence and privacy","Your body belongs to you. You can ask questions, say no to unwanted touch and seek help from a trusted adult if someone makes you uncomfortable or violates your boundaries."]
-    ],
-    fact:"Bodies do not all develop in the same way or at the same speed.",
-    action:"🎯 Try This: Make a small self-care kit for school or outings with items you may need, such as tissues, soap or hand sanitizer and menstrual products if appropriate."
-  },
-  healthy: {
-    icon:"💪🏾", title:"Healthy Habits", level:"Ages 6–18",
-    summary:"Build everyday habits that support your body, your mind and your ability to learn.",
-    sections:[
-      ["Eat a variety of foods","Try to eat a mixture of foods from different food groups. Include vegetables and fruits, grains or other staple foods, protein sources and healthy fats. Drink safe water regularly."],
-      ["Sleep matters","Growing children and teenagers need adequate sleep. A regular bedtime, a calmer evening routine and reducing unnecessary screen use right before bed can support good sleep."],
-      ["Move your body","Walking, running, sports, dancing, games and other physical activity help keep the body strong. Choose activities you enjoy and take sensible safety precautions."],
-      ["Care for your mind","Feelings such as stress, sadness or worry happen to everyone. Talk to a trusted person, take breaks, spend time with supportive people and ask for help when feelings become difficult to manage."],
-      ["Avoid harmful choices","Do not misuse medicines or substances. Follow instructions from trusted adults and qualified healthcare professionals. Never accept unknown substances from someone simply because they say they are safe."]
-    ],
-    fact:"Healthy habits are built through small actions repeated consistently.",
-    action:"🎯 Try This: Pick three habits for this week: drink more safe water, get enough sleep, move your body, eat a balanced meal, or talk to someone when you need support."
-  },
-  environment: {
-    icon:"🌱", title:"Environmental Sanitation", level:"Ages 6–18",
-    summary:"Learn how clean surroundings, safe waste practices and teamwork can make communities healthier.",
-    sections:[
-      ["What is environmental sanitation?","Environmental sanitation means keeping our surroundings clean and reducing conditions that can harm health. It includes proper waste management, clean water, safe toilets and keeping public spaces free from avoidable pollution."],
-      ["Use bins and dispose of waste properly","Put waste in the appropriate bin or disposal point. Do not throw rubbish into drains, roads, playgrounds or water bodies. Where local systems support it, separate recyclable materials from other waste."],
-      ["Protect drains and waterways","Blocked drains can contribute to flooding and create places where pests breed. Never use drains or streams as rubbish dumps. Keep plastic, food waste and other refuse out of waterways."],
-      ["Keep shared spaces clean","Schools, markets, playgrounds and streets are shared spaces. Pick up litter safely, use cleaning tools properly and encourage others respectfully rather than shaming them."],
-      ["Work as a team","Community sanitation works best when people cooperate. Small actions by many people can create a cleaner environment for everyone."]
-    ],
-    fact:"A clean community is not created by one person alone—it is built by many people making better choices.",
-    action:"🎯 Try This: Look around your home, school or street and identify three things that could make the area cleaner. Choose one safe action you can take."
-  },
-  waste: {
-    icon:"♻️", title:"Waste Management", level:"Ages 6–18",
-    summary:"Understand the journey of waste and the simple choices that reduce litter and pollution.",
-    sections:[
-      ["What is waste?","Waste is material we no longer need or want. It can include food scraps, paper, plastic, cans, bottles and other materials. Not all waste should be handled in the same way."],
-      ["Reduce, reuse, recycle","Reduce means avoiding unnecessary waste. Reuse means using an item again when it is safe and practical. Recycle means processing suitable materials so they can become useful products again."],
-      ["Food waste","Avoid taking more food than you can eat. Store food safely and dispose of food waste appropriately. Do not leave food waste lying around because it can attract pests."],
-      ["Plastic and litter","Plastic waste can block drains and pollute land and water. Carry reusable items where practical and always dispose of plastics through the available waste system."],
-      ["Safety first","Do not pick up sharp objects, unknown chemicals, medical waste or other dangerous materials with bare hands. Tell a trusted adult or responsible authority instead."]
-    ],
-    fact:"The best waste item is often the one you never create in the first place.",
-    action:"🎯 Try This: Find one disposable item you use often and think of a safe reusable alternative."
-  },
-  water: {
-    icon:"💧", title:"Clean Water & Toilet Hygiene", level:"Ages 6–18",
-    summary:"Learn why safe water and clean toilets matter and how simple habits protect everyone.",
-    sections:[
-      ["Why clean water matters","Our bodies need water for many important functions. Water used for drinking, preparing food and brushing teeth should be from a safe source."],
-      ["Safe water habits","Use water from a trusted safe source. Keep storage containers clean and covered. Avoid dipping dirty hands or cups into stored drinking water."],
-      ["Toilet hygiene","Use toilets properly and keep them clean. Wash your hands with soap and clean water after using the toilet. Help younger children learn the same habit."],
-      ["Protect water sources","Do not throw rubbish, chemicals or human waste into rivers, streams, wells or other water sources. Pollution can make water unsafe and harm people, animals and the environment."],
-      ["If water safety is uncertain","Ask a trusted adult or local health authority what treatment or safe-water method is appropriate for your area. Do not assume water is safe simply because it looks clear."]
-    ],
-    fact:"Water can look clean and still contain germs or harmful substances, so a trusted safe water source matters.",
-    action:"🎯 Try This: Check the drinking-water storage at home or school. Is it clean, covered and handled safely?"
-  }
-};
-
-
-
-
-<script>
 const afamLibrary = {
   hygiene:{
     icon:"🧼", title:"Personal Hygiene", tag:"Everyday Clean Habits",
@@ -1265,6 +1079,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   renderAfamLibrary();
 });
 </script>
+
 
 </body>
 </html>
