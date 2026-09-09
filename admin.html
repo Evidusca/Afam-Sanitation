@@ -25,11 +25,21 @@ input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0
 .logout{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;padding:9px 14px;border-radius:10px;font-weight:800;cursor:pointer}
 
 .report-table-wrap{overflow-x:auto}.report-table{width:100%;border-collapse:collapse;min-width:780px}.report-table th,.report-table td{padding:12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top;font-size:13px}.report-table th{color:var(--dark);background:#f5faf6}.status-select{border:1px solid #cfe0d4;border-radius:8px;padding:7px;font:inherit}.admin-message{font-weight:800}
+
+.member-toolbar{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap}
+.member-stats{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+.member-stat{min-width:155px;background:#f5faf6;border:1px solid var(--border);border-radius:14px;padding:13px 16px}
+.member-stat strong{display:block;font-size:25px;color:var(--green)}
+.member-stat span{font-size:13px;color:var(--muted);font-weight:700}
+.member-table{min-width:1050px}
+.status-badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eaf8ee;color:var(--green);font-weight:800;font-size:12px}
+@media(max-width:700px){.member-toolbar{flex-direction:column}.member-toolbar .btn{width:100%}}
+
 </style></head>
 <body>
 <header><div class="container header">
 <div class="brand"><img src="logo.png" alt="Afam Sanitation CDS logo"><div>AFAM SANITATION CDS<br><small>Administrator</small></div></div>
-<div style="display:flex;gap:10px;align-items:center"><a class="back" href="index.html">← Public Website</a><button class="logout" id="logoutBtn" type="button">Logout</button></div></div></header>
+<div style="display:flex;gap:10px;align-items:center"><a class="back" href="Afam_Sanitation_NEW_MEMBER_REGISTRATION.html" target="_blank">New Member Registration</a> <a class="back" href="index.html">← Public Website</a><button class="logout" id="logoutBtn" type="button">Logout</button></div></div></header>
 
 <main class="container">
   <div id="loginView" class="card login-card">
@@ -73,12 +83,57 @@ input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0
         <p id="formMessage" class="message"></p>
       </form>
 
+    
     <div class="card">
+      <div class="kicker">CDS Members</div>
+      <div class="member-toolbar">
+        <div>
+          <h2>Active CDS Members</h2>
+          <p class="muted">Members who register from the public registration page appear here automatically. Expired service members are removed from the active register by the system.</p>
+        </div>
+        <button class="btn primary" type="button" id="refreshMembers">↻ Refresh Members</button>
+      </div>
+
+      <div class="member-stats">
+        <div class="member-stat">
+          <strong id="memberCount">0</strong>
+          <span>Active Members</span>
+        </div>
+        <div class="member-stat">
+          <strong id="endingSoonCount">0</strong>
+          <span>Ending This / Next Month</span>
+        </div>
+      </div>
+
+      <p id="membersMessage" class="admin-message" aria-live="polite"></p>
+
+      <div class="report-table-wrap">
+        <table class="report-table member-table">
+          <thead>
+            <tr>
+              <th>Member ID</th>
+              <th>Full Name</th>
+              <th>State Code</th>
+              <th>Batch</th>
+              <th>End of Service</th>
+              <th>Birthday</th>
+              <th>State of Origin</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="membersTableBody">
+            <tr><td colspan="8" class="muted">Login to load members.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+<div class="card">
       <div style="display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap">
         <div>
           <div class="kicker">Community reports</div>
           <h2>Sanitation issues</h2>
-          <p class="muted">Review reports submitted by visitors and update their status.</p><p class="muted" style="font-size:12px">Uploaded photos are stored automatically in the Afam Sanitation Google Drive report-photo folder.</p>
+          <p class="muted">Review reports submitted by visitors and update their status.</p><p class="muted" style="font-size:12px">Community reports no longer require photo uploads.</p>
         </div>
         <button class="btn primary" type="button" id="refreshReports">Refresh Reports</button>
       </div>
@@ -152,6 +207,7 @@ loginForm.addEventListener("submit", async (e) => {
       loginMessage.textContent = "";
       showAdmin();
       loadReports();
+      loadMembers();
     } else {
       loginMessage.textContent = result.message || "Login failed.";
     }
@@ -329,9 +385,90 @@ async function updateReportStatus(select) {
 
 document.getElementById("refreshReports").addEventListener("click", loadReports);
 
+
+async function loadMembers() {
+  const token = getToken();
+  if (!token) { showLogin(); return; }
+
+  const body = document.getElementById("membersTableBody");
+  const message = document.getElementById("membersMessage");
+  const count = document.getElementById("memberCount");
+  const endingSoon = document.getElementById("endingSoonCount");
+
+  body.innerHTML = '<tr><td colspan="8" class="muted">Loading members…</td></tr>';
+  message.textContent = "";
+
+  try {
+    const response = await fetch(
+      API_URL + "?action=members&adminToken=" + encodeURIComponent(token),
+      {cache:"no-store"}
+    );
+    const result = await response.json();
+
+    if (!result.success) {
+      body.innerHTML = '<tr><td colspan="8" class="muted">Could not load members.</td></tr>';
+      message.textContent = result.message || "Could not load members.";
+      return;
+    }
+
+    const members = Array.isArray(result.data) ? result.data : [];
+    count.textContent = members.length;
+
+    const now = new Date();
+    const currentMonthIndex = now.getFullYear() * 12 + now.getMonth();
+    const soonCount = members.filter(member => {
+      const match = String(member["End of Service"] || "").match(/^(\d{4})-(\d{2})$/);
+      if (!match) return false;
+      const endIndex = Number(match[1]) * 12 + Number(match[2]) - 1;
+      return endIndex >= currentMonthIndex && endIndex <= currentMonthIndex + 1;
+    }).length;
+    endingSoon.textContent = soonCount;
+
+    if (!members.length) {
+      body.innerHTML = '<tr><td colspan="8" class="muted">No active members registered yet.</td></tr>';
+      return;
+    }
+
+    body.innerHTML = members.map(member => `
+      <tr>
+        <td>${escapeHtmlAdmin(member["Member ID"] || "")}</td>
+        <td><strong>${escapeHtmlAdmin(member["Full Name"] || "")}</strong></td>
+        <td>${escapeHtmlAdmin(member["State Code"] || "")}</td>
+        <td>${escapeHtmlAdmin(member["Batch"] || "")}</td>
+        <td>${escapeHtmlAdmin(formatServiceEnd(member["End of Service"]))}</td>
+        <td>${escapeHtmlAdmin(formatMemberDate(member["Birthday"]))}</td>
+        <td>${escapeHtmlAdmin(member["State of Origin"] || "")}</td>
+        <td><span class="status-badge">Active</span></td>
+      </tr>
+    `).join("");
+
+  } catch (err) {
+    console.error(err);
+    body.innerHTML = '<tr><td colspan="8" class="muted">Connection problem while loading members.</td></tr>';
+    message.textContent = "Could not connect to the member service.";
+  }
+}
+
+function formatServiceEnd(value) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})$/);
+  if (!match) return String(value || "");
+  return new Date(Number(match[1]), Number(match[2]) - 1, 1)
+    .toLocaleString("en-NG", {month:"long", year:"numeric"});
+}
+
+function formatMemberDate(value) {
+  const text = String(value || "");
+  if (!text) return "";
+  const date = new Date(text + (text.length === 10 ? "T00:00:00" : ""));
+  return Number.isNaN(date.getTime()) ? text : date.toLocaleDateString("en-NG");
+}
+
+document.getElementById("refreshMembers").addEventListener("click", loadMembers);
+
 if (getToken()) {
   showAdmin();
   loadReports();
+  loadMembers();
 } else {
   showLogin();
 }
