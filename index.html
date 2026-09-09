@@ -463,34 +463,41 @@ document.querySelectorAll("#navLinks a").forEach(a => a.addEventListener("click"
 async function loadImpact() {
   if (!API_URL || API_URL.includes("PASTE_YOUR")) return;
   try {
-    const res = await fetch(API_URL + "?action=impact");
+    const res = await fetch(API_URL + "?action=impact&_=" + Date.now(), {
+      cache: "no-store",
+      redirect: "follow"
+    });
     const json = await res.json();
-    if (!json.success) return;
+    if (!json.success) throw new Error(json.message || "Impact API returned an error");
     const d = json.data || {};
     document.getElementById("totalActivities").textContent = d["Total Activities"] ?? 0;
     document.getElementById("schools").textContent = d["Schools Visited"] ?? 0;
     document.getElementById("people").textContent = d["People Reached"] ?? 0;
     document.getElementById("communities").textContent = d["Communities Reached"] ?? 0;
   } catch (err) {
-    console.log("Impact data could not be loaded yet.", err);
+    console.error("Impact data could not be loaded.", err);
   }
 }
 
 async function loadActivities() {
   if (!API_URL || API_URL.includes("PASTE_YOUR")) return;
   try {
-    const res = await fetch(API_URL + "?action=activities");
+    const res = await fetch(API_URL + "?action=activities&_=" + Date.now(), {
+      cache: "no-store",
+      redirect: "follow"
+    });
     const json = await res.json();
-    if (!json.success || !Array.isArray(json.data) || json.data.length === 0) return;
+    if (!json.success) throw new Error(json.message || "Activities API returned an error");
 
     const list = document.getElementById("activityList");
-    list.innerHTML = "";
+    if (!Array.isArray(json.data) || json.data.length === 0) return;
 
+    list.innerHTML = "";
     json.data.slice(-6).reverse().forEach(item => {
       const article = document.createElement("article");
       article.className = "activity";
       article.innerHTML = `
-        <div class="date">${item["Date"] || "Activity"}</div>
+        <div class="date">${escapeHtml(item["Date"] || "Activity")}</div>
         <h3>${escapeHtml(item["Activity Type"] || "Community Activity")}</h3>
         <p><strong>${escapeHtml(item["Location"] || "Location not specified")}</strong></p>
         <p class="muted">${escapeHtml(item["Description"] || "")}</p>
@@ -499,7 +506,7 @@ async function loadActivities() {
       list.appendChild(article);
     });
   } catch (err) {
-    console.log("Activities could not be loaded yet.", err);
+    console.error("Activities could not be loaded.", err);
   }
 }
 
@@ -769,6 +776,7 @@ async function refreshPublicData(){
 }
 function schedulePublicData(){const run=()=>refreshPublicData();if("requestIdleCallback" in window) requestIdleCallback(run,{timeout:3500});else setTimeout(run,1200)}
 schedulePublicData();
+setInterval(() => { loadImpact(); loadActivities(); }, 30000);
 </script>
 
 
