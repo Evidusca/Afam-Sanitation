@@ -79,7 +79,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0
         <div>
           <div class="kicker">Community reports</div>
           <h2>Sanitation issues</h2>
-          <p class="muted">Review reports submitted by visitors and update their status.</p>
+          <p class="muted">Review reports submitted by visitors and update their status.</p><p class="muted" style="font-size:12px">Uploaded photos are stored automatically in the Afam Sanitation Google Drive report-photo folder.</p>
         </div>
         <button class="btn primary" type="button" id="refreshReports">Refresh Reports</button>
       </div>
@@ -265,7 +265,10 @@ async function loadReports() {
       const location = escapeHtmlAdmin(item["Location"] || "");
       const problem = escapeHtmlAdmin(item["Problem Type"] || "");
       const description = escapeHtmlAdmin(item["Description"] || "");
-      const photo = item["Photo"] ? '<a href="' + escapeAttrAdmin(item["Photo"]) + '" target="_blank" rel="noopener">View photo</a>' : "—";
+      const photoUrl = String(item["Photo"] || "").trim();
+      const photo = photoUrl
+        ? '<a href="' + escapeAttrAdmin(photoUrl) + '" target="_blank" rel="noopener" style="display:inline-flex;flex-direction:column;gap:6px;align-items:flex-start"><img src="' + escapeAttrAdmin(photoUrl) + '" alt="Sanitation report photo" style="width:90px;height:70px;object-fit:cover;border-radius:8px;border:1px solid #dce9df" onerror="this.style.display=\'none\'"><span>View photo</span></a>'
+        : "No photo";
       const current = item["Status"] || "Pending";
 
       tr.innerHTML = `
