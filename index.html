@@ -179,6 +179,35 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 .lesson-action{font-size:15px}
 .test-box[style*="text-align:center"]{background:linear-gradient(135deg,#effaf1,#fffbea);border:2px dashed rgba(8,117,47,.22)}
 
+
+/* Standalone Education Library + Quiz */
+.library-note{display:flex;gap:12px;align-items:flex-start;background:#f2faf4;border:1px solid rgba(8,117,47,.14);padding:17px 19px;border-radius:18px;margin:0 0 24px}
+.library-note strong{color:#08752f;white-space:nowrap}.library-note span{color:#52605a;line-height:1.6}
+.edu-card .btn{width:100%}
+.library-topic-tag{display:inline-block;background:#edf8ef;color:#08752f;font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;margin-bottom:8px}
+.library-viewer-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap}
+.library-viewer-head h2{margin:0 0 7px}.library-viewer-head p{margin:0;color:#52605a}
+.library-section{padding:19px 0;border-bottom:1px solid #e6eee8}.library-section:last-child{border-bottom:0}
+.library-section h3{margin:0 0 8px;color:#08752f}.library-section p,.library-section li{line-height:1.75;color:#3f4b45}
+.library-section ul{padding-left:22px}
+.library-fact{background:#fff8d9;border-left:5px solid #e5b900;border-radius:15px;padding:16px;margin:20px 0}
+.book-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;margin-top:14px}
+.book-card{background:#f8faf8;border:1px solid #e2eae4;border-radius:16px;padding:15px}
+.book-card strong{display:block;margin-bottom:5px;color:#173022}.book-card span{font-size:14px;line-height:1.55;color:#5a655f}
+.quiz-controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.quiz-intro{text-align:center;background:linear-gradient(135deg,#effaf1,#fffbea);border-radius:24px;padding:30px 20px;border:1px solid rgba(8,117,47,.13)}
+.quiz-icon{font-size:54px}.quiz-intro h3{font-size:25px;margin:8px 0}.quiz-intro p{color:#52605a}
+.quiz-progress{font-weight:800;color:#08752f;margin-bottom:16px}
+.quiz-question{background:#fff;border:1px solid #e2eae4;border-radius:18px;padding:18px;margin:14px 0}
+.quiz-question h4{margin:0 0 12px}
+.quiz-option{display:block;background:#f7f9f8;padding:11px 13px;border-radius:12px;margin:7px 0;cursor:pointer}
+.quiz-option:hover{background:#eef6f0}
+.quiz-option input{margin-right:9px}
+.quiz-result{text-align:center;background:#fff;border-radius:20px;padding:24px;margin-top:20px}
+.quiz-score{font-size:44px;font-weight:900;color:#08752f}
+.quiz-result-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px}
+@media(max-width:650px){.library-note{display:block}.library-note span{display:block;margin-top:5px}}
+
 </style>
 
 <style>
@@ -324,10 +353,10 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
         <h2>Choose your age group.</h2>
         <p class="muted">The same health message can be taught in different ways. Pick an age range to see the topics that fit best.</p>
         <div class="age-cards">
-          <button class="age-card" type="button" data-age="6-9" onclick="selectAge('6-9')"><div class="age-icon">🧒🏽</div><h3>6–9</h3><p>Clean habits & body basics</p></button>
-          <button class="age-card" type="button" data-age="10-12" onclick="selectAge('10-12')"><div class="age-icon">🧑🏽‍🤝‍🧑🏽</div><h3>10–12</h3><p>Growing up & early puberty</p></button>
-          <button class="age-card" type="button" data-age="13-15" onclick="selectAge('13-15')"><div class="age-icon">👦🏽👧🏽</div><h3>13–15</h3><p>Puberty, periods & confidence</p></button>
-          <button class="age-card" type="button" data-age="16-18" onclick="selectAge('16-18')"><div class="age-icon">🧑🏽</div><h3>16–18</h3><p>Health, responsibility & wellbeing</p></button>
+          <button class="age-card" type="button" data-age="6-9"><div class="age-icon">🧒🏽</div><h3>6–9</h3><p>Clean habits & body basics</p></button>
+          <button class="age-card" type="button" data-age="10-12"><div class="age-icon">🧑🏽‍🤝‍🧑🏽</div><h3>10–12</h3><p>Growing up & early puberty</p></button>
+          <button class="age-card" type="button" data-age="13-15"><div class="age-icon">👦🏽👧🏽</div><h3>13–15</h3><p>Puberty, periods & confidence</p></button>
+          <button class="age-card" type="button" data-age="16-18"><div class="age-icon">🧑🏽</div><h3>16–18</h3><p>Health, responsibility & wellbeing</p></button>
         </div>
         <div id="ageResult" class="age-result"><strong>Not sure where to start?</strong> Choose an age range above and we'll suggest a learning path.</div>
       </div>
@@ -383,54 +412,47 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 </section>
 
 
+
 <section id="education" class="section">
   <div class="section-head">
     <div>
       <span class="eyebrow">EDUCATION LIBRARY</span>
-      <h2>Learn first. Test yourself later. 📚</h2>
-      <p>Every topic gives you a real lesson to read and explore before the 10-question challenge. Choose your age group, open a topic, learn at your own pace, then take the test at the end.</p>
+      <h2>Explore. Learn. Grow. 📚</h2>
+      <p>A simple library of useful, age-appropriate information about personal hygiene, growing up, healthy habits and cleaner communities. Read as much as you like, then test what you learned in the quiz below.</p>
     </div>
   </div>
 
-  <div class="age-guide" style="margin-bottom:22px">
-    <div class="age-card active" data-age="6-9" onclick="selectAge('6-9')"><strong>6–9</strong><span>Clean habits & body basics</span></div>
-    <div class="age-card" data-age="10-12" onclick="selectAge('10-12')"><strong>10–12</strong><span>Growing up & early puberty</span></div>
-    <div class="age-card" data-age="13-15" onclick="selectAge('13-15')"><strong>13–15</strong><span>Puberty, periods & confidence</span></div>
-    <div class="age-card" data-age="16-18" onclick="selectAge('16-18')"><strong>16–18</strong><span>Health, responsibility & wellbeing</span></div>
+  <div class="library-note">
+    <strong>📖 How to use the library</strong>
+    <span>Choose a topic below. The information opens right here, so you can learn without leaving the page. At the end of each topic you'll also find recommended books and learning resources.</span>
   </div>
 
-  <div id="ageRecommendation" class="fun-strip" style="margin-bottom:28px">
-    🌟 Recommended for ages 6–9: start with Personal Hygiene.
-  </div>
-
-  <div id="educationLibrary" class="education-grid"></div>
-
-  <div id="lessonViewer" class="lesson-viewer" aria-hidden="true">
-    <div class="lesson-top">
-      <button class="btn secondary" onclick="closeLesson()">← Back to Library</button>
-      <span id="lessonProgress" class="lesson-progress">Lesson</span>
-    </div>
-    <div id="lessonContent"></div>
-    <div id="lessonTest"></div>
-  </div>
-</section>
-<section id="quiz" class="quiz-section">
-  <div class="container">
-    <div class="section-head"><div class="kicker">Test what you learned</div><h2>Afam Hygiene Quiz.</h2><p class="muted">Answer these quick questions after exploring the Education Library.</p></div>
-    <div class="quiz-card">
-      <form id="quizForm">
-        <div class="quiz-q"><h3>1. What is puberty?</h3><label><input type="radio" name="q1" value="a"> A sickness that affects only some children</label><label><input type="radio" name="q1" value="b"> A natural stage when the body changes toward adulthood</label><label><input type="radio" name="q1" value="c"> A type of hygiene product</label></div>
-        <div class="quiz-q"><h3>2. Which is a good daily hygiene habit?</h3><label><input type="radio" name="q2" value="a"> Washing hands regularly with soap and clean water</label><label><input type="radio" name="q2" value="b"> Wearing the same underwear for several days</label><label><input type="radio" name="q2" value="c"> Avoiding baths during hot weather</label></div>
-        <div class="quiz-q"><h3>3. Is it normal for people to start puberty at different times?</h3><label><input type="radio" name="q3" value="a"> Yes</label><label><input type="radio" name="q3" value="b"> No</label></div>
-        <div class="quiz-q"><h3>4. What should you do when changing a menstrual product?</h3><label><input type="radio" name="q4" value="a"> Never wash your hands</label><label><input type="radio" name="q4" value="b"> Wash your hands before and after changing it</label><label><input type="radio" name="q4" value="c"> Leave used products in an open public place</label></div>
-        <div class="quiz-q"><h3>5. If a symptom is severe, worrying or getting worse, what should you do?</h3><label><input type="radio" name="q5" value="a"> Ignore it</label><label><input type="radio" name="q5" value="b"> Search social media and self-diagnose</label><label><input type="radio" name="q5" value="c"> Speak with a trusted adult or qualified healthcare professional</label></div>
-        <button class="btn primary" type="submit" style="margin-top:20px">Check my score</button>
-      </form>
-      <div id="quizResult" class="quiz-result"></div>
-    </div>
-  </div>
+  <div id="libraryGrid" class="education-grid"></div>
+  <div id="libraryViewer" class="lesson-viewer" aria-hidden="true"></div>
 </section>
 
+<section id="quiz" class="section quiz-section">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">TEST WHAT YOU LEARNED</span>
+      <h2>Afam Sanitation Quiz.</h2>
+      <p>Answer 10 random questions after exploring the Education Library. You can try the same 10 again or get a fresh set of 10.</p>
+    </div>
+  </div>
+
+  <div class="quiz-controls">
+    <button class="btn" type="button" onclick="startAfamQuiz('fresh')">🎲 Give Me 10 Random Questions</button>
+    <button class="btn secondary" type="button" onclick="startAfamQuiz('same')">🔁 Do The Same 10 Again</button>
+  </div>
+
+  <div id="quizIntro" class="quiz-intro">
+    <div class="quiz-icon">🧠</div>
+    <h3>Ready to test yourself?</h3>
+    <p>Read the Education Library first, then choose your challenge above.</p>
+  </div>
+
+  <div id="afamQuiz" class="test-box" style="display:none"></div>
+</section>
 <section id="activities" class="activities">
   <div class="container">
     <div class="section-head">
@@ -629,10 +651,27 @@ reportForm.addEventListener("submit", async e => {
 });
 
 
+const BUDDY_CACHE_PREFIX="afam_buddy_";
+const QUICK_BUDDY={
+  "how do i wash my hands":"Wet your hands, apply soap, rub your palms, backs of hands, between your fingers and under your nails for about 20 seconds, then rinse with clean running water and dry them.",
+  "why should i wash my hands":"Handwashing helps remove germs and can reduce the spread of infections. Wash especially before eating or preparing food and after using the toilet.",
+  "what is puberty":"Puberty is a normal stage of growing up when hormones cause physical and emotional changes as the body develops toward adulthood. People begin and progress through puberty at different times.",
+  "what is personal hygiene":"Personal hygiene means caring for your body and keeping yourself clean through habits such as bathing, brushing your teeth, washing your hands and wearing clean clothes.",
+  "what is sanitation":"Sanitation means keeping people and places clean and reducing conditions that can spread germs, pollution and other health risks."
+};
 async function askSanitationBuddy(question) {
-  const url = API_URL + "?action=hygiene_chat&message=" + encodeURIComponent(question);
-  const response = await fetch(url);
-  return await response.json();
+  const key=BUDDY_CACHE_PREFIX+question.trim().toLowerCase();
+  try{const cached=localStorage.getItem(key);if(cached)return {success:true,answer:cached,cached:true}}catch(e){}
+  const quick=QUICK_BUDDY[question.trim().toLowerCase()];
+  if(quick)return {success:true,answer:quick,quick:true};
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),20000);
+  try{
+    const response=await fetch(API_URL+"?action=hygiene_chat&message="+encodeURIComponent(question),{signal:controller.signal});
+    const result=await response.json();
+    if(result.success&&result.answer){try{localStorage.setItem(key,result.answer)}catch(e){}}
+    return result;
+  }finally{clearTimeout(timer)}
 }
 
 function formatBotText(text) {
@@ -790,38 +829,27 @@ document.getElementById('lessonModal').addEventListener('click',e=>{if(e.target.
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
 document.getElementById('quizForm').addEventListener('submit',function(e){e.preventDefault();const answers={q1:'b',q2:'a',q3:'a',q4:'b',q5:'c'};let score=0;Object.entries(answers).forEach(([q,a])=>{const el=document.querySelector('input[name="'+q+'"]:checked');if(el&&el.value===a)score++});const r=document.getElementById('quizResult');let msg=score===5?'Excellent! 🎉 You got all 5 correct.':score>=3?'Good job! 👍 You got '+score+' out of 5. Review the lessons and try again.':'Keep learning! 🌱 You got '+score+' out of 5. Read the Education Library and try again.';r.innerHTML='<strong>'+msg+'</strong>';r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'nearest'})});
 
-loadImpact();
-loadActivities();
+// Keep the public page fast: API-backed impact/activity data loads after the first paint.
+const IMPACT_CACHE_KEY="afam_impact_cache_v1";
+const ACTIVITY_CACHE_KEY="afam_activity_cache_v1";
+const CACHE_MS=5*60*1000;
+function readCache(key){try{const x=JSON.parse(localStorage.getItem(key)||"null");return x&&Date.now()-x.time<CACHE_MS?x.data:null}catch(e){return null}}
+function writeCache(key,data){try{localStorage.setItem(key,JSON.stringify({time:Date.now(),data}))}catch(e){}}
+function renderImpactData(d){document.getElementById("totalActivities").textContent=d["Total Activities"]??0;document.getElementById("schools").textContent=d["Schools Visited"]??0;document.getElementById("people").textContent=d["People Reached"]??0;document.getElementById("communities").textContent=d["Communities Reached"]??0}
+function renderActivityData(data){if(!Array.isArray(data)||!data.length)return;const list=document.getElementById("activityList");list.innerHTML="";data.slice(-6).reverse().forEach(item=>{const article=document.createElement("article");article.className="activity";article.innerHTML=`<div class="date">${item["Date"]||"Activity"}</div><h3>${escapeHtml(item["Activity Type"]||"Community Activity")}</h3><p><strong>${escapeHtml(item["Location"]||"Location not specified")}</strong></p><p class="muted">${escapeHtml(item["Description"]||"")}</p><p class="small">${item["People Reached"]||0} people reached · ${item["Volunteers"]||0} volunteers</p>`;list.appendChild(article)})}
+async function refreshPublicData(){
+  const ci=readCache(IMPACT_CACHE_KEY); if(ci) renderImpactData(ci);
+  const ca=readCache(ACTIVITY_CACHE_KEY); if(ca) renderActivityData(ca);
+  try{const [ri,ra]=await Promise.all([fetch(API_URL+"?action=impact"),fetch(API_URL+"?action=activities")]);const [ji,ja]=await Promise.all([ri.json(),ra.json()]);if(ji.success){writeCache(IMPACT_CACHE_KEY,ji.data||{});renderImpactData(ji.data||{})}if(ja.success){writeCache(ACTIVITY_CACHE_KEY,ja.data||[]);renderActivityData(ja.data||[])}}catch(e){console.log("Public data refresh delayed",e)}
+}
+function schedulePublicData(){const run=()=>refreshPublicData();if("requestIdleCallback" in window) requestIdleCallback(run,{timeout:3500});else setTimeout(run,1200)}
+schedulePublicData();
 </script>
 
-<script>
-const AFAM_LESSONS = {
- personal:{icon:'🧼',title:'Personal Hygiene',summary:'Simple daily habits that help you stay clean, comfortable and healthy.',learn:'Personal hygiene includes bathing, washing hands, brushing teeth, keeping nails and hair clean, wearing clean clothes and keeping personal items clean.',tips:['Wash your hands with soap and clean water, especially before eating and after using the toilet.','Brush your teeth twice a day.','Bathe regularly and wear clean clothes.','Keep fingernails short and clean.'],fact:'Handwashing is one of the easiest ways to reduce the spread of germs.',mission:'Today, practise a full clean routine: wash, brush, bathe and wear clean clothes.'},
- puberty:{icon:'🌱',title:'Puberty & Body Changes',summary:'Understand normal changes as your body grows.',learn:'Puberty is a normal stage of growing up. Bodies change at different times and at different speeds. Changes can include height, body hair, body odour, skin changes and emotional changes.',tips:['Everyone develops at a different pace.','Keep clean as sweating and body odour may increase.','Ask a trusted adult or health professional when you have questions.','Your changing body deserves respect.'],fact:'There is no single “correct” age for every puberty change.',mission:'Write down one healthy habit you want to improve as you grow.'},
- periods:{icon:'🩸',title:'Periods & Menstrual Health',summary:'Learn what periods are and how to manage them safely and confidently.',learn:'A period is a normal part of the menstrual cycle. Good menstrual hygiene means changing sanitary products regularly, washing hands before and after changing them, keeping the genital area clean and disposing of used products properly.',tips:['Carry a clean menstrual product when needed.','Change products regularly.','Wash your hands before and after changing a product.','Talk to a trusted adult or health professional if pain or bleeding is worrying.'],fact:'Periods are a normal body process, not something to be ashamed of.',mission:'Help make conversations about periods respectful, private and free from teasing.'},
- boys:{icon:'🧑🏾',title:'Boys & Growing Up',summary:'A respectful guide to normal changes boys may experience.',learn:'During puberty, boys may experience a deeper voice, facial or body hair, erections, wet dreams, testicular development, body odour, acne and emotional changes. These changes are normal and happen at different times.',tips:['Keep your body and clothes clean.','Learn that private body changes are normal.','Respect your own and other people’s boundaries.','Ask a trusted adult or health professional questions when needed.'],fact:'Puberty does not happen at exactly the same time for everyone.',mission:'Choose one healthy routine—bathing, brushing or exercise—and keep it going this week.'},
- girls:{icon:'👧🏾',title:'Girls & Growing Up',summary:'Understand body changes, confidence and healthy self-care.',learn:'Girls may experience breast development, periods, discharge, body hair, body odour, acne and emotional changes during puberty. These are normal changes, and each person develops at their own pace.',tips:['Keep clean and wear comfortable clean clothes.','Learn how to prepare for your period.','Remember that bodies develop differently.','Talk to a trusted adult or health professional when something concerns you.'],fact:'Normal puberty changes can happen at different ages and speeds.',mission:'Make a small self-care plan for this week.'},
- healthy:{icon:'💚',title:'Healthy Habits',summary:'Build everyday habits that support your body, mind and community.',learn:'Healthy habits include eating balanced meals, drinking safe water, sleeping well, being physically active, keeping clean, managing emotions and asking for help when needed.',tips:['Drink safe water.','Get enough sleep and rest.','Move your body regularly.','Speak to someone you trust when you need support.'],fact:'Small healthy habits repeated every day can make a big difference.',mission:'Pick one healthy habit and practise it every day for seven days.'},
- environment:{icon:'🌱',title:'Environmental Sanitation',summary:'Learn how clean surroundings protect people and communities.',learn:'Environmental sanitation involves keeping homes, schools, markets, playgrounds, drains and public spaces clean. Good sanitation includes safe waste disposal and reducing places where germs and pests can spread.',tips:['Use bins and dispose of waste properly.','Do not block drains with rubbish.','Keep shared spaces clean.','Join safe community clean-up activities.'],fact:'A clean environment is a shared responsibility.',mission:'Spot one small cleanliness problem around you and suggest a safe solution.'},
- waste:{icon:'♻️',title:'Waste Management',summary:'Understand how to reduce, sort and safely dispose of waste.',learn:'Good waste management means reducing unnecessary waste, reusing useful items where safe, separating waste when facilities allow it and disposing of rubbish properly.',tips:['Do not litter.','Use reusable items where practical.','Keep sharp or hazardous waste away from children.','Never burn waste in unsafe places.'],fact:'Reducing waste at the source is often better than dealing with it after it is created.',mission:'Find one item you can reuse instead of throwing away.'},
- water:{icon:'💧',title:'Clean Water & Food Hygiene',summary:'Learn simple ways to keep water and food safer.',learn:'Safe water and food hygiene help prevent illness. Use clean water, wash hands before preparing or eating food, keep food covered and avoid cross-contamination between raw and ready-to-eat foods.',tips:['Use safe drinking water.','Wash hands before handling food.','Keep food covered.','Keep raw and cooked foods separate.'],fact:'Clean hands are an important part of safe food preparation.',mission:'Before your next meal, practise proper handwashing and check that your drinking water is safe.'}
-};
-const TEST_BANK={};
-Object.keys(AFAM_LESSONS).forEach(k=>{TEST_BANK[k]=[]});
-TEST_BANK.personal=[['How often should you brush your teeth?',['Once a week','Twice a day','Only when they hurt','Never'],'Twice a day'],['What should you use for effective handwashing?',['Soap and clean water','Only perfume','Dust','Oil'],'Soap and clean water'],['When should you wash your hands?',['Before eating','After using the toilet','Both','Only on Sundays'],'Both'],['What helps prevent body odour?',['Regular bathing','Never changing clothes','Avoiding water','Skipping exercise forever'],'Regular bathing'],['Why keep nails clean?',['To collect dirt','To reduce dirt and germs','To make them heavier','No reason'],'To reduce dirt and germs'],['What is personal hygiene?',['Keeping yourself clean and cared for','Only cleaning shoes','Only washing hair','A type of sport'],'Keeping yourself clean and cared for'],['What should you wear regularly?',['Clean clothes','Wet clothes','Dirty clothes','Any clothes forever'],'Clean clothes'],['What is a healthy habit?',['Brushing teeth','Never bathing','Littering','Skipping meals every day'],'Brushing teeth'],['What can you do after using the toilet?',['Wash your hands','Eat immediately','Touch food without washing','Ignore hygiene'],'Wash your hands'],['Which is a good daily goal?',['Stay clean and care for your surroundings','Litter everywhere','Avoid water','Never brush'],'Stay clean and care for your surroundings']];
-function genericQuestions(k){const l=AFAM_LESSONS[k];return Array.from({length:30},(_,i)=>['Which statement best matches '+l.title+'?',[l.summary,'It is never important','It means avoiding all questions','It is only for adults'],l.summary]);}
-Object.keys(AFAM_LESSONS).forEach(k=>{if(!TEST_BANK[k].length)TEST_BANK[k]=genericQuestions(k)});
-let currentLesson=null,currentQuestions=[],currentIndex=0,currentScore=0;
-function renderLessons(){const grid=document.getElementById('lessonGrid');if(!grid)return;grid.innerHTML=Object.entries(AFAM_LESSONS).map(([k,l])=>`<article class="lesson-card" onclick="openLesson('${k}')"><div class="lesson-icon">${l.icon}</div><h3>${l.title}</h3><p>${l.summary}</p><button>Learn More →</button></article>`).join('')}
-function openLesson(k){currentLesson=k;document.getElementById('lessonGrid').style.display='none';const panel=document.getElementById('lessonPanel');panel.hidden=false;const l=AFAM_LESSONS[k];document.getElementById('lessonContent').innerHTML=`<h2>${l.icon} ${l.title}</h2><p>${l.summary}</p><div class="lesson-content-grid"><div class="lesson-box"><h3>📚 Learn More</h3><p>${l.learn}</p></div><div class="lesson-box"><h3>🎯 Practical Tips</h3><ul>${l.tips.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="lesson-box fun-fact"><h3>💡 Did You Know?</h3><p>${l.fact}</p></div><div class="lesson-box mission"><h3>🚀 Try This</h3><p>${l.mission}</p></div></div>`;startTest()}
-function closeLesson(){document.getElementById('lessonPanel').hidden=true;document.getElementById('lessonGrid').style.display='grid';window.scrollTo({top:document.getElementById('education').offsetTop-80,behavior:'smooth'})}
-function questionPool(){const bank=TEST_BANK[currentLesson];const key='afamTestHistory_'+currentLesson;const used=JSON.parse(localStorage.getItem(key)||'[]');let available=bank.map((_,i)=>i).filter(i=>!used.includes(i));if(available.length<10){localStorage.removeItem(key);available=bank.map((_,i)=>i)};available.sort(()=>Math.random()-.5);return available.slice(0,10).map(i=>({...bank[i],_i:i}))}
-function startTest(){currentQuestions=questionPool();currentIndex=0;currentScore=0;renderQuestion()}
-function renderQuestion(){const box=document.getElementById('lessonTest');const q=currentQuestions[currentIndex];box.innerHTML=`<h2>📝 Test Yourself</h2><p class="progress-note">Question ${currentIndex+1} of 10</p><div class="test-question"><h3>${q[0]}</h3>${q[1].map((o,i)=>`<button class="test-option" onclick="answerQuestion(this,${i})">${o}</button>`).join('')}</div>`}
-function answerQuestion(btn,i){document.querySelectorAll('.test-option').forEach(b=>b.disabled=true);const q=currentQuestions[currentIndex];if(q[1][i]===q[2])currentScore++;btn.classList.add('selected');setTimeout(()=>{currentIndex++;if(currentIndex<10)renderQuestion();else finishTest()},350)}
-function finishTest(){const key='afamTestHistory_'+currentLesson;const used=JSON.parse(localStorage.getItem(key)||'[]');localStorage.setItem(key,JSON.stringify([...new Set([...used,...currentQuestions.map(q=>q._i)])]));let title=currentScore>=9?'🌟 Clean Champion!':currentScore>=7?'👏 Great Job!':currentScore>=5?'👍 Keep Learning!':'📚 Let’s Review This Lesson';document.getElementById('lessonTest').innerHTML=`<div class="test-result"><h2>${title}</h2><p>You scored <strong>${currentScore}/10</strong>.</p><p>You've completed this set. Your next visit will bring a fresh set of questions on this phone.</p><button class="test-next" onclick="startTest()">🔄 Give Me 10 New Questions</button></div>`}
-document.addEventListener('DOMContentLoaded',renderLessons);
-</script>
+
+
+
+
 
 <script>
 const educationLessons = {
@@ -948,606 +976,293 @@ const educationLessons = {
   }
 };
 
-const ageLessonMap = {
-  "6-9":["hygiene","healthy","environment","waste","water"],
-  "10-12":["hygiene","puberty","healthy","periods","boys","girls","environment","waste","water"],
-  "13-15":["puberty","periods","boys","girls","hygiene","healthy","environment","waste","water"],
-  "16-18":["puberty","periods","boys","girls","hygiene","healthy","environment","waste","water"]
+
+
+
+<script>
+const afamLibrary = {
+  hygiene:{
+    icon:"🧼", title:"Personal Hygiene", tag:"Everyday Clean Habits",
+    summary:"Learn the simple habits that help keep your body clean, comfortable and healthy.",
+    sections:[
+      ["What is personal hygiene?","Personal hygiene means taking care of your body and keeping yourself clean. It includes bathing, brushing your teeth, washing your hands, caring for your hair and nails, and wearing clean clothes."],
+      ["Clean hands","Wash your hands with soap and clean running water before eating or preparing food, after using the toilet, after coughing or sneezing, after playing outside and whenever your hands are dirty. Rub all parts of your hands for about 20 seconds before rinsing."],
+      ["Bathing and body care","Bathe regularly, especially after sweating or playing. Pay attention to areas such as the armpits and feet. Dry yourself with a clean towel and change into clean clothes."],
+      ["Teeth and mouth","Brush your teeth twice a day with fluoride toothpaste. Brush gently around your teeth and gums. Limit frequent sugary foods and drinks and tell a trusted adult if you have tooth pain."],
+      ["Hair, nails and clothes","Keep hair clean and cared for. Keep fingernails short and clean. Wear clean underwear and clothes, and do not share personal items such as toothbrushes or towels."],
+      ["Body odour","Sweating is normal. Body odour can happen when sweat mixes with bacteria on the skin. Regular bathing, clean clothes and keeping areas such as the armpits clean can help."]
+    ],
+    fact:"Clean hands are one of the simplest ways to reduce the spread of many germs.",
+    books:[["The Care and Keeping of You","American Girl — a child-friendly body and hygiene guide for growing girls."],["What’s Happening to Me?","A puberty and body-changes guide written for young readers."],["Wash Your Hands!","A simple picture-book style topic to look for in school or public libraries."]]
+  },
+  puberty:{
+    icon:"🌱", title:"Puberty & Body Changes", tag:"Growing Up",
+    summary:"Understand the physical and emotional changes that can happen as children grow into teenagers.",
+    sections:[
+      ["What is puberty?","Puberty is a normal stage of growing up when hormones cause the body to develop toward adulthood. It does not begin at exactly the same age for everyone."],
+      ["Changes many people notice","People may grow taller, develop body hair, have more body odour, experience oily skin or acne, and notice emotional changes. These are common parts of growing up."],
+      ["Girls","Breasts may develop, hips may change, body hair may grow and periods may begin. Vaginal discharge can also occur and can be normal."],
+      ["Boys","The penis and testicles develop, the voice may deepen, facial or body hair may appear, erections and wet dreams can happen, and body odour or acne may increase."],
+      ["Different bodies, different timelines","One person may start puberty earlier or later than a friend. Development can also happen at different speeds. Comparing bodies is not a good way to decide whether someone is healthy."],
+      ["Getting reliable help","Questions about growing up are normal. Talk to a trusted adult or qualified healthcare professional when you need accurate information or when a change worries you."]
+    ],
+    fact:"Puberty is a process, not a competition. People do not all develop at the same time.",
+    books:[["The Care and Keeping of You","American Girl — an accessible guide to puberty, hygiene and body changes."],["Guy Stuff: The Body Book for Boys","A practical puberty and body-care guide for boys."],["What's Happening to Me?","A visual guide to puberty and growing up."]]
+  },
+  periods:{
+    icon:"🩸", title:"Periods & Menstrual Health", tag:"Menstrual Health",
+    summary:"Learn what periods are, how to manage them hygienically and how to support respectful menstrual health.",
+    sections:[
+      ["What is a period?","A period is the regular shedding of blood and tissue from the lining of the uterus through the vagina. It is a normal biological process for many girls and women after puberty begins."],
+      ["Managing a period","Use a clean menstrual product that suits you. Change products regularly according to the product instructions and your flow. Wash your hands before and after changing a product."],
+      ["Clean and comfortable care","Keep the external genital area clean with clean water. Avoid putting harsh or perfumed products inside the vagina. Carry spare products when possible, especially when away from home."],
+      ["Pain and other symptoms","Some people have cramps, tiredness, headaches or mood changes. Rest, warmth and appropriate over-the-counter pain relief may help some people. Severe or unusual symptoms should be discussed with a qualified healthcare professional."],
+      ["No shame","Periods are a normal part of growing up. Boys and girls can learn about menstrual health and help create respectful, clean and supportive environments."],
+      ["When to seek help","Talk to a trusted adult or qualified healthcare professional about very heavy bleeding, severe pain, fainting, unusual symptoms or anything that causes concern."]
+    ],
+    fact:"Periods are not dirty or shameful. Accurate information makes menstrual health easier to manage.",
+    books:[["The Care and Keeping of You","American Girl — includes puberty and period information for young readers."],["Celebrate Your Body (and Its Changes, Too!)","A body-positive guide to puberty and menstruation."],["Period Power","A teen-friendly introduction to understanding periods and menstrual health."]]
+  },
+  boys:{
+    icon:"🧑🏾", title:"Boys & Growing Up", tag:"For Boys",
+    summary:"A respectful guide to common puberty changes and healthy body care for boys.",
+    sections:[
+      ["Growing up","Puberty can bring changes in height, body shape, body hair, skin, sweat and emotions. These changes happen over time."],
+      ["Body changes","The penis and testicles develop, the voice may deepen, facial or body hair may appear, erections can happen and wet dreams may occur during sleep."],
+      ["Keeping clean","As sweating and body odour increase, regular bathing, clean clothes and clean socks become especially important. Brush your teeth twice a day and wash your hands regularly."],
+      ["Skin and acne","Hormonal changes can increase skin oil and cause pimples. Wash gently instead of scrubbing hard or squeezing spots. Severe or persistent acne can be discussed with a healthcare professional."],
+      ["Respect and boundaries","Puberty does not change the importance of respecting other people's privacy and boundaries. Questions are normal and should be answered with reliable information."]
+    ],
+    fact:"Growing earlier or later than a friend does not automatically mean something is wrong.",
+    books:[["Guy Stuff: The Body Book for Boys","A practical, age-appropriate guide to puberty and body care."],["What's Happening to Me?","A visual guide to the changes of puberty."],["The Boy's Body Book","A general body and growing-up reference for young readers."]]
+  },
+  girls:{
+    icon:"👧🏾", title:"Girls & Growing Up", tag:"For Girls",
+    summary:"Learn about common puberty changes, self-care, body confidence and personal boundaries.",
+    sections:[
+      ["Growing up","Girls may grow taller, develop breasts and hips, grow body hair and notice changes in skin, sweat and emotions. Everyone develops at a different rate."],
+      ["Periods","Periods can begin during puberty and may be irregular at first. Learning how to manage menstrual products and period symptoms can make the experience easier."],
+      ["Normal body changes","Vaginal discharge can sometimes be normal, especially when it is clear or white and does not have a strong unpleasant smell. Concerning symptoms should be discussed with a qualified healthcare professional."],
+      ["Skin and body odour","Hormonal changes can increase acne and sweating. Gentle washing, clean clothes and good personal hygiene can help."],
+      ["Confidence and privacy","Your body belongs to you. You can say no to unwanted touch and seek help from a trusted adult if someone makes you uncomfortable or violates your boundaries."]
+    ],
+    fact:"Bodies do not all develop in the same way or at the same speed.",
+    books:[["The Care and Keeping of You","American Girl — a popular body-care and puberty guide for girls."],["Celebrate Your Body (and Its Changes, Too!)","A positive guide to puberty, periods and body confidence."],["The Period Book","A straightforward introduction to menstruation for young readers."]]
+  },
+  healthy:{
+    icon:"💪🏾", title:"Healthy Habits", tag:"Healthy Living",
+    summary:"Build everyday habits that support your body, your mind and your ability to learn.",
+    sections:[
+      ["Eat a variety of foods","Try to eat a mixture of foods from different food groups, including vegetables and fruits, grains or other staple foods, protein sources and healthy fats."],
+      ["Drink safe water","Our bodies need water for many important functions. Choose water from a trusted safe source for drinking and food preparation."],
+      ["Sleep","A regular sleep routine supports health, growth and learning. A calmer evening routine can make it easier to get enough rest."],
+      ["Move your body","Walking, running, sports, dancing, games and other physical activities help keep the body strong. Choose activities you enjoy and take sensible safety precautions."],
+      ["Care for your mind","Stress, sadness and worry happen to everyone. Talk to a trusted person, take breaks and ask for help when feelings become difficult to manage."],
+      ["Avoid harmful choices","Do not misuse medicines or substances. Follow instructions from trusted adults and qualified healthcare professionals and never take unknown substances."]
+    ],
+    fact:"Healthy habits are usually built through small actions repeated consistently.",
+    books:[["The Feelings Book","A useful type of children's resource for learning to identify and talk about emotions."],["The Kids' Book of Healthy Eating","A practical introduction to food choices and healthy routines."],["National Geographic Kids health titles","Look for child-friendly health, body and science books in libraries."]]
+  },
+  environment:{
+    icon:"🌍", title:"Environmental Sanitation", tag:"Clean Communities",
+    summary:"Learn how clean surroundings, safe sanitation and teamwork can make communities healthier.",
+    sections:[
+      ["What is environmental sanitation?","Environmental sanitation means keeping our surroundings clean and reducing conditions that can harm health. It includes waste management, clean water, safe toilets and cleaner public spaces."],
+      ["Use bins and disposal points","Put waste in the appropriate bin or disposal point. Do not throw rubbish into drains, roads, playgrounds or water bodies."],
+      ["Protect drains and waterways","Blocked drains can contribute to flooding and create unhealthy conditions. Keep plastic, food waste and other refuse out of drains and waterways."],
+      ["Keep shared spaces clean","Schools, markets, playgrounds and streets are shared spaces. Pick up litter safely, use cleaning tools properly and encourage others respectfully."],
+      ["Work as a team","Community sanitation works best when people cooperate. Small actions by many people can create a cleaner environment for everyone."]
+    ],
+    fact:"A clean community is built by many people making better choices together.",
+    books:[["National Geographic Kids: Our Planet","Child-friendly environmental learning and conservation content."],["The Watcher","A picture-book example of how children can learn to notice and care for nature."],["DK Eyewitness environmental books","Visual reference books that can help children explore nature, pollution and conservation."]]
+  },
+  waste:{
+    icon:"♻️", title:"Waste Management", tag:"Waste & Recycling",
+    summary:"Understand the simple choices that reduce litter, pollution and unnecessary waste.",
+    sections:[
+      ["What is waste?","Waste is material we no longer need or want. It can include food scraps, paper, plastic, cans, bottles and other materials."],
+      ["Reduce","Reduce means avoiding unnecessary waste in the first place, such as avoiding items you do not need."],
+      ["Reuse","Reuse means using an item again when it is safe and practical instead of throwing it away immediately."],
+      ["Recycle","Recycling means processing suitable materials so they can become useful products again. Follow the recycling system available in your community."],
+      ["Food waste","Avoid taking more food than you can eat. Store food safely and dispose of food waste appropriately so it does not attract pests."],
+      ["Safety first","Do not pick up sharp objects, unknown chemicals, medical waste or other dangerous materials with bare hands. Tell a trusted adult or responsible authority."]
+    ],
+    fact:"Reducing unnecessary waste is often the first and easiest step in better waste management.",
+    books:[["What a Waste","A visual children's introduction to rubbish, recycling and responsible waste choices."],["The Watcher","A nature-focused story that can support conversations about caring for the environment."],["National Geographic Kids environment books","Visual learning resources about waste, nature and protecting the planet."]]
+  },
+  water:{
+    icon:"💧", title:"Clean Water & Toilet Hygiene", tag:"Water & Toilets",
+    summary:"Learn why safe water and clean toilets matter and how simple habits protect everyone.",
+    sections:[
+      ["Why clean water matters","Our bodies need water for many important functions. Water used for drinking, preparing food and brushing teeth should come from a safe source."],
+      ["Safe water storage","Keep drinking-water containers clean and covered. Avoid dipping dirty hands or cups into stored drinking water."],
+      ["Toilet hygiene","Use toilets properly and keep them clean. Wash your hands with soap and clean water after using the toilet."],
+      ["Protect water sources","Do not throw rubbish, chemicals or human waste into rivers, streams, wells or other water sources."],
+      ["When water safety is uncertain","Ask a trusted adult or local health authority what safe-water treatment is appropriate for your area. Water can look clear and still be unsafe."]
+    ],
+    fact:"Water can look clean and still contain germs or harmful substances, so a trusted safe water source matters.",
+    books:[["National Geographic Kids: Water","Look for child-friendly books about the water cycle, water safety and conservation."],["A Drop Around the World","A children's picture-book approach to understanding water and its journey."],["DK water and science reference books","Visual resources that help children explore water, hygiene and the environment."]]
+  }
 };
 
-const testBanks = {
-  hygiene:[
-    ["What does personal hygiene mean?",["Taking care of your body and keeping clean","Never going outside","Only washing your clothes","Avoiding exercise"],0],
-    ["When should you wash your hands?",["Only before sleeping","After using the toilet and before eating","Only when someone tells you","Once a week"],1],
-    ["How often is it generally recommended to brush your teeth?",["Once a week","Once a month","Twice a day","Only when they hurt"],2],
-    ["Why should fingernails be kept clean?",["Dirt and germs can collect underneath them","It makes you taller","It changes your voice","It stops you sweating"],0],
-    ["What can help reduce body odour?",["Regular bathing and clean clothes","Never changing clothes","Avoiding water","Eating only sweets"],0],
-    ["What should you use when washing your hands?",["Soap and clean running water when available","Only perfume","Mud","Cooking oil"],0],
-    ["What is a good habit after bathing?",["Dry yourself with a clean towel and wear clean clothes","Put on wet clothes","Share your towel with everyone","Avoid brushing your teeth"],0],
-    ["How should you treat your teeth when brushing?",["Brush gently around the teeth and gums","Scrub as hard as possible","Brush once a month","Only brush the front tooth"],0],
-    ["Which item should normally NOT be shared?",["A personal toothbrush","A school desk","A football","A classroom book"],0],
-    ["If you have ongoing tooth pain, what is a good step?",["Tell a trusted adult and seek qualified dental/health advice","Ignore it forever","Stop drinking water","Hide it from everyone"],0]
-  ],
-  puberty:[
-    ["What is puberty?",["A normal stage of growing up involving body changes","A disease","A type of food","A school subject"],0],
-    ["Do all people begin puberty at exactly the same age?",["Yes","No","Only boys do","Only girls do"],1],
-    ["Which can be a normal puberty change?",["Growth in height and body hair","Having no need for sleep","Never sweating","Losing all emotions"],0],
-    ["What can happen to a boy's voice during puberty?",["It may become deeper","It always disappears","It becomes permanently silent","Nothing can ever change"],0],
-    ["What may happen to girls during puberty?",["Breast development and periods may begin","They stop growing immediately","They can never have body hair","Nothing changes"],0],
-    ["Can emotions change during puberty?",["Yes","No","Only at school","Only during sleep"],0],
-    ["What is important to remember about puberty?",["People develop at different times and speeds","Everyone must develop at the same time","Earlier is always better","Later always means something is wrong"],0],
-    ["What can help during puberty?",["Good hygiene, sleep, healthy food and trusted support","Avoiding all adults","Skipping meals","Never asking questions"],0],
-    ["Who can provide reliable health information?",["A trusted adult or qualified health professional","A random stranger online","Someone who makes fun of you","Nobody"],0],
-    ["Is it okay to have questions about puberty?",["Yes","No","Only adults can ask questions","Only boys can ask"],0]
-  ],
-  periods:[
-    ["What is a period?",["A normal process where blood and tissue leave the uterus","An illness every person gets","A type of exercise","A skin condition"],0],
-    ["What should you do before and after changing a menstrual product?",["Wash your hands","Eat sweets","Touch your face","Do nothing"],0],
-    ["Are periods something to be ashamed of?",["No","Yes","Only at school","Only during holidays"],0],
-    ["What can some people experience during a period?",["Cramps or tiredness","A permanent fever","Their bones disappearing","Never feeling anything"],0],
-    ["Where should used menstrual products be disposed of?",["Safely according to the local waste arrangements","In a classroom desk","In a river","Anywhere on the floor"],0],
-    ["What should you do about severe or unusual period symptoms?",["Talk to a trusted adult or qualified healthcare professional","Hide them","Stop drinking water","Ignore them forever"],0],
-    ["What is important when managing periods at school?",["Having access to clean products and a plan for changing them","Avoiding school forever","Never washing hands","Sharing used products"],0],
-    ["Which statement is true?",["People can have different period experiences","Everyone has identical periods","Periods are dirty","Nobody needs information about periods"],0],
-    ["What can help make menstruation more respectful?",["Learning accurate information and avoiding shame","Making fun of people","Hiding all information","Spreading rumours"],0],
-    ["What should be avoided inside the vagina for routine cleaning?",["Harsh or perfumed products","Clean water for the external area","Following qualified health advice","Basic hygiene"],0]
-  ]
-};
-
-// For the remaining topics, build varied tests from lesson facts so every lesson still has 10 questions.
-testBanks.boys = [
- ["Which is a possible puberty change for boys?",["Voice deepening","Growing shorter every day","Never sweating","Losing all body hair"],0],
- ["Can wet dreams happen during puberty?",["Yes","No","Only after age 30","Only during school"],0],
- ["What can help with increased body odour?",["Bathing and clean clothes","Never washing","Sharing towels","Avoiding all water"],0],
- ["Can erections happen without a person choosing them?",["Yes","No","Never","Only during exercise"],0],
- ["Is acne during puberty something to be ashamed of?",["No","Yes","Always","Only for boys"],0],
- ["Do all boys develop at exactly the same rate?",["No","Yes","Only twins do","Only athletes do"],0],
- ["What is a good response to questions about puberty?",["Ask a trusted adult or health professional","Believe every rumour","Stay silent forever","Make fun of someone"],0],
- ["What should boys do about personal hygiene during puberty?",["Keep clean and wear clean clothes","Stop bathing","Share toothbrushes","Avoid exercise"],0],
- ["What can puberty affect besides the body?",["Feelings and emotions","The colour of the sky","The length of a school day","Nothing"],0],
- ["What is important about other people's boundaries?",["Respect them","Ignore them","Laugh at them","Test them"],0]
-];
-testBanks.girls = [
- ["Which is a possible puberty change for girls?",["Breast development","Never growing","Losing all body hair","Never sweating"],0],
- ["Can periods begin during puberty?",["Yes","No","Only after age 50","Only during school"],0],
- ["Can vaginal discharge sometimes be normal?",["Yes","No","Never","Only during sports"],0],
- ["What can help with body odour?",["Regular washing and clean clothes","Avoiding water","Never changing clothes","Using random chemicals"],0],
- ["What should you do if you have concerning symptoms?",["Talk to a trusted adult or qualified healthcare professional","Hide them","Ignore them forever","Ask a stranger"],0],
- ["Do all girls develop at the same speed?",["No","Yes","Only sisters do","Only athletes do"],0],
- ["What is an important privacy principle?",["Your body belongs to you","Everyone may touch you","You cannot say no","Privacy does not matter"],0],
- ["What can help with acne?",["Gentle washing and qualified advice if severe","Squeezing every spot hard","Using unknown chemicals","Never washing"],0],
- ["Is normal body development something to be ashamed of?",["No","Yes","Always","Only at school"],0],
- ["What is a good self-care habit?",["Keeping clean and having what you may need for school or outings","Skipping meals","Avoiding trusted adults","Never asking questions"],0]
-];
-testBanks.healthy = [
- ["Which helps a healthy lifestyle?",["Balanced food, sleep and physical activity","Skipping sleep","Only eating sweets","Never moving"],0],
- ["Why is sleep important?",["It supports health, growth and learning","It makes water unnecessary","It replaces food","It stops all emotions"],0],
- ["Which is a good drink choice?",["Safe water","Unknown liquid","Only sugary drinks","Chemical cleaner"],0],
- ["What can help when you feel stressed?",["Talk to a trusted person","Keep everything secret forever","Hurt yourself","Stop eating"],0],
- ["Why is physical activity useful?",["It helps keep the body strong and healthy","It prevents learning","It replaces sleep","It makes hygiene unnecessary"],0],
- ["What is a healthy approach to food?",["Eat a variety of foods","Eat one food forever","Avoid all vegetables","Never drink water"],0],
- ["What should you do with medicines?",["Use them according to trusted instructions","Share them randomly","Double every dose","Take unknown medicines"],0],
- ["Are difficult feelings something you can ask for help with?",["Yes","No","Only adults can","Never"],0],
- ["What is one way to build healthy habits?",["Repeat small healthy actions consistently","Change everything once a year","Avoid routines","Never practise"],0],
- ["Who can help with a health concern?",["A trusted adult or qualified healthcare professional","A random stranger","Nobody","Only social media"],0]
-];
-testBanks.environment = [
- ["What does environmental sanitation involve?",["Keeping surroundings clean and reducing health risks","Painting every wall","Only sweeping indoors","Avoiding all communities"],0],
- ["Where should rubbish go?",["An appropriate bin or disposal point","A drain","A river","The road"],0],
- ["Why should drains be kept clear?",["To reduce blockage, flooding and unhealthy conditions","To collect plastic","To make litter harder to see","For decoration"],0],
- ["What should you do with litter in a shared space?",["Dispose of it properly when safe","Throw it into water","Hide it under a desk","Leave it on the road"],0],
- ["Can one person create a completely clean community alone?",["Community teamwork makes a bigger difference","Yes, always","No one can help","Only children can"],0],
- ["What should never be dumped into waterways?",["Rubbish and harmful chemicals","Clean air","Sunlight","Rain"],0],
- ["Which is a shared space?",["A school or marketplace","Only your bedroom","Only your phone","Only your bag"],0],
- ["What is a good sanitation attitude?",["Encourage others respectfully","Shame everyone","Ignore litter","Make fun of cleaners"],0],
- ["What can many small actions create?",["A cleaner community","More pollution","More blocked drains","Nothing"],0],
- ["What is a safe response to dangerous waste?",["Tell a trusted adult or responsible authority","Pick it up with bare hands","Kick it into a drain","Hide it"],0]
-];
-testBanks.waste = [
- ["What is waste?",["Material we no longer need or want","Only water","Only food","Only paper"],0],
- ["What does reduce mean?",["Avoiding unnecessary waste","Throwing more away","Burning everything","Hiding rubbish"],0],
- ["What does reuse mean?",["Using an item again when safe and practical","Buying five more","Throwing it away","Putting it in a river"],0],
- ["What does recycle mean?",["Processing suitable materials into useful products again","Burning all waste","Hiding waste","Putting plastic in drains"],0],
- ["Why should food waste be handled properly?",["It can attract pests if left around","It becomes clean automatically","It stops all smells","It cannot affect anything"],0],
- ["What can plastic waste do?",["Pollute land and water and block drains","Clean rivers","Make drains wider","Disappear immediately"],0],
- ["What should you do with sharp or dangerous waste?",["Tell a trusted adult or responsible authority","Pick it up with bare hands","Put it in your pocket","Throw it at someone"],0],
- ["Which is often best for waste reduction?",["Avoid creating unnecessary waste","Create more waste","Use more disposable items","Litter less visibly"],0],
- ["Which can be reused when safe?",["A suitable reusable bottle","A used medical needle","Unknown chemicals","Broken sharp glass"],0],
- ["Who should help manage community waste?",["Everyone can play a safe, responsible role","Only children","Nobody","Only one person"],0]
-];
-testBanks.water = [
- ["Why is safe water important?",["Our bodies need water and unsafe water can contain harmful germs or substances","Water is only for washing cars","It is never needed","It replaces food"],0],
- ["How should drinking-water storage be kept?",["Clean and covered","Open and dirty","Near rubbish","Uncovered always"],0],
- ["Should dirty hands be dipped into stored drinking water?",["No","Yes","Only at night","Always"],0],
- ["What should you do after using the toilet?",["Wash your hands with soap and clean water when available","Touch your face","Eat immediately","Never wash"],0],
- ["Should rubbish be thrown into rivers or streams?",["No","Yes","Only plastic","Only on weekends"],0],
- ["Can water look clear and still be unsafe?",["Yes","No","Never","Only in winter"],0],
- ["What should you do if you are unsure about water safety?",["Ask a trusted adult or local health authority","Guess","Drink anything","Ignore the concern"],0],
- ["Why should toilets be kept clean?",["Clean toilets support hygiene and reduce health risks","It does not matter","Only adults use toilets","To make them smell stronger"],0],
- ["What should be protected from pollution?",["Water sources","Only roads","Only classrooms","Nothing"],0],
- ["What is a safe water habit?",["Use water from a trusted safe source","Share dirty cups","Leave containers open","Store water beside waste"],0]
+const quizBank = [
+ ["Which habit is most important before eating?","Wash your hands with soap and clean water",["Put on perfume","Touch your shoes","Skip washing"],0],
+ ["How often should you generally brush your teeth?","Twice a day",["Once a week","Once a month","Only when they hurt"],0],
+ ["What is puberty?","A normal stage of growing up when the body changes toward adulthood",["A disease","A type of exercise","A school punishment"],0],
+ ["Do all people begin puberty at exactly the same age?","No",["Yes","Only boys do","Only girls do"],0],
+ ["Which can be a normal puberty change?","Increased body hair",["Never sweating","Stopping growth forever","Losing all emotions"],0],
+ ["What can help reduce body odour?","Regular bathing and clean clothes",["Never changing clothes","Avoiding water","Using unknown chemicals"],0],
+ ["What is a period?","The normal shedding of blood and tissue from the uterine lining",["A disease","A type of exercise","A skin condition"],0],
+ ["What should you do before and after changing a menstrual product?","Wash your hands",["Eat sweets","Touch your face","Do nothing"],0],
+ ["Are periods something to be ashamed of?","No",["Yes","Only at school","Only during holidays"],0],
+ ["Which is a healthy habit?","Getting enough sleep",["Skipping sleep","Never drinking water","Avoiding all movement"],0],
+ ["What does environmental sanitation involve?","Keeping surroundings clean and reducing health risks",["Only painting walls","Only cleaning bedrooms","Avoiding public spaces"],0],
+ ["Where should rubbish normally go?","An appropriate bin or disposal point",["A drain","A river","The road"],0],
+ ["Why should drains be kept clear?","To reduce blockage and flooding",["To collect plastic","To hide rubbish","For decoration"],0],
+ ["What does reuse mean?","Using an item again when it is safe and practical",["Throwing it away","Buying five more","Putting it in a river"],0],
+ ["What does recycling mean?","Processing suitable materials into useful products again",["Hiding waste","Burning everything","Throwing plastic into drains"],0],
+ ["What should you do with sharp or dangerous waste?","Tell a trusted adult or responsible authority",["Pick it up with bare hands","Put it in your pocket","Kick it into a drain"],0],
+ ["Why is safe water important?","Unsafe water can contain harmful germs or substances",["Water is never needed","Water replaces food","Only animals need safe water"],0],
+ ["How should drinking-water storage be kept?","Clean and covered",["Open and dirty","Beside rubbish","Uncovered"],0],
+ ["What should you do after using the toilet?","Wash your hands with soap and clean water when available",["Eat immediately","Touch your face","Never wash"],0],
+ ["Can water look clear and still be unsafe?","Yes",["No","Never","Only in winter"],0],
+ ["Which is a possible puberty change for boys?","Voice deepening",["Growing shorter every day","Never sweating","Losing all body hair"],0],
+ ["Can wet dreams happen during puberty?","Yes",["No","Only after age 30","Only during school"],0],
+ ["Which is a possible puberty change for girls?","Breast development",["Never growing","Losing all body hair","Never sweating"],0],
+ ["Can vaginal discharge sometimes be normal?","Yes",["No","Never","Only during sports"],0],
+ ["What is an important privacy principle?","Your body belongs to you",["Everyone may touch you","You cannot say no","Privacy does not matter"],0],
+ ["What can help when you feel stressed?","Talk to a trusted person",["Keep everything secret forever","Stop eating","Avoid everyone"],0],
+ ["Why is physical activity useful?","It helps keep the body strong and healthy",["It replaces sleep","It replaces food","It makes hygiene unnecessary"],0],
+ ["What is a good approach to food?","Eat a variety of foods",["Eat one food forever","Avoid all vegetables","Never drink water"],0],
+ ["What should you do if a health change worries you?","Talk to a trusted adult or qualified healthcare professional",["Hide it","Ignore it forever","Ask a random stranger"],0],
+ ["What is one good way to protect waterways?","Keep rubbish and harmful substances out of them",["Dump waste into them","Use drains as rubbish bins","Pour unknown chemicals into them"],0],
+ ["Why should food waste be handled properly?","It can attract pests when left around",["It becomes clean automatically","It cannot affect anything","It makes drains wider"],0],
+ ["Which is often the best first step in waste reduction?","Avoid creating unnecessary waste",["Create more waste","Use more disposable items","Hide litter"],0],
+ ["What is a safe water habit?","Use water from a trusted safe source",["Share dirty cups","Leave containers open","Store water beside waste"],0],
+ ["What can many small sanitation actions create?","A cleaner community",["More pollution","More blocked drains","Nothing"],0],
+ ["What is body odour related to?","Sweat mixing with bacteria on the skin",["Never drinking water","Bones changing colour","Growing taller"],0],
+ ["How should you treat your teeth when brushing?","Brush gently around the teeth and gums",["Scrub as hard as possible","Brush once a month","Only brush one tooth"],0],
+ ["Should you share a personal toothbrush?","No",["Yes, with everyone","Only with strangers","Always"],0],
+ ["What can help with acne?","Gentle washing and qualified advice if severe",["Squeezing every spot hard","Using unknown chemicals","Never washing"],0],
+ ["What is a good response to questions about puberty?","Ask a trusted adult or health professional",["Believe every rumour","Make fun of someone","Never ask questions"],0]
 ];
 
-let currentLessonKey = null;
-let currentQuestions = [];
+let afamQuizQuestions = [];
+let afamQuizMode = "fresh";
+let afamQuizSet = [];
 
-function renderEducationLibrary(){
-  const age = document.querySelector(".age-card.active")?.dataset.age || "6-9";
-  const keys = ageLessonMap[age] || ageLessonMap["6-9"];
-  const box = document.getElementById("educationLibrary");
-  box.innerHTML = keys.map(key=>{
-    const l=educationLessons[key];
-    return `<article class="edu-card">
+function shuffleAfam(a){
+  const x=[...a];
+  for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}
+  return x;
+}
+
+function renderAfamLibrary(){
+  const grid=document.getElementById("libraryGrid");
+  if(!grid)return;
+  grid.innerHTML=Object.entries(afamLibrary).map(([key,l])=>`
+    <article class="edu-card">
       <div class="edu-icon">${l.icon}</div>
-      <div class="lesson-meta">${l.level}</div>
+      <span class="library-topic-tag">${l.tag}</span>
       <h3>${l.title}</h3>
       <p>${l.summary}</p>
-      <button class="btn" onclick="openLesson('${key}')">📖 Learn More</button>
-    </article>`;
-  }).join("");
+      <button class="btn" type="button" onclick="openLibraryTopic('${key}')">📖 Open Library</button>
+    </article>`).join("");
 }
 
-
-
-function shuffleArray(arr){
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
-  return a;
-}
-
-function getQuestionSet(key){
-  const bank=testBanks[key] || [];
-  return shuffleArray(bank).slice(0,10);
-}
-
-function openLesson(key){
-  currentLessonKey=key;
-  const l=educationLessons[key];
-  const viewer=document.getElementById("lessonViewer");
-  document.getElementById("lessonProgress").textContent="📖 Read the lesson • Test yourself when ready";
-  document.getElementById("lessonContent").innerHTML=`
-    <div class="lesson-hero">
-      <div class="big-icon">${l.icon}</div>
-      <div><div class="lesson-content"><h2>${l.title}</h2><p>${l.summary}</p></div></div>
+function openLibraryTopic(key){
+  const l=afamLibrary[key];
+  const viewer=document.getElementById("libraryViewer");
+  viewer.innerHTML=`
+    <div class="library-viewer-head">
+      <div>
+        <span class="library-topic-tag">${l.tag}</span>
+        <h2>${l.icon} ${l.title}</h2>
+        <p>${l.summary}</p>
+      </div>
+      <button class="btn secondary" type="button" onclick="closeLibraryTopic()">← Back to Library</button>
     </div>
-    <div class="lesson-content">
-      ${l.sections.map(s=>`<section><h3>${s[0]}</h3><p>${s[1]}</p></section>`).join("")}
-      <div class="lesson-fact"><strong>💡 Did You Know?</strong><p>${l.fact}</p></div>
-      <div class="lesson-action"><strong>${l.action}</strong></div>
-
-      <div class="test-box" style="text-align:center;margin-top:30px">
-        <h3>🎓 Ready to test what you learned?</h3>
-        <p>Take your time to read the lesson. When you are ready, continue to the 10-question challenge.</p>
-        <button class="btn" type="button" onclick="startLessonTest()">📝 Take the 10-Question Test</button>
+    ${l.sections.map(s=>`<div class="library-section"><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join("")}
+    <div class="library-fact"><strong>💡 Remember:</strong> ${l.fact}</div>
+    <div class="library-section">
+      <h3>📚 Book & Learning Recommendations</h3>
+      <p>These are good starting points for children, teenagers, parents and educators. Availability can vary by library or bookstore.</p>
+      <div class="book-list">
+        ${l.books.map(b=>`<div class="book-card"><strong>${b[0]}</strong><span>${b[1]}</span></div>`).join("")}
       </div>
     </div>`;
-
-  document.getElementById("lessonTest").innerHTML="";
   viewer.classList.add("open");
   viewer.setAttribute("aria-hidden","false");
   viewer.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-function startLessonTest(){
-  if(!currentLessonKey)return;
-  renderLessonTest(currentLessonKey);
-  const test=document.getElementById("lessonTest");
-  test.scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function renderLessonTest(key){
-  currentQuestions=getQuestionSet(key);
-  const completed=JSON.parse(localStorage.getItem("afamLessonTests")||"{}");
-  const previous=completed[key];
-  const test=document.getElementById("lessonTest");
-  test.innerHTML=`
-    <div class="test-box">
-      <h3>📝 Test Yourself — 10 Questions</h3>
-      <p>Choose the best answer for each question.</p>
-      ${previous ? `<div class="lesson-fact"><strong>🔄 New Challenge Available</strong><p>You completed this lesson test before${previous.score!=null?` and scored ${previous.score}/10`:``}. This is a fresh set of questions for this phone.</p></div>`:""}
-      <form id="lessonQuizForm">
-        ${currentQuestions.map((q,i)=>`
-          <div class="question-card">
-            <h4>${i+1}. ${q[0]}</h4>
-            ${q[1].map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")}
-          </div>`).join("")}
-        <button class="btn" type="submit">✅ Submit My Test</button>
-      </form>
-      <div id="lessonScore"></div>
-    </div>`;
-  document.getElementById("lessonQuizForm").addEventListener("submit",submitLessonTest);
-}
-
-function submitLessonTest(e){
-  e.preventDefault();
-  let score=0, answered=0;
-  currentQuestions.forEach((q,i)=>{
-    const chosen=document.querySelector(`input[name="q${i}"]:checked`);
-    if(chosen){answered++;if(Number(chosen.value)===q[2])score++;}
-  });
-  if(answered<10){
-    document.getElementById("lessonScore").innerHTML=`<div class="lesson-fact"><strong>Almost there! 👀</strong><p>Please answer all 10 questions before submitting.</p></div>`;
-    return;
-  }
-  const data=JSON.parse(localStorage.getItem("afamLessonTests")||"{}");
-  data[currentLessonKey]={completed:true,score,completedAt:new Date().toISOString()};
-  localStorage.setItem("afamLessonTests",JSON.stringify(data));
-  const title=score>=9?"🌟 Clean Champion!":score>=7?"👏 Great Job!":score>=5?"👍 Keep Learning!":"📚 Let's Review This Lesson";
-  document.getElementById("lessonScore").innerHTML=`<div class="score-box"><div class="score-big">${score}/10</div><h3>${title}</h3><p>${score>=7?"Excellent work. Come back later for another fresh 10-question challenge.":"Review the lesson above and try another fresh challenge when you're ready."}</p><button class="btn" type="button" onclick="renderLessonTest(currentLessonKey)">🔄 Give Me 10 New Questions</button></div>`;
-}
-
-function closeLesson(){
-  const viewer=document.getElementById("lessonViewer");
+function closeLibraryTopic(){
+  const viewer=document.getElementById("libraryViewer");
   if(!viewer)return;
   viewer.classList.remove("open");
   viewer.setAttribute("aria-hidden","true");
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
-  if(document.getElementById("educationLibrary")) renderEducationLibrary();
-});
-</script>
-
-
-<script>
-const educationLessons = {
-  hygiene: {
-    icon:"🧼", title:"Personal Hygiene", level:"Ages 6–18",
-    summary:"Learn the everyday habits that help keep your body clean, comfortable and healthy.",
-    sections:[
-      ["What is personal hygiene?","Personal hygiene means taking care of your body and keeping yourself clean. Simple habits such as bathing, brushing your teeth, washing your hands and wearing clean clothes help you stay fresh and reduce the spread of germs."],
-      ["1. Keep your body clean","Bathe regularly, especially after sports, outdoor activities or when you have been sweating. Clean areas such as your armpits, feet and other body folds carefully. Dry yourself with a clean towel and change into clean clothes."],
-      ["2. Wash your hands","Wash your hands with soap and clean running water before eating or preparing food, after using the toilet, after coughing or sneezing, after playing outside and whenever your hands are visibly dirty. Rub all parts of your hands for about 20 seconds before rinsing."],
-      ["3. Care for your teeth","Brush your teeth twice a day with fluoride toothpaste. Clean gently around your teeth and gums. Limit frequent sugary snacks and drinks, and tell a trusted adult if you have tooth pain."],
-      ["4. Hair, nails and clothes","Keep hair clean and cared for. Keep fingernails short and clean because dirt and germs can collect underneath them. Wear clean underwear and clothes and do not share personal items such as toothbrushes or towels."],
-      ["Body odour","Sweat itself is not something to be ashamed of. Body odour can happen when sweat mixes with bacteria on the skin. Regular bathing, clean clothes and keeping areas such as the armpits clean can help."],
-      ["Your daily Clean Champion checklist","Morning: brush your teeth and wash your face. During the day: wash your hands at important times. Evening: bathe or wash, brush your teeth and put dirty clothes in the right place."]
-    ],
-    fact:"Clean hands are one of the simplest ways to reduce the spread of many germs.",
-    action:"🎯 Try This: For the next 7 days, make a morning and evening hygiene checklist and tick each habit when you complete it."
-  },
-  puberty: {
-    icon:"🌱", title:"Puberty & Body Changes", level:"Ages 10–18",
-    summary:"Understand why your body changes as you grow, and learn that different people develop at different times.",
-    sections:[
-      ["What is puberty?","Puberty is a normal stage of growing up when the body begins changing from a child's body toward an adult body. Hormones help cause these changes. Puberty does not happen at exactly the same age or speed for everyone."],
-      ["Common changes","People may grow taller, develop body hair, have more body odour, experience oily skin or acne, and notice emotional changes. These changes are normal parts of growing up."],
-      ["For girls","Breasts may develop, hips may change, body hair may grow, and periods may begin. Vaginal discharge can also occur and can be normal. A trusted adult or health professional can help if something worries you."],
-      ["For boys","The penis and testicles grow, the voice may deepen, facial or body hair may appear, erections and wet dreams can happen, and body odour or acne may increase. These are normal puberty changes."],
-      ["Everyone develops differently","One person may start puberty earlier or later than a friend. Growth and body changes can also happen at different speeds. Comparing your body with others can create unnecessary worry."],
-      ["Looking after yourself","Keep clean, wear clean clothes, eat a balanced diet, sleep well, stay active and talk to a trusted adult when you have questions. You deserve accurate information and respectful answers."]
-    ],
-    fact:"There is no single 'correct' age at which every person must experience each puberty change.",
-    action:"🎯 Try This: Write down three questions about growing up that you would like a trusted adult or health professional to answer."
-  },
-  periods: {
-    icon:"🩸", title:"Periods & Menstrual Health", level:"Ages 10–18",
-    summary:"Learn what periods are, how to manage them hygienically, and how to support someone who is menstruating.",
-    sections:[
-      ["What is a period?","A period is the monthly shedding of blood and tissue from the lining of the uterus through the vagina. It is a normal biological process for many girls and women after puberty begins."],
-      ["Managing a period","Use a clean menstrual product that suits you, such as a pad or another appropriate product. Change products regularly according to the product instructions and how heavy the flow is. Wash your hands before and after changing a product."],
-      ["Stay comfortable and clean","Keep the external genital area clean with clean water. Avoid putting harsh or perfumed products inside the vagina. Carry spare menstrual products when possible and have a plan for school or other activities."],
-      ["Period feelings and pain","Some people experience cramps, tiredness, headaches or mood changes. Gentle activity, rest, warmth and appropriate over-the-counter pain relief may help some people. If pain is severe or unusual, speak to a qualified healthcare professional."],
-      ["No shame","Periods are a normal part of growing up. Menstrual products should be disposed of safely according to local waste arrangements. Boys and girls can both learn how to support respectful, clean and safe menstrual environments."],
-      ["When to seek help","Talk to a trusted adult or qualified healthcare professional about very heavy bleeding, severe pain, fainting, unusual symptoms or anything that causes concern."]
-    ],
-    fact:"A period is not dirty or something a person should be ashamed of.",
-    action:"🎯 Try This: Think of one kind thing you can do to make school or home more comfortable and respectful for someone having a period."
-  },
-  boys: {
-    icon:"🧑🏾", title:"Boys & Growing Up", level:"Ages 10–18",
-    summary:"A simple, respectful guide to common puberty changes for boys.",
-    sections:[
-      ["Growing up","Puberty brings physical, emotional and social changes. Boys can grow taller, gain muscle, develop body hair and notice changes in their voice and skin."],
-      ["Body changes","The penis and testicles develop, erections may happen without warning, and wet dreams can occur during sleep. These are normal biological changes and are not something to be ashamed of."],
-      ["Keeping clean","As sweat and body odour increase, regular bathing, clean clothes, clean socks and good care of the armpits and feet become especially important. Brush your teeth twice a day and wash your hands regularly."],
-      ["Skin and acne","Hormonal changes can increase oil on the skin and lead to pimples. Wash gently rather than scrubbing hard or squeezing spots. Persistent or severe acne can be discussed with a healthcare professional."],
-      ["Feelings and respect","Puberty can bring stronger or changing emotions. Learn to respect your own body and other people's boundaries. Having questions is normal, and a trusted adult or qualified health professional can provide reliable information."]
-    ],
-    fact:"Puberty is a process, not a competition. Growing earlier or later than a friend does not automatically mean something is wrong.",
-    action:"🎯 Try This: Choose one new healthy habit—such as daily bathing, regular exercise or better sleep—and practise it for one week."
-  },
-  girls: {
-    icon:"👧🏾", title:"Girls & Growing Up", level:"Ages 10–18",
-    summary:"Understand common puberty changes for girls and learn practical ways to care for yourself.",
-    sections:[
-      ["Growing up","Girls may grow taller, develop breasts and hips, grow body hair and notice changes in skin, sweat and emotions. Everyone develops at a different rate."],
-      ["Periods","Periods can begin during puberty and may be irregular at first. Learning how to manage menstrual products, hygiene and period symptoms can make the experience easier."],
-      ["Normal body changes","Vaginal discharge can be normal, especially when it is clear or white and does not have a strong unpleasant smell. If there is pain, unusual bleeding, a strong unpleasant smell, itching or another concerning symptom, talk to a qualified healthcare professional."],
-      ["Skin and body odour","Hormonal changes may cause acne and increased sweating. Gentle washing, clean clothes and good personal hygiene can help. You do not need to feel ashamed of normal body changes."],
-      ["Confidence and privacy","Your body belongs to you. You can ask questions, say no to unwanted touch and seek help from a trusted adult if someone makes you uncomfortable or violates your boundaries."]
-    ],
-    fact:"Bodies do not all develop in the same way or at the same speed.",
-    action:"🎯 Try This: Make a small self-care kit for school or outings with items you may need, such as tissues, soap or hand sanitizer and menstrual products if appropriate."
-  },
-  healthy: {
-    icon:"💪🏾", title:"Healthy Habits", level:"Ages 6–18",
-    summary:"Build everyday habits that support your body, your mind and your ability to learn.",
-    sections:[
-      ["Eat a variety of foods","Try to eat a mixture of foods from different food groups. Include vegetables and fruits, grains or other staple foods, protein sources and healthy fats. Drink safe water regularly."],
-      ["Sleep matters","Growing children and teenagers need adequate sleep. A regular bedtime, a calmer evening routine and reducing unnecessary screen use right before bed can support good sleep."],
-      ["Move your body","Walking, running, sports, dancing, games and other physical activity help keep the body strong. Choose activities you enjoy and take sensible safety precautions."],
-      ["Care for your mind","Feelings such as stress, sadness or worry happen to everyone. Talk to a trusted person, take breaks, spend time with supportive people and ask for help when feelings become difficult to manage."],
-      ["Avoid harmful choices","Do not misuse medicines or substances. Follow instructions from trusted adults and qualified healthcare professionals. Never accept unknown substances from someone simply because they say they are safe."]
-    ],
-    fact:"Healthy habits are built through small actions repeated consistently.",
-    action:"🎯 Try This: Pick three habits for this week: drink more safe water, get enough sleep, move your body, eat a balanced meal, or talk to someone when you need support."
-  },
-  environment: {
-    icon:"🌱", title:"Environmental Sanitation", level:"Ages 6–18",
-    summary:"Learn how clean surroundings, safe waste practices and teamwork can make communities healthier.",
-    sections:[
-      ["What is environmental sanitation?","Environmental sanitation means keeping our surroundings clean and reducing conditions that can harm health. It includes proper waste management, clean water, safe toilets and keeping public spaces free from avoidable pollution."],
-      ["Use bins and dispose of waste properly","Put waste in the appropriate bin or disposal point. Do not throw rubbish into drains, roads, playgrounds or water bodies. Where local systems support it, separate recyclable materials from other waste."],
-      ["Protect drains and waterways","Blocked drains can contribute to flooding and create places where pests breed. Never use drains or streams as rubbish dumps. Keep plastic, food waste and other refuse out of waterways."],
-      ["Keep shared spaces clean","Schools, markets, playgrounds and streets are shared spaces. Pick up litter safely, use cleaning tools properly and encourage others respectfully rather than shaming them."],
-      ["Work as a team","Community sanitation works best when people cooperate. Small actions by many people can create a cleaner environment for everyone."]
-    ],
-    fact:"A clean community is not created by one person alone—it is built by many people making better choices.",
-    action:"🎯 Try This: Look around your home, school or street and identify three things that could make the area cleaner. Choose one safe action you can take."
-  },
-  waste: {
-    icon:"♻️", title:"Waste Management", level:"Ages 6–18",
-    summary:"Understand the journey of waste and the simple choices that reduce litter and pollution.",
-    sections:[
-      ["What is waste?","Waste is material we no longer need or want. It can include food scraps, paper, plastic, cans, bottles and other materials. Not all waste should be handled in the same way."],
-      ["Reduce, reuse, recycle","Reduce means avoiding unnecessary waste. Reuse means using an item again when it is safe and practical. Recycle means processing suitable materials so they can become useful products again."],
-      ["Food waste","Avoid taking more food than you can eat. Store food safely and dispose of food waste appropriately. Do not leave food waste lying around because it can attract pests."],
-      ["Plastic and litter","Plastic waste can block drains and pollute land and water. Carry reusable items where practical and always dispose of plastics through the available waste system."],
-      ["Safety first","Do not pick up sharp objects, unknown chemicals, medical waste or other dangerous materials with bare hands. Tell a trusted adult or responsible authority instead."]
-    ],
-    fact:"The best waste item is often the one you never create in the first place.",
-    action:"🎯 Try This: Find one disposable item you use often and think of a safe reusable alternative."
-  },
-  water: {
-    icon:"💧", title:"Clean Water & Toilet Hygiene", level:"Ages 6–18",
-    summary:"Learn why safe water and clean toilets matter and how simple habits protect everyone.",
-    sections:[
-      ["Why clean water matters","Our bodies need water for many important functions. Water used for drinking, preparing food and brushing teeth should be from a safe source."],
-      ["Safe water habits","Use water from a trusted safe source. Keep storage containers clean and covered. Avoid dipping dirty hands or cups into stored drinking water."],
-      ["Toilet hygiene","Use toilets properly and keep them clean. Wash your hands with soap and clean water after using the toilet. Help younger children learn the same habit."],
-      ["Protect water sources","Do not throw rubbish, chemicals or human waste into rivers, streams, wells or other water sources. Pollution can make water unsafe and harm people, animals and the environment."],
-      ["If water safety is uncertain","Ask a trusted adult or local health authority what treatment or safe-water method is appropriate for your area. Do not assume water is safe simply because it looks clear."]
-    ],
-    fact:"Water can look clean and still contain germs or harmful substances, so a trusted safe water source matters.",
-    action:"🎯 Try This: Check the drinking-water storage at home or school. Is it clean, covered and handled safely?"
+function startAfamQuiz(mode){
+  afamQuizMode=mode;
+  if(mode==="same" && afamQuizSet.length===10){
+    afamQuizQuestions=afamQuizSet;
+  }else{
+    afamQuizQuestions=shuffleAfam(quizBank).slice(0,10);
+    afamQuizSet=afamQuizQuestions;
   }
-};
-
-const ageLessonMap = {
-  "6-9":["hygiene","healthy","environment","waste","water"],
-  "10-12":["hygiene","puberty","healthy","periods","boys","girls","environment","waste","water"],
-  "13-15":["puberty","periods","boys","girls","hygiene","healthy","environment","waste","water"],
-  "16-18":["puberty","periods","boys","girls","hygiene","healthy","environment","waste","water"]
-};
-
-const testBanks = {
-  hygiene:[
-    ["What does personal hygiene mean?",["Taking care of your body and keeping clean","Never going outside","Only washing your clothes","Avoiding exercise"],0],
-    ["When should you wash your hands?",["Only before sleeping","After using the toilet and before eating","Only when someone tells you","Once a week"],1],
-    ["How often is it generally recommended to brush your teeth?",["Once a week","Once a month","Twice a day","Only when they hurt"],2],
-    ["Why should fingernails be kept clean?",["Dirt and germs can collect underneath them","It makes you taller","It changes your voice","It stops you sweating"],0],
-    ["What can help reduce body odour?",["Regular bathing and clean clothes","Never changing clothes","Avoiding water","Eating only sweets"],0],
-    ["What should you use when washing your hands?",["Soap and clean running water when available","Only perfume","Mud","Cooking oil"],0],
-    ["What is a good habit after bathing?",["Dry yourself with a clean towel and wear clean clothes","Put on wet clothes","Share your towel with everyone","Avoid brushing your teeth"],0],
-    ["How should you treat your teeth when brushing?",["Brush gently around the teeth and gums","Scrub as hard as possible","Brush once a month","Only brush the front tooth"],0],
-    ["Which item should normally NOT be shared?",["A personal toothbrush","A school desk","A football","A classroom book"],0],
-    ["If you have ongoing tooth pain, what is a good step?",["Tell a trusted adult and seek qualified dental/health advice","Ignore it forever","Stop drinking water","Hide it from everyone"],0]
-  ],
-  puberty:[
-    ["What is puberty?",["A normal stage of growing up involving body changes","A disease","A type of food","A school subject"],0],
-    ["Do all people begin puberty at exactly the same age?",["Yes","No","Only boys do","Only girls do"],1],
-    ["Which can be a normal puberty change?",["Growth in height and body hair","Having no need for sleep","Never sweating","Losing all emotions"],0],
-    ["What can happen to a boy's voice during puberty?",["It may become deeper","It always disappears","It becomes permanently silent","Nothing can ever change"],0],
-    ["What may happen to girls during puberty?",["Breast development and periods may begin","They stop growing immediately","They can never have body hair","Nothing changes"],0],
-    ["Can emotions change during puberty?",["Yes","No","Only at school","Only during sleep"],0],
-    ["What is important to remember about puberty?",["People develop at different times and speeds","Everyone must develop at the same time","Earlier is always better","Later always means something is wrong"],0],
-    ["What can help during puberty?",["Good hygiene, sleep, healthy food and trusted support","Avoiding all adults","Skipping meals","Never asking questions"],0],
-    ["Who can provide reliable health information?",["A trusted adult or qualified health professional","A random stranger online","Someone who makes fun of you","Nobody"],0],
-    ["Is it okay to have questions about puberty?",["Yes","No","Only adults can ask questions","Only boys can ask"],0]
-  ],
-  periods:[
-    ["What is a period?",["A normal process where blood and tissue leave the uterus","An illness every person gets","A type of exercise","A skin condition"],0],
-    ["What should you do before and after changing a menstrual product?",["Wash your hands","Eat sweets","Touch your face","Do nothing"],0],
-    ["Are periods something to be ashamed of?",["No","Yes","Only at school","Only during holidays"],0],
-    ["What can some people experience during a period?",["Cramps or tiredness","A permanent fever","Their bones disappearing","Never feeling anything"],0],
-    ["Where should used menstrual products be disposed of?",["Safely according to the local waste arrangements","In a classroom desk","In a river","Anywhere on the floor"],0],
-    ["What should you do about severe or unusual period symptoms?",["Talk to a trusted adult or qualified healthcare professional","Hide them","Stop drinking water","Ignore them forever"],0],
-    ["What is important when managing periods at school?",["Having access to clean products and a plan for changing them","Avoiding school forever","Never washing hands","Sharing used products"],0],
-    ["Which statement is true?",["People can have different period experiences","Everyone has identical periods","Periods are dirty","Nobody needs information about periods"],0],
-    ["What can help make menstruation more respectful?",["Learning accurate information and avoiding shame","Making fun of people","Hiding all information","Spreading rumours"],0],
-    ["What should be avoided inside the vagina for routine cleaning?",["Harsh or perfumed products","Clean water for the external area","Following qualified health advice","Basic hygiene"],0]
-  ]
-};
-
-// For the remaining topics, build varied tests from lesson facts so every lesson still has 10 questions.
-testBanks.boys = [
- ["Which is a possible puberty change for boys?",["Voice deepening","Growing shorter every day","Never sweating","Losing all body hair"],0],
- ["Can wet dreams happen during puberty?",["Yes","No","Only after age 30","Only during school"],0],
- ["What can help with increased body odour?",["Bathing and clean clothes","Never washing","Sharing towels","Avoiding all water"],0],
- ["Can erections happen without a person choosing them?",["Yes","No","Never","Only during exercise"],0],
- ["Is acne during puberty something to be ashamed of?",["No","Yes","Always","Only for boys"],0],
- ["Do all boys develop at exactly the same rate?",["No","Yes","Only twins do","Only athletes do"],0],
- ["What is a good response to questions about puberty?",["Ask a trusted adult or health professional","Believe every rumour","Stay silent forever","Make fun of someone"],0],
- ["What should boys do about personal hygiene during puberty?",["Keep clean and wear clean clothes","Stop bathing","Share toothbrushes","Avoid exercise"],0],
- ["What can puberty affect besides the body?",["Feelings and emotions","The colour of the sky","The length of a school day","Nothing"],0],
- ["What is important about other people's boundaries?",["Respect them","Ignore them","Laugh at them","Test them"],0]
-];
-testBanks.girls = [
- ["Which is a possible puberty change for girls?",["Breast development","Never growing","Losing all body hair","Never sweating"],0],
- ["Can periods begin during puberty?",["Yes","No","Only after age 50","Only during school"],0],
- ["Can vaginal discharge sometimes be normal?",["Yes","No","Never","Only during sports"],0],
- ["What can help with body odour?",["Regular washing and clean clothes","Avoiding water","Never changing clothes","Using random chemicals"],0],
- ["What should you do if you have concerning symptoms?",["Talk to a trusted adult or qualified healthcare professional","Hide them","Ignore them forever","Ask a stranger"],0],
- ["Do all girls develop at the same speed?",["No","Yes","Only sisters do","Only athletes do"],0],
- ["What is an important privacy principle?",["Your body belongs to you","Everyone may touch you","You cannot say no","Privacy does not matter"],0],
- ["What can help with acne?",["Gentle washing and qualified advice if severe","Squeezing every spot hard","Using unknown chemicals","Never washing"],0],
- ["Is normal body development something to be ashamed of?",["No","Yes","Always","Only at school"],0],
- ["What is a good self-care habit?",["Keeping clean and having what you may need for school or outings","Skipping meals","Avoiding trusted adults","Never asking questions"],0]
-];
-testBanks.healthy = [
- ["Which helps a healthy lifestyle?",["Balanced food, sleep and physical activity","Skipping sleep","Only eating sweets","Never moving"],0],
- ["Why is sleep important?",["It supports health, growth and learning","It makes water unnecessary","It replaces food","It stops all emotions"],0],
- ["Which is a good drink choice?",["Safe water","Unknown liquid","Only sugary drinks","Chemical cleaner"],0],
- ["What can help when you feel stressed?",["Talk to a trusted person","Keep everything secret forever","Hurt yourself","Stop eating"],0],
- ["Why is physical activity useful?",["It helps keep the body strong and healthy","It prevents learning","It replaces sleep","It makes hygiene unnecessary"],0],
- ["What is a healthy approach to food?",["Eat a variety of foods","Eat one food forever","Avoid all vegetables","Never drink water"],0],
- ["What should you do with medicines?",["Use them according to trusted instructions","Share them randomly","Double every dose","Take unknown medicines"],0],
- ["Are difficult feelings something you can ask for help with?",["Yes","No","Only adults can","Never"],0],
- ["What is one way to build healthy habits?",["Repeat small healthy actions consistently","Change everything once a year","Avoid routines","Never practise"],0],
- ["Who can help with a health concern?",["A trusted adult or qualified healthcare professional","A random stranger","Nobody","Only social media"],0]
-];
-testBanks.environment = [
- ["What does environmental sanitation involve?",["Keeping surroundings clean and reducing health risks","Painting every wall","Only sweeping indoors","Avoiding all communities"],0],
- ["Where should rubbish go?",["An appropriate bin or disposal point","A drain","A river","The road"],0],
- ["Why should drains be kept clear?",["To reduce blockage, flooding and unhealthy conditions","To collect plastic","To make litter harder to see","For decoration"],0],
- ["What should you do with litter in a shared space?",["Dispose of it properly when safe","Throw it into water","Hide it under a desk","Leave it on the road"],0],
- ["Can one person create a completely clean community alone?",["Community teamwork makes a bigger difference","Yes, always","No one can help","Only children can"],0],
- ["What should never be dumped into waterways?",["Rubbish and harmful chemicals","Clean air","Sunlight","Rain"],0],
- ["Which is a shared space?",["A school or marketplace","Only your bedroom","Only your phone","Only your bag"],0],
- ["What is a good sanitation attitude?",["Encourage others respectfully","Shame everyone","Ignore litter","Make fun of cleaners"],0],
- ["What can many small actions create?",["A cleaner community","More pollution","More blocked drains","Nothing"],0],
- ["What is a safe response to dangerous waste?",["Tell a trusted adult or responsible authority","Pick it up with bare hands","Kick it into a drain","Hide it"],0]
-];
-testBanks.waste = [
- ["What is waste?",["Material we no longer need or want","Only water","Only food","Only paper"],0],
- ["What does reduce mean?",["Avoiding unnecessary waste","Throwing more away","Burning everything","Hiding rubbish"],0],
- ["What does reuse mean?",["Using an item again when safe and practical","Buying five more","Throwing it away","Putting it in a river"],0],
- ["What does recycle mean?",["Processing suitable materials into useful products again","Burning all waste","Hiding waste","Putting plastic in drains"],0],
- ["Why should food waste be handled properly?",["It can attract pests if left around","It becomes clean automatically","It stops all smells","It cannot affect anything"],0],
- ["What can plastic waste do?",["Pollute land and water and block drains","Clean rivers","Make drains wider","Disappear immediately"],0],
- ["What should you do with sharp or dangerous waste?",["Tell a trusted adult or responsible authority","Pick it up with bare hands","Put it in your pocket","Throw it at someone"],0],
- ["Which is often best for waste reduction?",["Avoid creating unnecessary waste","Create more waste","Use more disposable items","Litter less visibly"],0],
- ["Which can be reused when safe?",["A suitable reusable bottle","A used medical needle","Unknown chemicals","Broken sharp glass"],0],
- ["Who should help manage community waste?",["Everyone can play a safe, responsible role","Only children","Nobody","Only one person"],0]
-];
-testBanks.water = [
- ["Why is safe water important?",["Our bodies need water and unsafe water can contain harmful germs or substances","Water is only for washing cars","It is never needed","It replaces food"],0],
- ["How should drinking-water storage be kept?",["Clean and covered","Open and dirty","Near rubbish","Uncovered always"],0],
- ["Should dirty hands be dipped into stored drinking water?",["No","Yes","Only at night","Always"],0],
- ["What should you do after using the toilet?",["Wash your hands with soap and clean water when available","Touch your face","Eat immediately","Never wash"],0],
- ["Should rubbish be thrown into rivers or streams?",["No","Yes","Only plastic","Only on weekends"],0],
- ["Can water look clear and still be unsafe?",["Yes","No","Never","Only in winter"],0],
- ["What should you do if you are unsure about water safety?",["Ask a trusted adult or local health authority","Guess","Drink anything","Ignore the concern"],0],
- ["Why should toilets be kept clean?",["Clean toilets support hygiene and reduce health risks","It does not matter","Only adults use toilets","To make them smell stronger"],0],
- ["What should be protected from pollution?",["Water sources","Only roads","Only classrooms","Nothing"],0],
- ["What is a safe water habit?",["Use water from a trusted safe source","Share dirty cups","Leave containers open","Store water beside waste"],0]
-];
-
-let currentLessonKey = null;
-let currentQuestions = [];
-
-function renderEducationLibrary(){
-  const age = document.querySelector(".age-card.active")?.dataset.age || "6-9";
-  const keys = ageLessonMap[age] || ageLessonMap["6-9"];
-  const box = document.getElementById("educationLibrary");
-  box.innerHTML = keys.map(key=>{
-    const l=educationLessons[key];
-    return `<article class="edu-card">
-      <div class="edu-icon">${l.icon}</div>
-      <div class="lesson-meta">${l.level}</div>
-      <h3>${l.title}</h3>
-      <p>${l.summary}</p>
-      <button class="btn" onclick="openLesson('${key}')">📖 Learn More</button>
-    </article>`;
-  }).join("");
+  const box=document.getElementById("afamQuiz");
+  document.getElementById("quizIntro").style.display="none";
+  box.style.display="block";
+  box.innerHTML=`
+    <div class="quiz-progress">🧠 Afam Sanitation Quiz • 10 Questions</div>
+    <p>Choose the best answer for each question.</p>
+    <form id="afamQuizForm">
+      ${afamQuizQuestions.map((q,i)=>`
+        <div class="quiz-question">
+          <h4>${i+1}. ${q[0]}</h4>
+          <label class="quiz-option"><input type="radio" name="afamQ${i}" value="0"> ${q[1]}</label>
+          <label class="quiz-option"><input type="radio" name="afamQ${i}" value="1"> ${q[2][0]}</label>
+          <label class="quiz-option"><input type="radio" name="afamQ${i}" value="2"> ${q[2][1]}</label>
+          <label class="quiz-option"><input type="radio" name="afamQ${i}" value="3"> ${q[2][2]}</label>
+        </div>`).join("")}
+      <button class="btn" type="submit">✅ Submit My Answers</button>
+    </form>
+    <div id="afamQuizResult"></div>`;
+  document.getElementById("afamQuizForm").addEventListener("submit",finishAfamQuiz);
+  box.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-function selectAge(age){
-  document.querySelectorAll(".age-card").forEach(c=>c.classList.toggle("active",c.dataset.age===age));
-  const rec = {
-    "6-9":"🌟 Recommended for ages 6–9: start with Personal Hygiene, then explore Healthy Habits and Clean Communities.",
-    "10-12":"🌱 Recommended for ages 10–12: explore Personal Hygiene, Puberty and Healthy Habits.",
-    "13-15":"💚 Recommended for ages 13–15: explore Puberty, Periods, Boys & Growing Up and Girls & Growing Up.",
-    "16-18":"🎓 Recommended for ages 16–18: explore the full library and build strong health and community habits."
-  };
-  document.getElementById("ageRecommendation").textContent = rec[age];
-  renderEducationLibrary();
-  closeLesson();
-}
-
-function shuffleArray(arr){
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
-  return a;
-}
-
-function getQuestionSet(key){
-  const bank=testBanks[key] || [];
-  return shuffleArray(bank).slice(0,10);
-}
-
-function openLesson(key){
-  currentLessonKey=key;
-  const l=educationLessons[key];
-  const viewer=document.getElementById("lessonViewer");
-  document.getElementById("lessonProgress").textContent="📖 Read the lesson • Then take the test";
-  document.getElementById("lessonContent").innerHTML=`
-    <div class="lesson-hero">
-      <div class="big-icon">${l.icon}</div>
-      <div><div class="lesson-content"><h2>${l.title}</h2><p>${l.summary}</p></div></div>
-    </div>
-    <div class="lesson-content">
-      ${l.sections.map(s=>`<section><h3>${s[0]}</h3><p>${s[1]}</p></section>`).join("")}
-      <div class="lesson-fact"><strong>💡 Did You Know?</strong><p>${l.fact}</p></div>
-      <div class="lesson-action"><strong>${l.action}</strong></div>
-    </div>`;
-  renderLessonTest(key);
-  viewer.classList.add("open");
-  viewer.setAttribute("aria-hidden","false");
-  viewer.scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function renderLessonTest(key){
-  currentQuestions=getQuestionSet(key);
-  const completed=JSON.parse(localStorage.getItem("afamLessonTests")||"{}");
-  const previous=completed[key];
-  const test=document.getElementById("lessonTest");
-  test.innerHTML=`
-    <div class="test-box">
-      <h3>📝 Test Yourself — 10 Questions</h3>
-      <p>Read the lesson above first. When you're ready, answer all 10 questions.</p>
-      ${previous ? `<div class="lesson-fact"><strong>🔄 New Challenge Available</strong><p>You completed this lesson test before${previous.score!=null?` and scored ${previous.score}/10`:``}. This is a fresh set of questions for this phone.</p></div>`:""}
-      <form id="lessonQuizForm">
-        ${currentQuestions.map((q,i)=>`
-          <div class="question-card">
-            <h4>${i+1}. ${q[0]}</h4>
-            ${q[1].map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")}
-          </div>`).join("")}
-        <button class="btn" type="submit">✅ Submit My Test</button>
-      </form>
-      <div id="lessonScore"></div>
-    </div>`;
-  document.getElementById("lessonQuizForm").addEventListener("submit",submitLessonTest);
-}
-
-function submitLessonTest(e){
+function finishAfamQuiz(e){
   e.preventDefault();
-  let score=0, answered=0;
-  currentQuestions.forEach((q,i)=>{
-    const chosen=document.querySelector(`input[name="q${i}"]:checked`);
-    if(chosen){answered++;if(Number(chosen.value)===q[2])score++;}
+  let score=0;
+  let answered=0;
+  afamQuizQuestions.forEach((q,i)=>{
+    const chosen=document.querySelector(`input[name="afamQ${i}"]:checked`);
+    if(chosen){
+      answered++;
+      if(Number(chosen.value)===q[3])score++;
+    }
   });
   if(answered<10){
-    document.getElementById("lessonScore").innerHTML=`<div class="lesson-fact"><strong>Almost there! 👀</strong><p>Please answer all 10 questions before submitting.</p></div>`;
+    document.getElementById("afamQuizResult").innerHTML=`<div class="library-fact"><strong>Almost there! 👀</strong> Please answer all 10 questions before submitting.</div>`;
     return;
   }
-  const data=JSON.parse(localStorage.getItem("afamLessonTests")||"{}");
-  data[currentLessonKey]={completed:true,score,completedAt:new Date().toISOString()};
-  localStorage.setItem("afamLessonTests",JSON.stringify(data));
-  const title=score>=9?"🌟 Clean Champion!":score>=7?"👏 Great Job!":score>=5?"👍 Keep Learning!":"📚 Let's Review This Lesson";
-  document.getElementById("lessonScore").innerHTML=`<div class="score-box"><div class="score-big">${score}/10</div><h3>${title}</h3><p>${score>=7?"Excellent work. Come back later for another fresh 10-question challenge.":"Review the lesson above and try another fresh challenge when you're ready."}</p><button class="btn" type="button" onclick="renderLessonTest(currentLessonKey)">🔄 Give Me 10 New Questions</button></div>`;
-}
-
-function closeLesson(){
-  const viewer=document.getElementById("lessonViewer");
-  if(!viewer)return;
-  viewer.classList.remove("open");
-  viewer.setAttribute("aria-hidden","true");
+  const title=score>=9?"🌟 Clean Champion!":score>=7?"👏 Great Job!":score>=5?"👍 Keep Learning!":"📚 Explore the Library Again";
+  document.getElementById("afamQuizResult").innerHTML=`
+    <div class="quiz-result">
+      <div class="quiz-score">${score}/10</div>
+      <h3>${title}</h3>
+      <p>${score>=7?"Excellent work! You can repeat these questions or challenge yourself with a fresh set.":"Review the Education Library and try again when you're ready."}</p>
+      <div class="quiz-result-actions">
+        <button class="btn" type="button" onclick="startAfamQuiz('fresh')">🎲 Give Me 10 Fresh Questions</button>
+        <button class="btn secondary" type="button" onclick="startAfamQuiz('same')">🔁 Do The Same 10 Again</button>
+      </div>
+    </div>`;
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
-  if(document.getElementById("educationLibrary")) renderEducationLibrary();
+  renderAfamLibrary();
 });
 </script>
 
