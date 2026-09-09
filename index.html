@@ -108,6 +108,14 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
   .hero{padding-top:48px}
   section{padding:58px 0}
 }
+
+.report-modal{position:fixed;inset:0;background:rgba(4,43,21,.62);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+.report-modal.open{display:flex}.report-modal-card{width:min(620px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;padding:28px;box-shadow:0 25px 70px rgba(0,0,0,.2)}
+.report-modal-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.report-close{border:0;background:#eef5ef;border-radius:10px;font-size:22px;width:40px;height:40px;cursor:pointer}
+.report-form{display:grid;gap:14px;margin-top:20px}.report-form label{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:var(--dark)}
+.report-form input,.report-form select,.report-form textarea{width:100%;border:1px solid #cfe0d4;border-radius:11px;padding:12px 13px;font:inherit;color:var(--text);background:#fff;outline:none}
+.report-form input:focus,.report-form select:focus,.report-form textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}
+.report-message{font-weight:800;margin:0}.report-help{font-size:12px;color:var(--muted);margin:0}
 </style>
 </head>
 <body>
@@ -145,6 +153,45 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
     </div>
   </div>
 </header>
+
+
+
+<section id="hygiene-buddy" style="background:#f5f8f3">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">Your questions are welcome</div>
+      <h2>Meet Afam Hygiene Buddy.</h2>
+      <p class="muted">Ask about hygiene, periods, puberty, body changes, growing up and healthy habits. No shame. No embarrassment. Just simple, educational answers.</p>
+      <div><span class="pill">🧼 Hygiene</span><span class="pill">🩸 Periods</span><span class="pill">🌱 Puberty</span><span class="pill">👦 Boys</span><span class="pill">👧 Girls</span><span class="pill">❤️ Healthy habits</span></div>
+    </div>
+
+    <div class="chat-shell">
+      <div class="chat-top">
+        <div class="chat-title"><div class="chat-avatar">🧼</div><div>Afam Hygiene Buddy</div></div>
+        <p class="chat-sub">A friendly AI guide to hygiene, puberty, periods, body changes and growing up.</p>
+      </div>
+      <div class="chat-tools">
+        <div class="quick-prompts" aria-label="Suggested questions">
+          <button type="button" onclick="askSuggested('What is puberty?')">What is puberty?</button>
+          <button type="button" onclick="askSuggested('What should I know about periods?')">Periods</button>
+          <button type="button" onclick="askSuggested('What changes happen to boys during puberty?')">Boys</button>
+          <button type="button" onclick="askSuggested('What changes happen to girls during puberty?')">Girls</button>
+          <button type="button" onclick="askSuggested('What are good daily hygiene habits?')">Hygiene</button>
+        </div>
+        <button class="clear-chat" type="button" onclick="clearChat()">Clear</button>
+      </div>
+      <div id="chatMessages" class="chat-messages" aria-live="polite">
+        <div class="chat-row"><div class="chat-bubble bot"><p><strong>Hello! 👋 I'm Afam Hygiene Buddy.</strong></p><p>You can ask me about your body, puberty, periods, personal hygiene, growing up and healthy habits.</p><p>There are no silly questions. What would you like to know?</p></div></div>
+      </div>
+      <form id="hygieneChatForm" class="chat-form">
+        <input id="hygieneQuestion" type="text" maxlength="1000" placeholder="Ask a question about growing up, hygiene or your body…" autocomplete="off" required>
+        <button id="hygieneSend" class="btn primary" type="submit">Ask</button>
+      </form>
+      <div id="hygieneStatus" class="chat-status"></div>
+    </div>
+    <p class="note">Educational information only. Afam Hygiene Buddy is not a doctor and does not diagnose illness. For serious or worrying symptoms, speak with a trusted adult or qualified healthcare professional.</p>
+  </div>
+</section>
 
 <section id="impact">
   <div class="container">
@@ -210,42 +257,7 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 
 
 
-<section id="hygiene-buddy" style="background:#f5f8f3">
-  <div class="container">
-    <div class="section-head">
-      <div class="kicker">Your questions are welcome</div>
-      <h2>Meet Afam Hygiene Buddy.</h2>
-      <p class="muted">Ask about hygiene, periods, puberty, body changes, growing up and healthy habits. No shame. No embarrassment. Just simple, educational answers.</p>
-      <div><span class="pill">🧼 Hygiene</span><span class="pill">🩸 Periods</span><span class="pill">🌱 Puberty</span><span class="pill">👦 Boys</span><span class="pill">👧 Girls</span><span class="pill">❤️ Healthy habits</span></div>
-    </div>
 
-    <div class="chat-shell">
-      <div class="chat-top">
-        <div class="chat-title"><div class="chat-avatar">🧼</div><div>Afam Hygiene Buddy</div></div>
-        <p class="chat-sub">A friendly AI guide to hygiene, puberty, periods, body changes and growing up.</p>
-      </div>
-      <div class="chat-tools">
-        <div class="quick-prompts" aria-label="Suggested questions">
-          <button type="button" onclick="askSuggested('What is puberty?')">What is puberty?</button>
-          <button type="button" onclick="askSuggested('What should I know about periods?')">Periods</button>
-          <button type="button" onclick="askSuggested('What changes happen to boys during puberty?')">Boys</button>
-          <button type="button" onclick="askSuggested('What changes happen to girls during puberty?')">Girls</button>
-          <button type="button" onclick="askSuggested('What are good daily hygiene habits?')">Hygiene</button>
-        </div>
-        <button class="clear-chat" type="button" onclick="clearChat()">Clear</button>
-      </div>
-      <div id="chatMessages" class="chat-messages" aria-live="polite">
-        <div class="chat-row"><div class="chat-bubble bot"><p><strong>Hello! 👋 I'm Afam Hygiene Buddy.</strong></p><p>You can ask me about your body, puberty, periods, personal hygiene, growing up and healthy habits.</p><p>There are no silly questions. What would you like to know?</p></div></div>
-      </div>
-      <form id="hygieneChatForm" class="chat-form">
-        <input id="hygieneQuestion" type="text" maxlength="1000" placeholder="Ask a question about growing up, hygiene or your body…" autocomplete="off" required>
-        <button id="hygieneSend" class="btn primary" type="submit">Ask</button>
-      </form>
-      <div id="hygieneStatus" class="chat-status"></div>
-    </div>
-    <p class="note">Educational information only. Afam Hygiene Buddy is not a doctor and does not diagnose illness. For serious or worrying symptoms, speak with a trusted adult or qualified healthcare professional.</p>
-  </div>
-</section>
 
 <section id="activities" class="activities">
   <div class="container">
@@ -270,6 +282,49 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
     <a class="btn" style="background:#fff;color:var(--dark)" href="#" id="reportBtn">Report an Issue</a>
   </div>
 </section>
+
+
+<div class="report-modal" id="reportModal" aria-hidden="true">
+  <div class="report-modal-card" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <div class="report-modal-head">
+      <div>
+        <div class="kicker">Community reporting</div>
+        <h2 id="reportTitle">Report a sanitation problem</h2>
+        <p class="muted">Tell Afam Sanitation CDS what you found. Your report helps us identify areas that may need attention.</p>
+      </div>
+      <button class="report-close" id="reportClose" type="button" aria-label="Close">×</button>
+    </div>
+    <form id="reportForm" class="report-form">
+      <label>Date
+        <input type="date" id="reportDate" required>
+      </label>
+      <label>Location
+        <input type="text" id="reportLocation" placeholder="e.g. Afam Market, near the main entrance" required>
+      </label>
+      <label>Problem Type
+        <select id="reportProblemType" required>
+          <option value="">Select a problem</option>
+          <option>Improper waste disposal</option>
+          <option>Overflowing waste bin</option>
+          <option>Blocked drainage</option>
+          <option>Dirty public area</option>
+          <option>Unsafe toilet / sanitation facility</option>
+          <option>Water / hygiene concern</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Description
+        <textarea id="reportDescription" rows="4" maxlength="1200" placeholder="Describe what you saw and why it needs attention." required></textarea>
+      </label>
+      <label>Photo Link (optional)
+        <input type="url" id="reportPhoto" placeholder="Google Drive or image link">
+      </label>
+      <p class="report-help">Please don't include private or sensitive information about other people.</p>
+      <button class="btn primary" id="reportSubmit" type="submit">Submit Report</button>
+      <p id="reportMessage" class="report-message" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
 
 <footer>
   <div class="container footer-inner">
@@ -336,53 +391,67 @@ function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));
 }
 
+const reportModal = document.getElementById("reportModal");
+const reportForm = document.getElementById("reportForm");
+const reportDate = document.getElementById("reportDate");
+const reportMessage = document.getElementById("reportMessage");
+const reportSubmit = document.getElementById("reportSubmit");
+
+function openReportModal() {
+  reportModal.classList.add("open");
+  reportModal.setAttribute("aria-hidden", "false");
+  reportDate.value = new Date().toISOString().split("T")[0];
+  document.getElementById("reportLocation").focus();
+}
+function closeReportModal() {
+  reportModal.classList.remove("open");
+  reportModal.setAttribute("aria-hidden", "true");
+}
 document.getElementById("reportBtn").addEventListener("click", e => {
   e.preventDefault();
-  alert("The sanitation reporting form will be connected in the next step.");
+  openReportModal();
+});
+document.getElementById("reportClose").addEventListener("click", closeReportModal);
+reportModal.addEventListener("click", e => {
+  if (e.target === reportModal) closeReportModal();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && reportModal.classList.contains("open")) closeReportModal();
 });
 
-const activityForm = document.getElementById("activityForm");
-const activityDate = document.getElementById("activityDate");
-const formMessage = document.getElementById("formMessage");
-activityDate.value = new Date().toISOString().split("T")[0];
-
-activityForm.addEventListener("submit", async (e) => {
+reportForm.addEventListener("submit", async e => {
   e.preventDefault();
+  reportSubmit.disabled = true;
+  reportMessage.textContent = "Submitting report…";
 
   const payload = {
-    action: "activity",
-    date: activityDate.value,
-    location: document.getElementById("activityLocation").value.trim(),
-    activityType: document.getElementById("activityType").value,
-    description: document.getElementById("description").value.trim(),
-    volunteers: Number(document.getElementById("volunteers").value) || 0,
-    peopleReached: Number(document.getElementById("peopleReached").value) || 0,
-    wasteCollected: Number(document.getElementById("wasteCollected").value) || 0,
-    hygieneEducation: document.getElementById("hygieneEducation").value,
-    photos: document.getElementById("photos").value.trim(),
-    remarks: document.getElementById("remarks").value.trim(),
-    submittedBy: document.getElementById("submittedBy").value.trim()
+    action: "sanitation_report",
+    date: reportDate.value,
+    location: document.getElementById("reportLocation").value.trim(),
+    problemType: document.getElementById("reportProblemType").value,
+    description: document.getElementById("reportDescription").value.trim(),
+    photo: document.getElementById("reportPhoto").value.trim()
   };
-
-  formMessage.textContent = "Saving activity…";
 
   try {
     await fetch(API_URL, {
       method: "POST",
       mode: "no-cors",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      headers: {"Content-Type":"text/plain;charset=utf-8"},
       body: JSON.stringify(payload)
     });
-
-    formMessage.textContent = "Activity submitted. Check the Activities sheet to confirm it was saved.";
-    activityForm.reset();
-    activityDate.value = new Date().toISOString().split("T")[0];
-    setTimeout(() => { loadImpact(); loadActivities(); }, 1500);
+    reportMessage.textContent = "Thank you. Your sanitation report has been submitted.";
+    reportForm.reset();
+    reportDate.value = new Date().toISOString().split("T")[0];
+    setTimeout(closeReportModal, 1600);
   } catch (err) {
-    formMessage.textContent = "The submission could not be sent. Please check your internet connection and try again.";
     console.error(err);
+    reportMessage.textContent = "We couldn't send the report. Please check your connection and try again.";
+  } finally {
+    reportSubmit.disabled = false;
   }
 });
+
 
 
 async function askHygieneBuddy(question) {
