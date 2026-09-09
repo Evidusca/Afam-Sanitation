@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Afam Sanitation CDS — New Member Registration</title>
+<style>
+:root{--green:#08752f;--dark:#064a24;--light:#f3faf5;--border:#d7e8dc;--text:#173022;--muted:#5c6b62}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#f7fcf8,#fff)}
+.container{width:min(980px,92%);margin:auto}.top{background:var(--green);color:#fff;padding:15px 0}.topin{display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.04em}.brand img{width:48px;height:48px;object-fit:contain;background:#fff;border-radius:12px;padding:3px}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:9px 13px;border-radius:10px;font-weight:800}
+main{padding:50px 0}.hero{text-align:center;max-width:750px;margin:0 auto 28px}.eyebrow{display:inline-block;background:#e8f5ec;color:var(--green);padding:8px 13px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.12em}.hero h1{font-size:clamp(34px,6vw,56px);line-height:1.05;color:var(--dark);margin:14px 0}.hero p{font-size:17px;line-height:1.7;color:var(--muted)}.card{background:#fff;border:1px solid var(--border);border-radius:24px;padding:28px;box-shadow:0 16px 45px rgba(6,74,36,.07)}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}label{display:flex;flex-direction:column;gap:7px;font-weight:800;font-size:13px;color:var(--dark)}input,select{border:1px solid #cfe0d4;border-radius:12px;padding:13px;font:inherit;color:var(--text);background:#fff}input:focus,select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(8,117,47,.08)}.full{grid-column:1/-1}.hint{font-weight:500;color:var(--muted);font-size:12px}.btn{margin-top:22px;min-height:50px;border:0;border-radius:12px;padding:0 22px;background:var(--green);color:#fff;font-weight:900;font-size:15px;cursor:pointer}.btn:disabled{opacity:.6;cursor:not-allowed}.message{margin-top:15px;font-weight:800}.success{background:#eaf8ee;color:#08752f;padding:14px;border-radius:12px}.error{background:#fff0f0;color:#a12626;padding:14px;border-radius:12px}.privacy{margin-top:18px;padding:14px 16px;border-radius:12px;background:#f7faf8;color:var(--muted);font-size:13px;line-height:1.6}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.topin{align-items:flex-start}.back{font-size:12px}.card{padding:20px}}
+</style></head><body>
+<header class="top"><div class="container topin"><div class="brand"><img src="logo.png" alt="Afam Sanitation CDS logo"><div>AFAM SANITATION CDS<br><small>NEW MEMBER REGISTRATION</small></div></div><a class="back" href="https://evidusca.github.io/Afam-Sanitation/">← Public Website</a></div></header>
+<main class="container"><div class="hero"><span class="eyebrow">WELCOME TO THE CDS TEAM</span><h1>Join Afam Sanitation CDS. 🌱</h1><p>New corps members can register their details below. Your information will be added to the CDS member register and used to keep the active membership list up to date.</p></div>
+<div class="card"><form id="memberForm"><div class="form-grid">
+<label>Full Name<input id="fullName" required autocomplete="name" placeholder="Enter your full name"></label>
+<label>NYSC State Code<input id="stateCode" required placeholder="e.g. RV/26B/1234" autocomplete="off"></label>
+<label>Batch<input id="batch" required placeholder="e.g. 2026 Batch B" autocomplete="off"></label>
+<label>End of Service Month & Year<input id="endOfService" required type="month"></label>
+<label>Birthday<input id="birthday" required type="date" autocomplete="bday"></label>
+<label>State of Origin<select id="stateOfOrigin" required><option value="">Select state</option></select></label>
+</div>
+<button class="btn" id="registerBtn" type="submit">Register as a CDS Member</button><div id="message" class="message" aria-live="polite"></div>
+<div class="privacy"><strong>🔒 Your information:</strong> This registration collects only the details needed for the Afam Sanitation CDS member register. Please enter your information carefully.</div>
+</form></div></main>
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbxMHXPlkr5DORU92N0t-XMbChXJr9t0cbxugq8x9ELUwAfmCwZ8NaxItGUDDk1lnZG4/exec';
+const states=['Abia','Adamawa','Akwa Ibom','Anambra','Bauchi','Bayelsa','Benue','Borno','Cross River','Delta','Ebonyi','Edo','Ekiti','Enugu','Gombe','Imo','Jigawa','Kaduna','Kano','Katsina','Kebbi','Kogi','Kwara','Lagos','Nasarawa','Niger','Ogun','Ondo','Osun','Oyo','Plateau','Rivers','Sokoto','Taraba','Yobe','Zamfara','Federal Capital Territory'];
+const stateSelect=document.getElementById('stateOfOrigin');states.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;stateSelect.appendChild(o)});
+const now=new Date();const minYear=now.getFullYear();document.getElementById('endOfService').min=`${minYear}-01`;
+function showMessage(text,ok){const m=document.getElementById('message');m.className='message '+(ok?'success':'error');m.textContent=text}
+document.getElementById('memberForm').addEventListener('submit',async e=>{e.preventDefault();const btn=document.getElementById('registerBtn');btn.disabled=true;showMessage('Submitting your registration…',true);
+const payload={action:'register_member',fullName:document.getElementById('fullName').value.trim(),stateCode:document.getElementById('stateCode').value.trim().toUpperCase(),batch:document.getElementById('batch').value.trim(),endOfService:document.getElementById('endOfService').value,birthday:document.getElementById('birthday').value,stateOfOrigin:stateSelect.value};
+try{const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});const result=await r.json();if(result.success){showMessage('Registration successful! Welcome to Afam Sanitation CDS. Your member ID is '+result.memberId+'.',true);document.getElementById('memberForm').reset()}else showMessage(result.message||'Registration failed.',false)}catch(err){console.error(err);showMessage('Could not connect to the registration service. Please try again.',false)}finally{btn.disabled=false}});
+</script></body></html>
