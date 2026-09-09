@@ -175,6 +175,10 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
 .score-big{font-size:40px;font-weight:900;color:#08752f}
 @media(max-width:650px){.lesson-hero{grid-template-columns:1fr;text-align:center}.lesson-content h2{font-size:25px}}
 
+
+.lesson-action{font-size:15px}
+.test-box[style*="text-align:center"]{background:linear-gradient(135deg,#effaf1,#fffbea);border:2px dashed rgba(8,117,47,.22)}
+
 </style>
 
 <style>
@@ -1100,7 +1104,7 @@ function openLesson(key){
   currentLessonKey=key;
   const l=educationLessons[key];
   const viewer=document.getElementById("lessonViewer");
-  document.getElementById("lessonProgress").textContent="📖 Read the lesson • Then take the test";
+  document.getElementById("lessonProgress").textContent="📖 Read the lesson • Test yourself when ready";
   document.getElementById("lessonContent").innerHTML=`
     <div class="lesson-hero">
       <div class="big-icon">${l.icon}</div>
@@ -1110,11 +1114,25 @@ function openLesson(key){
       ${l.sections.map(s=>`<section><h3>${s[0]}</h3><p>${s[1]}</p></section>`).join("")}
       <div class="lesson-fact"><strong>💡 Did You Know?</strong><p>${l.fact}</p></div>
       <div class="lesson-action"><strong>${l.action}</strong></div>
+
+      <div class="test-box" style="text-align:center;margin-top:30px">
+        <h3>🎓 Ready to test what you learned?</h3>
+        <p>Take your time to read the lesson. When you are ready, continue to the 10-question challenge.</p>
+        <button class="btn" type="button" onclick="startLessonTest()">📝 Take the 10-Question Test</button>
+      </div>
     </div>`;
-  renderLessonTest(key);
+
+  document.getElementById("lessonTest").innerHTML="";
   viewer.classList.add("open");
   viewer.setAttribute("aria-hidden","false");
   viewer.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function startLessonTest(){
+  if(!currentLessonKey)return;
+  renderLessonTest(currentLessonKey);
+  const test=document.getElementById("lessonTest");
+  test.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 function renderLessonTest(key){
@@ -1125,7 +1143,7 @@ function renderLessonTest(key){
   test.innerHTML=`
     <div class="test-box">
       <h3>📝 Test Yourself — 10 Questions</h3>
-      <p>Read the lesson above first. When you're ready, answer all 10 questions.</p>
+      <p>Choose the best answer for each question.</p>
       ${previous ? `<div class="lesson-fact"><strong>🔄 New Challenge Available</strong><p>You completed this lesson test before${previous.score!=null?` and scored ${previous.score}/10`:``}. This is a fresh set of questions for this phone.</p></div>`:""}
       <form id="lessonQuizForm">
         ${currentQuestions.map((q,i)=>`
