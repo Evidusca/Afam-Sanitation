@@ -319,7 +319,8 @@ footer{background:#042b15;color:#d8e8dd;padding:30px 0}
       <label>Photo (optional, max 2 MB)
         <input type="file" id="reportPhoto" accept="image/*">
       </label>
-      <p class="report-help">Upload one photo only. Maximum size is 2 MB. Upload one photo only. Maximum size is 2 MB. Please don't include private or sensitive information about other people.</p>
+      <p id="reportPhotoName" class="report-help"></p>
+      <p class="report-help">Upload one photo only. Maximum size is 2 MB. Please don't include private or sensitive information about other people.</p>
       <button class="btn primary" id="reportSubmit" type="submit">Submit Report</button>
       <p id="reportMessage" class="report-message" aria-live="polite"></p>
     </form>
@@ -412,6 +413,19 @@ document.getElementById("reportBtn").addEventListener("click", e => {
   openReportModal();
 });
 document.getElementById("reportClose").addEventListener("click", closeReportModal);
+document.getElementById("reportPhoto").addEventListener("change", () => {
+  const file = document.getElementById("reportPhoto").files[0];
+  const nameBox = document.getElementById("reportPhotoName");
+  if (!file) {
+    nameBox.textContent = "";
+    return;
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    nameBox.textContent = "This photo is larger than 2 MB.";
+    return;
+  }
+  nameBox.textContent = "Selected: " + file.name;
+});
 reportModal.addEventListener("click", e => {
   if (e.target === reportModal) closeReportModal();
 });
@@ -478,11 +492,12 @@ function blobToDataUrl(blob) {
 
 reportForm.addEventListener("submit", async e => {
   e.preventDefault();
-  reportSubmit.disabled = true;
-  reportMessage.textContent = photoFile ? "Uploading photo and submitting report…" : "Submitting report…";
 
   const photoInput = document.getElementById("reportPhoto");
   const photoFile = photoInput.files && photoInput.files[0];
+
+  reportSubmit.disabled = true;
+  reportMessage.textContent = photoFile ? "Uploading photo and submitting report…" : "Submitting report…";
 
   if (photoFile && photoFile.size > 2 * 1024 * 1024) {
     reportMessage.textContent = "The photo is too large. Please choose an image no bigger than 2 MB.";
