@@ -62,8 +62,6 @@ h2{font-size:clamp(30px,4vw,44px);line-height:1.1;margin:8px 0;color:var(--dark)
 .report h2{color:#fff}
 .report .muted{color:#c9ddd0}
 .report-box{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-footer{background:#042b15;color:#d8e8dd;padding:30px 0}
-.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
 .small{font-size:13px}
 .loading{opacity:.7}
 
@@ -427,12 +425,6 @@ body{overflow-x:hidden}
   </div>
 </div>
 
-<footer>
-  <div class="container footer-inner">
-    <div><strong>AFAM SANITATION CDS</strong><div class="small">NYSC Community Development Service</div></div>
-    <div class="small">Clean Environment. Healthy Community.</div>
-  </div>
-</footer>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbxMHXPlkr5DORU92N0t-XMbChXJr9t0cbxugq8x9ELUwAfmCwZ8NaxItGUDDk1lnZG4/exec";
@@ -535,6 +527,175 @@ function refreshPublicActivities() {
 
 refreshPublicActivities();
 setInterval(refreshPublicActivities, 30000);
+
+// Afam Sanitation Buddy — JSONP chat connection.
+function callHygieneChat(message, onSuccess, onFailure) {
+  const callbackName = '__afamChat_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+  const script = document.createElement('script');
+  let finished = false;
+  const cleanup = () => {
+    finished = true;
+    try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+    if (script.parentNode) script.parentNode.removeChild(script);
+  };
+  window[callbackName] = data => {
+    if (finished) return;
+    cleanup();
+    onSuccess(data);
+  };
+  script.onerror = () => {
+    if (finished) return;
+    cleanup();
+    if (onFailure) onFailure(new Error('Chatbot connection failed'));
+  };
+  const params = '?action=hygiene_chat&message=' + encodeURIComponent(message) +
+    '&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
+  script.src = API_URL + params;
+  document.head.appendChild(script);
+  setTimeout(() => {
+    if (!finished) {
+      cleanup();
+      if (onFailure) onFailure(new Error('Chatbot timeout'));
+    }
+  }, 30000);
+}
+
+function addChatMessage(text, role) {
+  const box = document.getElementById('chatMessages');
+  if (!box) return null;
+  const row = document.createElement('div');
+  row.className = 'chat-row ' + (role === 'user' ? 'user' : '');
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble ' + (role === 'user' ? 'user' : 'bot');
+  bubble.textContent = text;
+  row.appendChild(bubble);
+  box.appendChild(row);
+  box.scrollTop = box.scrollHeight;
+  return row;
+}
+
+function showTyping() {
+  const box = document.getElementById('chatMessages');
+  if (!box) return null;
+  const row = document.createElement('div');
+  row.className = 'chat-row';
+  row.id = 'afamTyping';
+  row.innerHTML = '<div class="chat-bubble bot"><span class="typing"><span></span><span></span><span></span></span></div>';
+  box.appendChild(row);
+  box.scrollTop = box.scrollHeight;
+  return row;
+}
+
+function formatBotText(text) {
+  // Keep chatbot output safe while preserving simple line breaks and bullets.
+  return escapeHtml(text || '').replace(/\n/g, '<br>');
+}
+
+function addBotMessage(text) {
+  const box = document.getElementById('chatMessages');
+  if (!box) return;
+  const row = document.createElement('div');
+  row.className = 'chat-row';
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble bot';
+  bubble.innerHTML = formatBotText(text);
+  row.appendChild(bubble);
+  box.appendChild(row);
+  box.scrollTop = box.scrollHeight;
+}
+
+function setChatStatus(message) {
+  const status = document.getElementById('hygieneStatus');
+  if (status) status.textContent = message || '';
+}
+
+const afamQuickAnswers = [
+  { keys:['what is puberty','puberty'], answer:'Puberty is the normal stage when a child\'s body changes and develops into an adult body. It can include changes in height, body hair, skin, body shape, voice and emotions. Everyone starts and progresses through puberty at a different time, so there is no single “right” age or speed.' },
+  { keys:['periods','what are periods','menstrual'], answer:'A period is normal bleeding from the uterus that happens as part of the menstrual cycle. Periods are a normal part of puberty. During a period, use a clean pad or another suitable menstrual product, change it regularly, wash your hands before and after changing it, and keep the genital area clean. Talk to a trusted adult or healthcare professional if bleeding is unusually heavy or pain is severe.' },
+  { keys:['boys','boys and growing up','boy puberty'], answer:'During puberty, boys may grow taller, develop more body and facial hair, have a deeper voice, develop more muscle, notice body odor or acne, and experience erections or wet dreams. These are normal body changes. Puberty happens at different times and speeds for different people.' },
+  { keys:['girls','girls and growing up','girl puberty'], answer:'During puberty, girls may grow taller, develop breasts and body hair, begin having periods, notice vaginal discharge, body odor or acne, and experience emotional changes. These are normal parts of growing up, and the timing is different for every person.' },
+  { keys:['hygiene','personal hygiene','what is hygiene'], answer:'Personal hygiene means taking care of your body and keeping yourself clean. Helpful habits include bathing regularly, washing your hands with soap and clean water, brushing your teeth twice a day, keeping nails clean, wearing clean clothes and not sharing personal items such as toothbrushes or towels.' }
+];
+function getAfamQuickAnswer(question){
+  const q=String(question||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+  if(!q) return null;
+  for(const item of afamQuickAnswers){
+    if(item.keys.some(k=>q===k || q.includes(k))) return item.answer;
+  }
+  return null;
+}
+
+function sendHygieneQuestion(question) {
+  const input = document.getElementById('hygieneQuestion');
+  const send = document.getElementById('hygieneSend');
+  const message = String(question || '').trim();
+  if (!message) return;
+
+  addChatMessage(message, 'user');
+  if (input) input.value = '';
+  if (send) send.disabled = true;
+  const quickAnswer = getAfamQuickAnswer(message);
+  if (quickAnswer) {
+    setChatStatus('');
+    const typing = showTyping();
+    setTimeout(() => {
+      if (typing && typing.parentNode) typing.parentNode.removeChild(typing);
+      if (send) send.disabled = false;
+      addBotMessage(quickAnswer);
+      if (input) input.focus();
+    }, 250);
+    return;
+  }
+
+  setChatStatus('Thinking…');
+  const typing = showTyping();
+
+  callHygieneChat(message, result => {
+    if (typing && typing.parentNode) typing.parentNode.removeChild(typing);
+    if (send) send.disabled = false;
+    setChatStatus('');
+    if (result && result.success) {
+      addBotMessage(result.answer || result.message || 'I’m sorry, I could not generate an answer right now.');
+    } else {
+      addBotMessage((result && (result.message || result.error)) || 'Sorry, I could not connect to Afam Sanitation Buddy. Please try again.');
+    }
+    if (input) input.focus();
+  }, error => {
+    if (typing && typing.parentNode) typing.parentNode.removeChild(typing);
+    if (send) send.disabled = false;
+    setChatStatus('');
+    const fallbackAnswer = getAfamQuickAnswer(message);
+    if (fallbackAnswer) {
+      addBotMessage(fallbackAnswer);
+    } else {
+      addBotMessage('Afam Sanitation Buddy is temporarily busy. Please try again in a moment.');
+    }
+    console.error('Afam Sanitation Buddy:', error);
+    if (input) input.focus();
+  });
+}
+
+function askSuggested(question) {
+  sendHygieneQuestion(question);
+}
+
+function clearChat() {
+  const box = document.getElementById('chatMessages');
+  if (!box) return;
+  box.innerHTML = '<div class="chat-row"><div class="chat-bubble bot"><p><strong>Hello! 👋 I\'m Afam Sanitation Buddy.</strong></p><p>You can ask me about your body, puberty, periods, personal hygiene, growing up and healthy habits.</p><p>There are no silly questions. What would you like to know?</p></div></div>';
+  setChatStatus('');
+  const input = document.getElementById('hygieneQuestion');
+  if (input) input.focus();
+}
+
+const hygieneChatForm = document.getElementById('hygieneChatForm');
+if (hygieneChatForm) {
+  hygieneChatForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const input = document.getElementById('hygieneQuestion');
+    sendHygieneQuestion(input ? input.value : '');
+  });
+}
 </script>
 
 
@@ -542,6 +703,59 @@ setInterval(refreshPublicActivities, 30000);
 
 
 
+<script>
+// Community reporting
+const reportModal = document.getElementById('reportModal');
+const reportForm = document.getElementById('reportForm');
+const reportDate = document.getElementById('reportDate');
+const reportMessage = document.getElementById('reportMessage');
+const reportSubmit = document.getElementById('reportSubmit');
+
+function openReportModal(){
+  if(!reportModal)return;
+  reportModal.classList.add('open');
+  reportModal.setAttribute('aria-hidden','false');
+  if(reportDate) reportDate.value = new Date().toISOString().split('T')[0];
+  const locationInput=document.getElementById('reportLocation');
+  if(locationInput) setTimeout(()=>locationInput.focus(),50);
+}
+function closeReportModal(){
+  if(!reportModal)return;
+  reportModal.classList.remove('open');
+  reportModal.setAttribute('aria-hidden','true');
+}
+const reportBtn=document.getElementById('reportBtn');
+if(reportBtn) reportBtn.addEventListener('click',e=>{e.preventDefault();openReportModal();});
+const reportClose=document.getElementById('reportClose');
+if(reportClose) reportClose.addEventListener('click',closeReportModal);
+if(reportModal) reportModal.addEventListener('click',e=>{if(e.target===reportModal)closeReportModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape' && reportModal && reportModal.classList.contains('open'))closeReportModal();});
+
+if(reportForm) reportForm.addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(reportSubmit) reportSubmit.disabled=true;
+  if(reportMessage) reportMessage.textContent='Submitting report…';
+  const payload={
+    action:'sanitation_report',
+    date:reportDate ? reportDate.value : '',
+    location:(document.getElementById('reportLocation')?.value||'').trim(),
+    problemType:document.getElementById('reportProblemType')?.value||'',
+    description:(document.getElementById('reportDescription')?.value||'').trim()
+  };
+  try{
+    await fetch(API_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+    if(reportMessage) reportMessage.textContent='Thank you. Your sanitation report has been submitted.';
+    reportForm.reset();
+    if(reportDate) reportDate.value=new Date().toISOString().split('T')[0];
+    setTimeout(closeReportModal,1600);
+  }catch(err){
+    console.error('Report submission failed:',err);
+    if(reportMessage) reportMessage.textContent='We couldn’t send the report. Please check your connection and try again.';
+  }finally{
+    if(reportSubmit) reportSubmit.disabled=false;
+  }
+});
+</script>
 <script>
 const afamLibrary = {
   hygiene:{
@@ -713,6 +927,8 @@ const quizBank = [
 let afamQuizQuestions = [];
 let afamQuizMode = "fresh";
 let afamQuizSet = [];
+let afamQuizAnswerKeys = [];
+let activeSectionAnswerKeys = [];
 
 function shuffleAfam(a){
   const x=[...a];
@@ -793,6 +1009,16 @@ function closeLibraryTopic(){
   viewer.setAttribute("aria-hidden","true");
 }
 
+function buildShuffledOptions(q){
+  const options = [
+    { text:q[1], correct:q[3]===0 },
+    { text:q[2][0], correct:q[3]===1 },
+    { text:q[2][1], correct:q[3]===2 },
+    { text:q[2][2], correct:q[3]===3 }
+  ];
+  return shuffleAfam(options);
+}
+
 function startAfamQuiz(mode){
   afamQuizMode=mode;
   if(mode==="same" && afamQuizSet.length===10){
@@ -801,45 +1027,48 @@ function startAfamQuiz(mode){
     afamQuizQuestions=shuffleAfam(quizBank).slice(0,10);
     afamQuizSet=afamQuizQuestions;
   }
+  afamQuizAnswerKeys=[];
   const box=document.getElementById("afamQuiz");
-  document.getElementById("quizIntro").style.display="none";
+  const intro=document.getElementById("quizIntro");
+  if(intro) intro.style.display="none";
+  if(!box)return;
   box.style.display="block";
   box.innerHTML=`
     <div class="quiz-progress">🧠 Afam Sanitation Quiz • 10 Questions</div>
     <p>Choose the best answer for each question.</p>
     <form id="afamQuizForm">
-      ${afamQuizQuestions.map((q,i)=>`
-        <div class="quiz-question">
+      ${afamQuizQuestions.map((q,i)=>{
+        const opts=buildShuffledOptions(q);
+        const correctIndex=opts.findIndex(o=>o.correct);
+        afamQuizAnswerKeys[i]=correctIndex;
+        return `<div class="quiz-question">
           <h4>${i+1}. ${q[0]}</h4>
-          <label class="quiz-option"><input type="radio" name="afamQ${i}" value="0"> ${q[1]}</label>
-          <label class="quiz-option"><input type="radio" name="afamQ${i}" value="1"> ${q[2][0]}</label>
-          <label class="quiz-option"><input type="radio" name="afamQ${i}" value="2"> ${q[2][1]}</label>
-          <label class="quiz-option"><input type="radio" name="afamQ${i}" value="3"> ${q[2][2]}</label>
-        </div>`).join("")}
-      <button class="btn" type="submit">✅ Submit My Answers</button>
+          ${opts.map((o,j)=>`<label class="quiz-option"><input type="radio" name="afamQ${i}" value="${j}"> ${o.text}</label>`).join("")}
+        </div>`;
+      }).join("")}
+      <button class="btn quiz-submit-btn" type="button" onclick="finishAfamQuiz(event)">✅ Submit My Answers</button>
     </form>
     <div id="afamQuizResult"></div>`;
-  document.getElementById("afamQuizForm").addEventListener("submit",finishAfamQuiz);
-  box.scrollIntoView({behavior:"smooth",block:"start"});
+  // Submission is handled directly by the button onclick so it works reliably on hosted pages.
 }
 
 function finishAfamQuiz(e){
-  e.preventDefault();
-  let score=0;
-  let answered=0;
+  if(e && e.preventDefault) e.preventDefault();
+  let score=0, answered=0;
   afamQuizQuestions.forEach((q,i)=>{
-    const chosen=document.querySelector(`input[name="afamQ${i}"]:checked`);
+    const chosen=document.querySelector(`#afamQuizForm input[name="afamQ${i}"]:checked`);
     if(chosen){
       answered++;
-      if(Number(chosen.value)===q[3])score++;
+      if(Number(chosen.value)===afamQuizAnswerKeys[i])score++;
     }
   });
+  const result=document.getElementById("afamQuizResult");
   if(answered<10){
-    document.getElementById("afamQuizResult").innerHTML=`<div class="library-fact"><strong>Almost there! 👀</strong> Please answer all 10 questions before submitting.</div>`;
+    if(result) result.innerHTML=`<div class="library-fact"><strong>Almost there! 👀</strong> Please answer all 10 questions before submitting.</div>`;
     return;
   }
   const title=score>=9?"🌟 Clean Champion!":score>=7?"👏 Great Job!":score>=5?"👍 Keep Learning!":"📚 Explore the Library Again";
-  document.getElementById("afamQuizResult").innerHTML=`
+  if(result) result.innerHTML=`
     <div class="quiz-result">
       <div class="quiz-score">${score}/10</div>
       <h3>${title}</h3>
@@ -977,6 +1206,7 @@ function startSectionQuiz(key, mode="fresh"){
     lastSectionQuestionSet = {key, questions: activeSectionQuestions};
   }
 
+  activeSectionAnswerKeys=[];
   const box=document.getElementById("sectionQuiz_"+key);
   if(!box)return;
 
@@ -985,43 +1215,49 @@ function startSectionQuiz(key, mode="fresh"){
       <div class="quiz-progress">🧠 ${afamLibrary[key].title} • 10 Questions</div>
       <p>These questions are based on the information you just read.</p>
       <form id="sectionQuizForm_${key}">
-        ${activeSectionQuestions.map((q,i)=>`
-          <div class="quiz-question">
+        ${activeSectionQuestions.map((q,i)=>{
+          const opts=buildShuffledOptions(q);
+          const correctIndex=opts.findIndex(o=>o.correct);
+          activeSectionAnswerKeys[i]=correctIndex;
+          return `<div class="quiz-question">
             <h4>${i+1}. ${q[0]}</h4>
-            <label class="quiz-option"><input type="radio" name="sectionQ${i}" value="0"> ${q[1]}</label>
-            <label class="quiz-option"><input type="radio" name="sectionQ${i}" value="1"> ${q[2][0]}</label>
-            <label class="quiz-option"><input type="radio" name="sectionQ${i}" value="2"> ${q[2][1]}</label>
-            <label class="quiz-option"><input type="radio" name="sectionQ${i}" value="3"> ${q[2][2]}</label>
-          </div>`).join("")}
-        <button class="btn" type="submit">✅ Submit My Answers</button>
+            ${opts.map((o,j)=>`<label class="quiz-option"><input type="radio" name="sectionQ${i}" value="${j}"> ${o.text}</label>`).join("")}
+          </div>`;
+        }).join("")}
+        <button class="btn quiz-submit-btn" type="button" onclick="finishSectionQuiz(event)">✅ Submit My Answers</button>
       </form>
       <div id="sectionQuizResult_${key}"></div>
     </div>`;
 
-  document.getElementById("sectionQuizForm_"+key).addEventListener("submit", finishSectionQuiz);
+  // Submission is handled directly by the button onclick so it works reliably on hosted pages.
   box.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
+window.finishAfamQuiz = finishAfamQuiz;
+window.finishSectionQuiz = finishSectionQuiz;
+window.startAfamQuiz = startAfamQuiz;
+window.startSectionQuiz = startSectionQuiz;
+
 function finishSectionQuiz(e){
-  e.preventDefault();
+  if(e && e.preventDefault) e.preventDefault();
   let score=0, answered=0;
   activeSectionQuestions.forEach((q,i)=>{
-    const chosen=document.querySelector(`input[name="sectionQ${i}"]:checked`);
+    const chosen=document.querySelector(`#sectionQuizForm_${activeSectionQuizKey} input[name="sectionQ${i}"]:checked`);
     if(chosen){
       answered++;
-      if(Number(chosen.value)===q[3])score++;
+      if(Number(chosen.value)===activeSectionAnswerKeys[i])score++;
     }
   });
 
   const key=activeSectionQuizKey;
   const result=document.getElementById("sectionQuizResult_"+key);
   if(answered<10){
-    result.innerHTML=`<div class="library-fact"><strong>Almost there! 👀</strong> Please answer all 10 questions before submitting.</div>`;
+    if(result) result.innerHTML=`<div class="library-fact"><strong>Almost there! 👀</strong> Please answer all 10 questions before submitting.</div>`;
     return;
   }
 
   const title=score>=9?"🌟 Clean Champion!":score>=7?"👏 Great Job!":score>=5?"👍 Keep Learning!":"📚 Review the Library Topic";
-  result.innerHTML=`
+  if(result) result.innerHTML=`
     <div class="quiz-result">
       <div class="quiz-score">${score}/10</div>
       <h3>${title}</h3>
@@ -1034,11 +1270,32 @@ function finishSectionQuiz(e){
 }
 
 
+
 document.addEventListener("DOMContentLoaded",()=>{
   renderAfamLibrary();
 });
 </script>
 
+
+
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-made">Made by</div>
+    <div class="footer-name"><a href="https://www.linkedin.com/in/evidence-oviri-iaeng-cisa-isrm-cti-iaeee-508003235/" target="_blank" rel="noopener noreferrer">Evidence Oviri Mudiaga</a></div>
+    <div class="footer-details">Batch C 2025 <span>•</span> RV/25C/3214</div>
+  </div>
+</footer>
+<style>
+.site-footer{margin-top:70px;background:#064a24;color:#fff;padding:30px 20px;text-align:center;border-top:4px solid #08752f}
+.site-footer .footer-inner{max-width:1100px;margin:0 auto}
+.site-footer .footer-made{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-bottom:6px}
+.site-footer .footer-name{font-size:14px;font-weight:600;letter-spacing:.02em}
+.site-footer .footer-name a{color:inherit;text-decoration:none}
+.site-footer .footer-name a:hover{text-decoration:underline}
+.site-footer .footer-details{margin-top:7px;font-size:13px;font-weight:400;opacity:.9}
+.site-footer .footer-details span{margin:0 7px;opacity:.7}
+</style>
 
 </body>
 </html>
