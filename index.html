@@ -240,7 +240,6 @@ body{overflow-x:hidden}
       <a href="#about">About</a>
       
       <a href="#hygiene-buddy">Sanitation Buddy</a>
-      <a href="#impact">Impact</a>
       <a href="#education">Education</a>
       <a href="#quiz">Quiz</a>
       <a href="#activities">Activities</a>
@@ -255,7 +254,7 @@ body{overflow-x:hidden}
       <h1>Cleaner environments.<br><span style="color:var(--green)">Healthier communities.</span></h1>
       <p>Afam Sanitation CDS is a team of NYSC corps members working with schools, marketplaces and communities to promote personal hygiene and create cleaner public spaces.</p>
       <div class="actions">
-        <a class="btn primary" href="#impact">See Our Impact</a>
+        <a class="btn primary" href="#activities">See Our Activities</a>
         <a class="btn secondary" href="#report">Report a Sanitation Issue</a>
       </div>
     </div>
@@ -316,20 +315,7 @@ body{overflow-x:hidden}
   </div>
 </div>
 
-<section id="impact">
-  <div class="container">
-    <div class="section-head">
-      <div class="kicker">Our impact</div>
-      <h2>Service you can measure.</h2>
-    </div>
-    <div class="stats">
-      <div class="stat"><strong id="totalActivities">0</strong><span>Activities</span></div>
-      <div class="stat"><strong id="schools">0</strong><span>Schools Reached</span></div>
-      <div class="stat"><strong id="people">0</strong><span>People Reached</span></div>
-      <div class="stat"><strong id="communities">0</strong><span>Communities Reached</span></div>
-    </div>
-  </div>
-</section>
+
 
 <section id="about">
   <div class="container">
@@ -382,10 +368,10 @@ body{overflow-x:hidden}
     <div class="section-head">
       <div class="kicker">Field work</div>
       <h2>Our activities.</h2>
-      <p class="muted">As we record real outreach activities in Google Sheets, they will appear here automatically.</p>
+      <p class="muted">Real outreach activities recorded by Afam Sanitation CDS appear here.</p>
     </div>
     <div id="activityList" class="activity-list">
-      <article class="activity"><div class="date">Coming soon</div><h3>Our first digital activity record</h3><p class="muted">Once an outreach is entered into the system, its details will appear here.</p></article>
+      <div class="activity"><div class="date">Loading activities...</div><h3>Loading our field work</h3><p class="muted">Please wait while the latest outreach records are loaded.</p></div>
     </div>
   </div>
 </section>
@@ -459,7 +445,25 @@ document.querySelectorAll("#navLinks a").forEach(a => a.addEventListener("click"
   document.getElementById("navLinks").classList.remove("open");
 }));
 
-// Public impact/activity loader.
+// Public activity loader.
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function pickField(item, names, fallback='') {
+  for (const name of names) {
+    if (item && item[name] !== undefined && item[name] !== null && String(item[name]).trim() !== '') {
+      return item[name];
+    }
+  }
+  return fallback;
+}
+
 function callPublicGet(action, onSuccess, onFailure) {
   const callbackName = '__afamPublic_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
   const script = document.createElement('script');
@@ -469,45 +473,68 @@ function callPublicGet(action, onSuccess, onFailure) {
     try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
     if (script.parentNode) script.parentNode.removeChild(script);
   };
-  window[callbackName] = data => { if (finished) return; cleanup(); onSuccess(data); };
-  script.onerror = () => { if (finished) return; cleanup(); if (onFailure) onFailure(new Error('API connection failed')); };
+  window[callbackName] = data => {
+    if (finished) return;
+    cleanup();
+    onSuccess(data);
+  };
+  script.onerror = () => {
+    if (finished) return;
+    cleanup();
+    if (onFailure) onFailure(new Error('API connection failed'));
+  };
   script.src = API_URL + '?action=' + encodeURIComponent(action) + '&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
   document.head.appendChild(script);
-  setTimeout(() => { if (!finished) { cleanup(); if (onFailure) onFailure(new Error('API timeout')); } }, 20000);
-}
-
-function refreshPublicData() {
-  callPublicGet('impact', result => {
-    if (result && result.success) {
-      const d = result.data || {};
-      document.getElementById('totalActivities').textContent = d['Total Activities'] ?? 0;
-      document.getElementById('schools').textContent = d['Schools Visited'] ?? 0;
-      document.getElementById('people').textContent = d['People Reached'] ?? 0;
-      document.getElementById('communities').textContent = d['Communities Reached'] ?? 0;
+  setTimeout(() => {
+    if (!finished) {
+      cleanup();
+      if (onFailure) onFailure(new Error('API timeout'));
     }
-  }, console.error);
+  }, 20000);
+}
 
+function renderActivities(items) {
+  const list = document.getElementById('activityList');
+  if (!list) return;
+
+  if (!Array.isArray(items) || items.length === 0) {
+    list.innerHTML = '<div class="activity"><div class="date">No activities yet</div><h3>Our next outreach will appear here</h3><p class="muted">Once an outreach activity is recorded by the CDS team, it will be displayed here.</p></div>';
+    return;
+  }
+
+  list.innerHTML = '';
+  items.slice().reverse().slice(0, 9).forEach(item => {
+    const date = pickField(item, ['Date', 'Activity Date'], 'Activity');
+    const type = pickField(item, ['Activity Type', 'Type'], 'Community Outreach');
+    const location = pickField(item, ['Location', 'Venue', 'Community'], 'Location not specified');
+    const description = pickField(item, ['Description', 'Details', 'Activity Description'], '');
+    const people = pickField(item, ['People Reached', 'People Reached '], '0');
+    const volunteers = pickField(item, ['Volunteers', 'Volunteers Involved'], '0');
+
+    const article = document.createElement('article');
+    article.className = 'activity';
+    article.innerHTML = `
+      <div class="date">${escapeHtml(date)}</div>
+      <h3>${escapeHtml(type)}</h3>
+      <p><strong>${escapeHtml(location)}</strong></p>
+      ${description ? `<p class="muted">${escapeHtml(description)}</p>` : ''}
+      <p class="small">${escapeHtml(people)} people reached · ${escapeHtml(volunteers)} volunteers</p>`;
+    list.appendChild(article);
+  });
+}
+
+function refreshPublicActivities() {
   callPublicGet('activities', result => {
-    if (!result || !result.success || !Array.isArray(result.data)) return;
-    const list = document.getElementById('activityList');
-    if (!result.data.length) return;
-    list.innerHTML = '';
-    result.data.slice(-6).reverse().forEach(item => {
-      const article = document.createElement('article');
-      article.className = 'activity';
-      article.innerHTML = `
-        <div class="date">${escapeHtml(item['Date'] || 'Activity')}</div>
-        <h3>${escapeHtml(item['Activity Type'] || 'Community Activity')}</h3>
-        <p><strong>${escapeHtml(item['Location'] || 'Location not specified')}</strong></p>
-        <p class="muted">${escapeHtml(item['Description'] || '')}</p>
-        <p class="small">${item['People Reached'] || 0} people reached · ${item['Volunteers'] || 0} volunteers</p>`;
-      list.appendChild(article);
-    });
+    if (!result || !result.success) {
+      console.error('Activities API error:', result);
+      return;
+    }
+    renderActivities(result.data || []);
   }, console.error);
 }
 
-refreshPublicData();
-setInterval(refreshPublicData, 30000);
+refreshPublicActivities();
+setInterval(refreshPublicActivities, 30000);
 </script>
 
 
