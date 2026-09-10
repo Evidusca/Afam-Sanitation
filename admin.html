@@ -287,64 +287,61 @@ activityForm.addEventListener("submit", async (e) => {
   }
 });
 
-async function loadReports() {
+function callAdminGet(action, params, onSuccess, onFailure) {
+  const callbackName = '__afamAdmin_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+  const script = document.createElement('script');
+  let finished = false;
+  const cleanup = () => {
+    finished = true;
+    try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+    if (script.parentNode) script.parentNode.removeChild(script);
+  };
+  window[callbackName] = data => { if (finished) return; cleanup(); onSuccess(data); };
+  script.onerror = () => { if (finished) return; cleanup(); if (onFailure) onFailure(new Error('Could not connect to the administrator service.')); };
+  const query = new URLSearchParams();
+  query.set('action', action);
+  query.set('callback', callbackName);
+  Object.keys(params || {}).forEach(k => query.set(k, params[k] == null ? '' : String(params[k])));
+  script.src = API_URL + '?' + query.toString();
+  document.head.appendChild(script);
+  setTimeout(() => { if (!finished) { cleanup(); if (onFailure) onFailure(new Error('The server took too long to respond.')); } }, 20000);
+}
+
+function loadReports() {
   const token = getToken();
   if (!token) return;
-
-  const body = document.getElementById("reportTableBody");
-  const message = document.getElementById("reportsMessage");
+  const body = document.getElementById('reportTableBody');
+  const message = document.getElementById('reportsMessage');
   body.innerHTML = '<tr><td colspan="5" class="muted">Loading reports…</td></tr>';
-
-  try {
-    const response = await fetch(API_URL + "?action=reports&adminToken=" + encodeURIComponent(token));
-    const result = await response.json();
-
-    if (!result.success) {
+  callAdminGet('reports', {adminToken: token}, result => {
+    if (!result || !result.success) {
       body.innerHTML = '<tr><td colspan="5" class="muted">Could not load reports.</td></tr>';
-      message.textContent = result.message || "Could not load reports.";
+      message.textContent = (result && result.message) || 'Could not load reports.';
       return;
     }
-
     if (!result.data || result.data.length === 0) {
       body.innerHTML = '<tr><td colspan="5" class="muted">No sanitation reports yet.</td></tr>';
-      message.textContent = "";
+      message.textContent = '';
       return;
     }
-
-    body.innerHTML = "";
+    body.innerHTML = '';
     result.data.forEach(item => {
-      const tr = document.createElement("tr");
-
-      const date = item["Date"] ? new Date(item["Date"]).toLocaleDateString() : "";
-      const location = escapeHtmlAdmin(item["Location"] || "");
-      const problem = escapeHtmlAdmin(item["Problem Type"] || "");
-      const description = escapeHtmlAdmin(item["Description"] || "");
-      
-      const current = item["Status"] || "Pending";
-
-      tr.innerHTML = `
-        <td>${date}</td>
-        <td>${location}</td>
-        <td>${problem}</td>
-        <td>${description}</td>
-        <td></td>
-        <td>
-          <select class="status-select" data-row="${Number(item._rowNumber)}">
-            ${["Pending","Reviewed","In Progress","Resolved"].map(s => `<option ${s === current ? "selected" : ""}>${s}</option>`).join("")}
-          </select>
-        </td>`;
+      const tr = document.createElement('tr');
+      const date = item['Date'] ? new Date(item['Date']).toLocaleDateString() : '';
+      const location = escapeHtmlAdmin(item['Location'] || '');
+      const problem = escapeHtmlAdmin(item['Problem Type'] || '');
+      const description = escapeHtmlAdmin(item['Description'] || '');
+      const current = item['Status'] || 'Pending';
+      tr.innerHTML = `<td>${date}</td><td>${location}</td><td>${problem}</td><td>${description}</td><td><select class="status-select" data-row="${Number(item._rowNumber)}">${['Pending','Reviewed','In Progress','Resolved'].map(s => `<option ${s === current ? 'selected' : ''}>${s}</option>`).join('')}</select></td>`;
       body.appendChild(tr);
     });
-
-    body.querySelectorAll(".status-select").forEach(select => {
-      select.addEventListener("change", () => updateReportStatus(select));
-    });
+    body.querySelectorAll('.status-select').forEach(select => select.addEventListener('change', () => updateReportStatus(select)));
     message.textContent = `${result.data.length} report(s) loaded.`;
-  } catch (err) {
+  }, err => {
     console.error(err);
     body.innerHTML = '<tr><td colspan="5" class="muted">Connection problem while loading reports.</td></tr>';
-    message.textContent = "Could not connect to the reports service.";
-  }
+    message.textContent = 'Could not connect to the reports service.';
+  });
 }
 
 function escapeHtmlAdmin(value) {
@@ -385,67 +382,42 @@ async function updateReportStatus(select) {
 document.getElementById("refreshReports").addEventListener("click", loadReports);
 
 
-async function loadMembers() {
+function loadMembers() {
   const token = getToken();
   if (!token) { showLogin(); return; }
-
-  const body = document.getElementById("membersTableBody");
-  const message = document.getElementById("membersMessage");
-  const count = document.getElementById("memberCount");
-  const endingSoon = document.getElementById("endingSoonCount");
-
+  const body = document.getElementById('membersTableBody');
+  const message = document.getElementById('membersMessage');
+  const count = document.getElementById('memberCount');
+  const endingSoon = document.getElementById('endingSoonCount');
   body.innerHTML = '<tr><td colspan="8" class="muted">Loading members…</td></tr>';
-  message.textContent = "";
-
-  try {
-    const response = await fetch(
-      API_URL + "?action=members&adminToken=" + encodeURIComponent(token),
-      {cache:"no-store"}
-    );
-    const result = await response.json();
-
-    if (!result.success) {
+  message.textContent = '';
+  callAdminGet('members', {adminToken: token}, result => {
+    if (!result || !result.success) {
       body.innerHTML = '<tr><td colspan="8" class="muted">Could not load members.</td></tr>';
-      message.textContent = result.message || "Could not load members.";
+      message.textContent = (result && result.message) || 'Could not load members.';
       return;
     }
-
     const members = Array.isArray(result.data) ? result.data : [];
     count.textContent = members.length;
-
     const now = new Date();
     const currentMonthIndex = now.getFullYear() * 12 + now.getMonth();
     const soonCount = members.filter(member => {
-      const match = String(member["End of Service"] || "").match(/^(\d{4})-(\d{2})$/);
+      const match = String(member['End of Service'] || '').match(/^(\d{4})-(\d{2})$/);
       if (!match) return false;
       const endIndex = Number(match[1]) * 12 + Number(match[2]) - 1;
       return endIndex >= currentMonthIndex && endIndex <= currentMonthIndex + 1;
     }).length;
     endingSoon.textContent = soonCount;
-
     if (!members.length) {
       body.innerHTML = '<tr><td colspan="8" class="muted">No active members registered yet.</td></tr>';
       return;
     }
-
-    body.innerHTML = members.map(member => `
-      <tr>
-        <td>${escapeHtmlAdmin(member["Member ID"] || "")}</td>
-        <td><strong>${escapeHtmlAdmin(member["Full Name"] || "")}</strong></td>
-        <td>${escapeHtmlAdmin(member["State Code"] || "")}</td>
-        <td>${escapeHtmlAdmin(member["Batch"] || "")}</td>
-        <td>${escapeHtmlAdmin(formatServiceEnd(member["End of Service"]))}</td>
-        <td>${escapeHtmlAdmin(formatMemberDate(member["Birthday"]))}</td>
-        <td>${escapeHtmlAdmin(member["State of Origin"] || "")}</td>
-        <td><span class="status-badge">Active</span></td>
-      </tr>
-    `).join("");
-
-  } catch (err) {
+    body.innerHTML = members.map(member => `<tr><td>${escapeHtmlAdmin(member['Member ID'] || '')}</td><td><strong>${escapeHtmlAdmin(member['Full Name'] || '')}</strong></td><td>${escapeHtmlAdmin(member['State Code'] || '')}</td><td>${escapeHtmlAdmin(member['Batch'] || '')}</td><td>${escapeHtmlAdmin(formatServiceEnd(member['End of Service']))}</td><td>${escapeHtmlAdmin(formatMemberDate(member['Birthday']))}</td><td>${escapeHtmlAdmin(member['State of Origin'] || '')}</td><td><span class="status-badge">Active</span></td></tr>`).join('');
+  }, err => {
     console.error(err);
     body.innerHTML = '<tr><td colspan="8" class="muted">Connection problem while loading members.</td></tr>';
-    message.textContent = "Could not connect to the member service.";
-  }
+    message.textContent = 'Could not connect to the member service.';
+  });
 }
 
 function formatServiceEnd(value) {
