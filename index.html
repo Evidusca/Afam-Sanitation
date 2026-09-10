@@ -321,7 +321,6 @@ body{overflow-x:hidden}
     <div class="section-head">
       <div class="kicker">Our impact</div>
       <h2>Service you can measure.</h2>
-      <p class="muted">These figures will eventually update automatically from the Afam Sanitation Google Sheets database.</p>
     </div>
     <div class="stats">
       <div class="stat"><strong id="totalActivities">0</strong><span>Activities</span></div>
@@ -761,22 +760,55 @@ document.getElementById('lessonModal').addEventListener('click',e=>{if(e.target.
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
 document.getElementById('quizForm').addEventListener('submit',function(e){e.preventDefault();const answers={q1:'b',q2:'a',q3:'a',q4:'b',q5:'c'};let score=0;Object.entries(answers).forEach(([q,a])=>{const el=document.querySelector('input[name="'+q+'"]:checked');if(el&&el.value===a)score++});const r=document.getElementById('quizResult');let msg=score===5?'Excellent! 🎉 You got all 5 correct.':score>=3?'Good job! 👍 You got '+score+' out of 5. Review the lessons and try again.':'Keep learning! 🌱 You got '+score+' out of 5. Read the Education Library and try again.';r.innerHTML='<strong>'+msg+'</strong>';r.classList.add('show');r.scrollIntoView({behavior:'smooth',block:'nearest'})});
 
-// Keep the public page fast: API-backed impact/activity data loads after the first paint.
-const IMPACT_CACHE_KEY="afam_impact_cache_v1";
-const ACTIVITY_CACHE_KEY="afam_activity_cache_v1";
-const CACHE_MS=5*60*1000;
-function readCache(key){try{const x=JSON.parse(localStorage.getItem(key)||"null");return x&&Date.now()-x.time<CACHE_MS?x.data:null}catch(e){return null}}
-function writeCache(key,data){try{localStorage.setItem(key,JSON.stringify({time:Date.now(),data}))}catch(e){}}
-function renderImpactData(d){document.getElementById("totalActivities").textContent=d["Total Activities"]??0;document.getElementById("schools").textContent=d["Schools Visited"]??0;document.getElementById("people").textContent=d["People Reached"]??0;document.getElementById("communities").textContent=d["Communities Reached"]??0}
-function renderActivityData(data){if(!Array.isArray(data)||!data.length)return;const list=document.getElementById("activityList");list.innerHTML="";data.slice(-6).reverse().forEach(item=>{const article=document.createElement("article");article.className="activity";article.innerHTML=`<div class="date">${item["Date"]||"Activity"}</div><h3>${escapeHtml(item["Activity Type"]||"Community Activity")}</h3><p><strong>${escapeHtml(item["Location"]||"Location not specified")}</strong></p><p class="muted">${escapeHtml(item["Description"]||"")}</p><p class="small">${item["People Reached"]||0} people reached · ${item["Volunteers"]||0} volunteers</p>`;list.appendChild(article)})}
-async function refreshPublicData(){
-  const ci=readCache(IMPACT_CACHE_KEY); if(ci) renderImpactData(ci);
-  const ca=readCache(ACTIVITY_CACHE_KEY); if(ca) renderActivityData(ca);
-  try{const [ri,ra]=await Promise.all([fetch(API_URL+"?action=impact"),fetch(API_URL+"?action=activities")]);const [ji,ja]=await Promise.all([ri.json(),ra.json()]);if(ji.success){writeCache(IMPACT_CACHE_KEY,ji.data||{});renderImpactData(ji.data||{})}if(ja.success){writeCache(ACTIVITY_CACHE_KEY,ja.data||[]);renderActivityData(ja.data||[])}}catch(e){console.log("Public data refresh delayed",e)}
+// Public impact/activity loader.
+function callPublicGet(action, onSuccess, onFailure) {
+  const callbackName = '__afamPublic_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+  const script = document.createElement('script');
+  let finished = false;
+  const cleanup = () => {
+    finished = true;
+    try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
+    if (script.parentNode) script.parentNode.removeChild(script);
+  };
+  window[callbackName] = data => { if (finished) return; cleanup(); onSuccess(data); };
+  script.onerror = () => { if (finished) return; cleanup(); if (onFailure) onFailure(new Error('API connection failed')); };
+  script.src = API_URL + '?action=' + encodeURIComponent(action) + '&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
+  document.head.appendChild(script);
+  setTimeout(() => { if (!finished) { cleanup(); if (onFailure) onFailure(new Error('API timeout')); } }, 20000);
 }
-function schedulePublicData(){const run=()=>refreshPublicData();if("requestIdleCallback" in window) requestIdleCallback(run,{timeout:3500});else setTimeout(run,1200)}
-schedulePublicData();
-setInterval(() => { loadImpact(); loadActivities(); }, 30000);
+
+function refreshPublicData() {
+  callPublicGet('impact', result => {
+    if (result && result.success) {
+      const d = result.data || {};
+      document.getElementById('totalActivities').textContent = d['Total Activities'] ?? 0;
+      document.getElementById('schools').textContent = d['Schools Visited'] ?? 0;
+      document.getElementById('people').textContent = d['People Reached'] ?? 0;
+      document.getElementById('communities').textContent = d['Communities Reached'] ?? 0;
+    }
+  }, console.error);
+
+  callPublicGet('activities', result => {
+    if (!result || !result.success || !Array.isArray(result.data)) return;
+    const list = document.getElementById('activityList');
+    if (!result.data.length) return;
+    list.innerHTML = '';
+    result.data.slice(-6).reverse().forEach(item => {
+      const article = document.createElement('article');
+      article.className = 'activity';
+      article.innerHTML = `
+        <div class="date">${escapeHtml(item['Date'] || 'Activity')}</div>
+        <h3>${escapeHtml(item['Activity Type'] || 'Community Activity')}</h3>
+        <p><strong>${escapeHtml(item['Location'] || 'Location not specified')}</strong></p>
+        <p class="muted">${escapeHtml(item['Description'] || '')}</p>
+        <p class="small">${item['People Reached'] || 0} people reached · ${item['Volunteers'] || 0} volunteers</p>`;
+      list.appendChild(article);
+    });
+  }, console.error);
+}
+
+refreshPublicData();
+setInterval(refreshPublicData, 30000);
 </script>
 
 
